@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>美国STEM博士申请导航</title>
+<style>
+:root{
+  --bg:#f0f2f8;--bg2:#ffffff;--card:#ffffff;--border:#e2e5f0;
+  --fg:#1a1d2e;--muted:#6b7280;--accent:#6366f1;--accent2:#8b5cf6;
+  --green:#10b981;--yellow:#f59e0b;--red:#ef4444;
+  --tag-bg:#eef2ff;--tag-fg:#4338ca;--radius:12px;
+}
+body.dark{
+  --bg:#0f1117;--bg2:#161b27;--card:#1c2230;--border:#2a3347;
+  --fg:#e8ecf4;--muted:#6b7a99;--tag-bg:#1e2a4a;--tag-fg:#818cf8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;font-size:14px;transition:background .2s,color .2s}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+/* Header */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{font-size:15px;font-weight:800;letter-spacing:-.4px;padding:16px 0;margin-right:28px;white-space:nowrap;color:var(--accent)}
+.tabs{display:flex;gap:0;flex:1}
+.tab{padding:16px 16px;font-size:13.5px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);transition:.15s;white-space:nowrap}
+.tab:hover{color:var(--fg)}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.hdr-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.thm{background:none;border:1px solid var(--border);border-radius:7px;padding:5px 10px;cursor:pointer;font-size:12.5px;color:var(--muted)}
+.thm:hover{color:var(--fg)}
+.ai-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:600;cursor:pointer}
+.ai-btn:hover{opacity:.88}
+
+/* Sections */
+section{display:none;max-width:1000px;margin:0 auto;padding:32px 24px 60px}
+section.on{display:block}
+
+/* Page title */
+.ptitle{font-size:22px;font-weight:800;margin-bottom:6px}
+.psub{font-size:13.5px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px}
+.card h3{font-size:14.5px;font-weight:700;margin-bottom:8px}
+
+/* Tags */
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--tag-bg);color:var(--tag-fg);margin:2px 3px 2px 0}
+.tag.green{background:rgba(16,185,129,.12);color:#059669}
+.tag.yellow{background:rgba(245,158,11,.12);color:#d97706}
+.tag.red{background:rgba(239,68,68,.12);color:#dc2626}
+.tag.gray{background:var(--bg);color:var(--muted)}
+
+/* ── TIMELINE ─────────────────────────── */
+.tl-wrap{position:relative;padding-left:36px}
+.tl-wrap::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:var(--border);border-radius:2px}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-dot{position:absolute;left:-31px;top:14px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);z-index:1}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:.15s}
+.tl-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(99,102,241,.1)}
+.tl-card.open{border-color:var(--accent)}
+.tl-head{display:flex;align-items:center;gap:10px}
+.tl-phase{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--tag-bg);color:var(--accent)}
+.tl-time{font-size:12.5px;color:var(--muted)}
+.tl-title{font-size:14.5px;font-weight:700;margin-top:4px}
+.tl-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.tl-card.open .tl-body{display:block}
+.tl-tasks{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tl-task{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.6}
+.tl-task input[type=checkbox]{margin-top:3px;accent-color:var(--accent);flex-shrink:0;cursor:pointer;width:15px;height:15px}
+.tl-task-content{flex:1;min-width:0}
+.tl-task label{cursor:pointer;display:block}
+.tl-task.done label{text-decoration:line-through;color:var(--muted)}
+.tl-guide-btn{margin-top:5px;padding:2px 9px;font-size:11.5px;background:transparent;border:1px solid var(--border);border-radius:20px;color:var(--accent);cursor:pointer;transition:.15s}
+.tl-guide-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tl-guide{display:none;margin:8px 0 4px 0;padding:10px 14px;background:var(--bg);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;list-style:disc;padding-left:28px;gap:6px;font-size:12.5px;color:var(--text);line-height:1.65}
+.tl-guide.open{display:flex;flex-direction:column}
+.tl-guide li{padding:1px 0}
+.tl-tip{margin-top:12px;padding:10px 12px;background:var(--tag-bg);border-radius:9px;font-size:12.5px;color:#4338ca;line-height:1.7}
+body.dark .tl-tip{color:var(--accent2)}
+
+/* ── PROFESSOR DB ─────────────────────── */
+.db-toolbar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.search-box{flex:1;min-width:200px;padding:9px 14px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--fg);font-size:13.5px}
+.search-box:focus{outline:none;border-color:var(--accent)}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:.15s}
+.pill:hover,.pill.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.prof-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:.15s}
+.prof-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(99,102,241,.1)}
+.prof-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.prof-avatar{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.prof-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.prof-name a{color:var(--text);text-decoration:none}
+.prof-name a:hover{color:var(--accent)}
+.prof-bio{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:3px}
+.prof-meta{font-size:12px;color:var(--muted);margin-bottom:2px}
+.prof-focus{font-size:12.5px;line-height:1.6;margin-bottom:8px;color:var(--fg)}
+.prof-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px}
+.prof-link{font-size:11.5px;padding:4px 10px;border:1px solid var(--accent);border-radius:7px;color:var(--accent);text-decoration:none;white-space:nowrap}
+.prof-link:hover{background:var(--accent);color:#fff}
+.prof-rep{font-size:12px;line-height:1.65;color:var(--muted);background:rgba(99,102,241,.06);border-left:3px solid var(--accent);padding:8px 11px;border-radius:0 8px 8px 0;margin:8px 0}
+.rep-label{display:inline-block;font-weight:700;color:var(--accent);margin-right:6px;font-size:11.5px}
+.prof-resources{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.res-link{font-size:11px;padding:3px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--muted);text-decoration:none}
+.res-link:hover{color:var(--accent);border-color:var(--accent)}
+.voices-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.vtab{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-size:13px;cursor:pointer;transition:.15s}
+.vtab.on,.vtab:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vt-panel{display:block}
+.school-voice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.sv-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.sv-card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sv-school-name{font-size:15px;font-weight:700}
+.sv-rank{font-size:11.5px;background:rgba(99,102,241,.1);color:var(--accent);padding:2px 9px;border-radius:20px}
+.sv-pros,.sv-cons{margin-top:10px}
+.sv-pros-title,.sv-cons-title{font-size:12px;font-weight:700;margin-bottom:5px}
+.sv-pros-title{color:var(--green)}
+.sv-cons-title{color:var(--red)}
+.sv-pros li,.sv-cons li{font-size:12.5px;line-height:1.7;color:var(--muted);list-style:none;padding-left:14px;position:relative}
+.sv-pros li::before{content:"✓";color:var(--green);position:absolute;left:0;font-weight:700}
+.sv-cons li::before{content:"△";color:var(--yellow);position:absolute;left:0;font-size:10px;top:2px}
+.sv-quote{margin-top:10px;padding:8px 11px;background:var(--bg);border-left:3px solid var(--border);border-radius:0 6px 6px 0;font-size:12px;color:var(--muted);font-style:italic}
+.life-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.life-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.life-card h4{font-size:14px;font-weight:700;margin-bottom:10px}
+.life-card ul{list-style:disc;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.life-card li{font-size:12.5px;color:var(--muted);line-height:1.65}
+.visit-grid{display:flex;flex-direction:column;gap:12px}
+.vq-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.vq-block h4{font-size:13.5px;font-weight:700;color:var(--accent);margin-bottom:10px}
+.vq-block ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.vq-block li{font-size:13px;padding-left:18px;position:relative;line-height:1.6}
+.vq-block li::before{content:"Q:";color:var(--accent);font-weight:700;position:absolute;left:0;font-size:11px;top:2px}
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.plat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.plat-card h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.plat-card p{font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:10px}
+.plat-link{display:inline-block;padding:5px 13px;background:var(--accent);color:#fff;border-radius:8px;font-size:12.5px;text-decoration:none}
+.plat-link:hover{opacity:.85}
+.intern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.intern-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.intern-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.intern-logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.intern-name{font-size:14px;font-weight:700}
+.intern-type{font-size:11.5px;color:var(--muted)}
+.intern-card ul{list-style:disc;padding-left:16px;display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);line-height:1.65}
+.intern-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.intern-link{font-size:11.5px;padding:3px 10px;border:1px solid var(--accent);border-radius:6px;color:var(--accent);text-decoration:none}
+.intern-link:hover{background:var(--accent);color:#fff}
+.referral-box{background:rgba(99,102,241,.07);border:1px solid rgba(99,102,241,.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px}
+.referral-box h3{font-size:15px;font-weight:700;margin-bottom:12px}
+.referral-steps{display:flex;flex-direction:column;gap:10px}
+.r-step{display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.65}
+.r-num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.path-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.path-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.path-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.path-salary{font-size:13px;color:var(--green);font-weight:600;margin-bottom:10px}
+.path-card ul{list-style:disc;padding-left:16px;display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);line-height:1.65}
+.city-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.city-pill{padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-size:12.5px;cursor:pointer;transition:.15s}
+.city-pill.on,.city-pill:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.city-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;display:none}
+.city-card.on{display:block}
+.city-top{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.city-stat{text-align:center;background:var(--bg);border-radius:10px;padding:12px 16px;min-width:100px;flex:1}
+.city-stat-val{font-size:20px;font-weight:800;color:var(--accent)}
+.city-stat-label{font-size:11px;color:var(--muted);margin-top:3px}
+.city-sections{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:14px}
+.city-section{background:var(--bg);border-radius:10px;padding:12px 14px}
+.city-section h4{font-size:12.5px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.city-section ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.city-section li{font-size:12px;color:var(--muted);line-height:1.6;padding-left:12px;position:relative}
+.city-section li::before{content:"·";position:absolute;left:0;color:var(--accent)}
+.city-map{width:100%;height:160px;border:0;border-radius:10px;margin-bottom:16px;display:block}
+.safety-bar{display:flex;align-items:center;gap:8px;margin-top:6px}
+.safety-dot{width:10px;height:10px;border-radius:50%}
+.school-banner{background:var(--tag-bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;display:none}
+.school-banner.on{display:block}
+.school-banner-head{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.school-banner-name{font-size:15px;font-weight:700}
+.school-banner-rank{font-size:12px;color:var(--accent);background:rgba(99,102,241,.1);padding:2px 8px;border-radius:20px}
+.school-banner-stipend{font-size:12px;color:var(--green);font-weight:600}
+.school-banner-intro{font-size:12.5px;color:var(--muted);line-height:1.7}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.status-dot.open{background:var(--green)}
+.status-dot.unknown{background:var(--yellow)}
+.status-dot.closed{background:var(--red)}
+.status-txt{font-size:11.5px;color:var(--muted)}
+.db-empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* ── EMAIL TEMPLATES ──────────────────── */
+.tmpl-grid{display:grid;grid-template-columns:200px 1fr;gap:20px}
+.tmpl-nav{display:flex;flex-direction:column;gap:6px}
+.tnav-item{padding:10px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);border:1px solid transparent;transition:.15s}
+.tnav-item:hover{background:var(--card);border-color:var(--border)}
+.tnav-item.on{background:var(--tag-bg);color:var(--accent);border-color:var(--border)}
+.tmpl-content{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+.tmpl-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.tmpl-desc{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.tmpl-when{font-size:12px;color:var(--accent);background:var(--tag-bg);display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:14px}
+.tmpl-body{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:16px;font-size:13px;line-height:1.9;white-space:pre-wrap;font-family:-apple-system,sans-serif}
+.tmpl-body .ph{color:var(--accent);font-weight:600}
+.copy-tmpl{margin-top:14px;padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.copy-tmpl:hover{opacity:.88}
+.copy-tmpl.done{background:var(--green)}
+
+/* ── CHECKLIST ────────────────────────── */
+.ck-section{margin-bottom:22px}
+.ck-section h3{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ck-badge{font-size:11px;padding:2px 8px;border-radius:20px;background:var(--tag-bg);color:var(--accent)}
+.ck-items{display:flex;flex-direction:column;gap:8px}
+.ck-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:.15s}
+.ck-item:hover{border-color:var(--accent)}
+.ck-item.done{opacity:.6}
+.ck-item.done .ck-label{text-decoration:line-through}
+.ck-item input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;margin-top:2px;cursor:pointer}
+.ck-label{font-size:13.5px;font-weight:500}
+.ck-note{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5}
+.ck-progress{background:var(--border);border-radius:20px;height:6px;margin-bottom:24px;overflow:hidden}
+.ck-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.4s}
+.ck-prog-label{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+
+/* ── FUNDING ──────────────────────────── */
+.fund-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.fund-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.fund-card h4{font-size:14px;font-weight:700;margin-bottom:8px}
+.fund-card p{font-size:13px;line-height:1.7;color:var(--muted)}
+.fund-card .amount{font-size:18px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.compare-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.compare-table th{background:var(--tag-bg);padding:11px 14px;text-align:left;font-size:12.5px;font-weight:700;color:var(--accent)}
+.compare-table td{padding:11px 14px;font-size:13px;border-top:1px solid var(--border)}
+.compare-table tr:hover td{background:var(--bg)}
+
+/* ── GUIDE (STEM Tips) ────────────────── */
+.guide-grid{display:flex;flex-direction:column;gap:14px}
+.guide-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px}
+.guide-card h3{font-size:14.5px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.guide-card p,.guide-card li{font-size:13.5px;line-height:1.8;color:var(--fg)}
+.guide-card ul,.guide-card ol{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.guide-card .hl{color:var(--accent);font-weight:600}
+
+/* ── VIDEO SECTION ───────────────────── */
+.vid-section{margin-top:22px}
+.vid-section-title{font-size:14px;font-weight:700;color:var(--fg);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.vid-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.vid-embed-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+.vid-embed-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.vid-caption{padding:10px 13px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.vid-caption strong{display:block;font-size:13px;color:var(--fg);margin-bottom:2px}
+
+/* ── AI MODAL ─────────────────────────── */
+.ai-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:center;justify-content:center}
+.ai-overlay.on{display:flex}
+.ai-modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;width:min(520px,92vw);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.ai-modal h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.ai-modal p{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.ai-ta{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:9px;background:var(--bg);color:var(--fg);font-size:13.5px;min-height:90px;resize:none;font-family:inherit}
+.ai-ta:focus{outline:none;border-color:var(--accent)}
+.ai-footer{display:flex;gap:10px;margin-top:12px}
+.ai-copy{flex:1;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer}
+.ai-copy:hover{opacity:.88}
+.ai-copy.done{background:var(--green)}
+.ai-close{padding:9px 16px;border:1px solid var(--border);background:none;border-radius:9px;cursor:pointer;color:var(--muted);font-size:13.5px}
+.ai-ctx{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.6}
+
+/* ── MATCH ────────────────────────────── */
+.match-layout{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+.match-form{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:sticky;top:80px}
+.match-form h3{font-size:14px;font-weight:700;margin-bottom:16px}
+.mf-group{margin-bottom:14px}
+.mf-label{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px;display:block}
+.mf-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font-size:13.5px}
+.mf-input:focus{outline:none;border-color:var(--accent)}
+.mf-pills{display:flex;flex-wrap:wrap;gap:5px}
+.mf-pill{padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;cursor:pointer;transition:.15s}
+.mf-pill:hover,.mf-pill.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.match-btn{width:100%;margin-top:6px;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer}
+.match-btn:hover{opacity:.88}
+.match-results h3{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--muted)}
+.match-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start;transition:.15s}
+.match-card:hover{box-shadow:0 2px 12px rgba(99,102,241,.1)}
+.match-lvl{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.match-lvl.good{background:rgba(16,185,129,.12)}
+.match-lvl.ok{background:rgba(245,158,11,.12)}
+.match-lvl.hard{background:rgba(239,68,68,.1)}
+.match-info{flex:1;min-width:0}
+.match-name{font-size:14px;font-weight:700}
+.match-school{font-size:12px;color:var(--muted);margin-bottom:6px}
+.match-focus{font-size:12.5px;line-height:1.6;margin-bottom:8px}
+.match-issues{font-size:12px;color:var(--yellow);margin-top:4px}
+.match-issues.good{color:var(--green)}
+.tier-badge{font-size:11px;padding:2px 8px;border-radius:20px;margin-right:6px}
+.tier-elite{background:rgba(139,92,246,.15);color:#7c3aed}
+.tier-top{background:rgba(99,102,241,.15);color:#4338ca}
+.tier-strong{background:rgba(16,185,129,.15);color:#047857}
+.tier-accessible{background:rgba(107,114,128,.15);color:#4b5563}
+.match-empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* ── 套磁追踪 ─────────────────────────── */
+.prof-status{font-size:11.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--muted);cursor:pointer;font-family:inherit;margin-left:auto;max-width:118px}
+.prof-status:focus{outline:none;border-color:var(--accent)}
+.prof-status.st-saved{background:rgba(245,158,11,.15);color:#b45309;border-color:transparent;font-weight:600}
+.prof-status.st-sent{background:rgba(99,102,241,.15);color:#4338ca;border-color:transparent;font-weight:600}
+.prof-status.st-replied{background:rgba(16,185,129,.15);color:#047857;border-color:transparent;font-weight:600}
+.prof-status.st-interview{background:rgba(139,92,246,.16);color:#7c3aed;border-color:transparent;font-weight:600}
+.prof-status.st-rejected{background:rgba(107,114,128,.15);color:#6b7280;border-color:transparent}
+.mark-filter{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
+.mark-filter input{cursor:pointer;accent-color:var(--accent)}
+.mark-count{color:var(--accent);font-weight:700}
+.prof-card.is-marked{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+
+/* ── 我的申请：汇总面板 ───────────────── */
+.mine-h{font-size:15px;font-weight:700;margin-bottom:14px}
+.mine-empty{background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);padding:28px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.7}
+.mine-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;margin-bottom:16px}
+.mine-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center}
+.mine-stat .ms-num{font-size:24px;font-weight:800}
+.mine-stat .ms-lbl{font-size:11.5px;color:var(--muted);margin-top:2px}
+.mine-bar{display:flex;height:12px;border-radius:20px;overflow:hidden;margin-bottom:22px;background:var(--bg);border:1px solid var(--border)}
+.mine-bar span{display:block}
+.mine-group{margin-bottom:16px}
+.mine-group h4{font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.mine-group .mg-count{font-size:11.5px;color:var(--muted);font-weight:500}
+.mine-list{display:flex;flex-direction:column;gap:6px}
+.mine-prof{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 13px}
+.mine-prof .mp-name{font-weight:600;font-size:13px}
+.mine-prof .mp-name a{color:var(--fg);text-decoration:none}
+.mine-prof .mp-name a:hover{color:var(--accent)}
+.mine-prof .mp-school{font-size:11.5px;color:var(--muted)}
+.mine-prof .mp-mail{margin-left:auto;font-size:12px;text-decoration:none}
+.color-saved{background:#f59e0b}.color-sent{background:#6366f1}.color-replied{background:#10b981}.color-interview{background:#8b5cf6}.color-rejected{background:#9ca3af}
+
+/* ── 截止日期倒计时 ───────────────────── */
+.dl-add{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+.dl-in{padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--fg);font-size:13.5px;font-family:inherit}
+.dl-in:focus{outline:none;border-color:var(--accent)}
+#dl-name{flex:1;min-width:160px}
+.dl-date{min-width:150px}
+.dl-btn{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.dl-btn:hover{opacity:.88}
+.dl-item{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:9px;border-left:4px solid var(--border)}
+.dl-item.urgent{border-left-color:var(--red)}
+.dl-item.soon{border-left-color:var(--yellow)}
+.dl-item.ok{border-left-color:var(--green)}
+.dl-item.past{border-left-color:var(--muted);opacity:.6}
+.dl-item .dl-school{font-weight:700;font-size:13.5px}
+.dl-item .dl-when{font-size:11.5px;color:var(--muted);margin-top:1px}
+.dl-count{margin-left:auto;text-align:right}
+.dl-count .dc-num{font-size:20px;font-weight:800;line-height:1}
+.dl-count.urgent .dc-num{color:var(--red)}
+.dl-count.soon .dc-num{color:#b45309}
+.dl-count.ok .dc-num{color:var(--green)}
+.dl-count .dc-lbl{font-size:11px;color:var(--muted)}
+.dl-del{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:0 2px;flex-shrink:0}
+.dl-del:hover{color:var(--red)}
+.dl-empty{background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);padding:24px;text-align:center;color:var(--muted);font-size:13px;margin-bottom:16px}
+.dl-ref{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:4px 18px;margin-top:8px}
+.dl-ref summary{cursor:pointer;font-size:13px;font-weight:600;padding:12px 0;color:var(--accent)}
+.dl-ref-body{padding:4px 0 16px}
+.dl-ref-warn{font-size:12px;color:var(--red);line-height:1.7;margin-bottom:12px}
+.dl-ref-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.dl-ref-table th{background:var(--tag-bg);padding:9px 12px;text-align:left;font-weight:700;color:var(--accent)}
+.dl-ref-table td{padding:9px 12px;border-top:1px solid var(--border);color:var(--fg)}
+
+/* ── 数据时效性提示 ───────────────────── */
+.data-note{background:var(--tag-bg);border-bottom:1px solid var(--border);color:var(--muted);font-size:12px;padding:7px 24px;display:flex;align-items:center;gap:10px;line-height:1.5}
+.data-note b{color:var(--fg)}
+.data-note .dn-close{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;flex-shrink:0;padding:0 4px}
+.data-note.hide{display:none}
+
+/* ── 费用预算计算器 ───────────────────── */
+.budget-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:20px}
+.budget-card h3{font-size:14.5px;font-weight:700;margin-bottom:6px}
+.budget-card .bc-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.bc-rows{display:flex;flex-direction:column;gap:11px}
+.bc-row{display:flex;align-items:center;gap:12px}
+.bc-row label{flex:1;font-size:13px;color:var(--fg)}
+.bc-row label small{display:block;color:var(--muted);font-size:11px;margin-top:1px}
+.bc-row input{width:84px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font-size:13.5px;text-align:right}
+.bc-row input:focus{outline:none;border-color:var(--accent)}
+.bc-total{margin-top:16px;padding-top:15px;border-top:1px dashed var(--border);display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.bc-total .bc-usd{font-size:26px;font-weight:800;color:var(--accent)}
+.bc-total .bc-rmb{font-size:14px;color:var(--muted);font-weight:600}
+
+@media(max-width:700px){
+  .tmpl-grid{grid-template-columns:1fr}
+  .fund-grid{grid-template-columns:1fr}
+  .db-grid{grid-template-columns:1fr}
+  .match-layout{grid-template-columns:1fr}
+  .match-form{position:static}
+  .city-sections{grid-template-columns:1fr}
+  .vid-grid{grid-template-columns:1fr}
+  .school-voice-grid{grid-template-columns:1fr}
+  .life-grid{grid-template-columns:1fr}
+  .platform-grid{grid-template-columns:1fr}
+  .intern-grid{grid-template-columns:1fr}
+  .path-grid{grid-template-columns:1fr}
+  .city-stat{min-width:calc(50% - 8px)}
+  section{padding:24px 15px 50px}
+  .hdr{padding:0 14px}
+  .data-note{padding:7px 14px}
+  .tabs{overflow-x:auto}
+  .tab{padding:14px 11px;font-size:12.5px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">🎓 美国STEM博士导航</div>
+  <div class="tabs" id="tabs"></div>
+  <div class="hdr-right">
+    <button class="thm" onclick="toggleTheme()">🌓</button>
+    <button class="ai-btn" onclick="openAI()">💬 问 AI</button>
+  </div>
+</div>
+
+<div class="data-note" id="data-note">
+  <span>📌 <b>数据整理于 2026年6月</b>。导师招生状态、邮箱、GRE/语言成绩政策、申请费用每年都会变动——<b>套磁与提交前请务必以学校和导师官网为准</b>，本页仅作起点参考。</span>
+  <button class="dn-close" onclick="dismissDataNote()" title="不再显示">✕</button>
+</div>
+
+<!-- TIMELINE -->
+<section id="s-tl">
+  <div class="ptitle">📅 申请时间轴</div>
+  <div class="psub">美国STEM博士申请周期通常为 <b>提前1.5-2年</b> 准备。点开每个阶段查看具体任务清单。</div>
+  <div class="tl-wrap" id="tl-wrap"></div>
+</section>
+
+<!-- PROFESSORS -->
+<section id="s-profs">
+  <div class="ptitle">🔬 STEM导师数据库</div>
+  <div class="psub" id="profs-sub">按研究方向筛选 · <span style="color:var(--yellow);font-weight:600">⚠️ 招生状态每年变化，套磁前务必查看导师主页确认</span></div>
+  <div class="db-toolbar">
+    <input class="search-box" id="psearch" placeholder="搜索姓名或研究方向…" oninput="filterProfs()">
+    <label class="mark-filter"><input type="checkbox" id="only-marked" onchange="toggleOnlyMarked(this)"> 只看已标记 <span class="mark-count" id="mark-count"></span></label>
+    <div class="filter-pills" id="school-pills"></div>
+  </div>
+  <div class="filter-pills" id="field-pills" style="margin-bottom:16px"></div>
+  <div class="school-banner" id="school-banner">
+    <div class="school-banner-head">
+      <span class="school-banner-name" id="school-banner-name"></span>
+      <span class="school-banner-rank" id="school-banner-rank"></span>
+      <span class="school-banner-stipend" id="school-banner-stipend"></span>
+      <span style="font-size:12px;color:var(--muted)" id="school-banner-city"></span>
+    </div>
+    <div class="school-banner-intro" id="school-banner-intro"></div>
+  </div>
+  <div class="db-grid" id="prof-grid"></div>
+</section>
+
+<!-- EMAIL TEMPLATES -->
+<section id="s-email">
+  <div class="ptitle">✉️ 套磁邮件模板库</div>
+  <div class="psub">「套磁」是STEM博士申请最关键的环节，一封好邮件往往决定录取。以下模板按场景分类，<b>请务必结合导师研究实质性修改</b>，切勿直接复制发送。</div>
+  <div class="tmpl-grid">
+    <div class="tmpl-nav" id="tmpl-nav"></div>
+    <div class="tmpl-content" id="tmpl-content"></div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="s-check">
+  <div class="ptitle">✅ 申请要素清单</div>
+  <div class="psub">STEM博士申请材料清单，按阶段整理。进度自动保存。</div>
+  <div class="ck-progress"><div class="ck-fill" id="ck-fill"></div></div>
+  <div class="ck-prog-label" id="ck-label"></div>
+  <div id="ck-body"></div>
+</section>
+
+<!-- FUNDING -->
+<section id="s-fund">
+  <div class="ptitle">💰 奖学金与资助解读</div>
+  <div class="psub">美国STEM博士<b>基本全奖（全免学费+生活津贴）</b>，这是和硕士申请最大的区别。但细节差异很大，需要在套磁和面试中主动确认。</div>
+  <div id="fund-body"></div>
+</section>
+
+<!-- CAREER -->
+<section id="s-career">
+  <div class="ptitle">💼 就业实习 & 城市生活</div>
+  <div class="psub">大厂内推渠道、PhD 就业路径、各城市气候安全租房娱乐全攻略。</div>
+  <div class="voices-tabs">
+    <button class="vtab on" onclick="switchCTab('intern',this)">🏢 实习内推</button>
+    <button class="vtab" onclick="switchCTab('path',this)">🎯 就业路径</button>
+    <button class="vtab" onclick="switchCTab('city',this)">🏙️ 城市生活</button>
+  </div>
+  <div id="ct-intern" class="vt-panel"></div>
+  <div id="ct-path"   class="vt-panel" style="display:none"></div>
+  <div id="ct-city"   class="vt-panel" style="display:none"></div>
+</section>
+
+<!-- VOICES -->
+<section id="s-voices">
+  <div class="ptitle">💬 学生说</div>
+  <div class="psub">各校项目口碑、PhD 生活实况、Visit Day 必问清单——来自学术圈长期沉淀的公开经验与建议。</div>
+  <div class="voices-tabs">
+    <button class="vtab on" onclick="switchVTab('school',this)">🏫 各校口碑</button>
+    <button class="vtab" onclick="switchVTab('life',this)">🎓 PhD 生活实况</button>
+    <button class="vtab" onclick="switchVTab('visitday',this)">🗣️ Visit Day 必问</button>
+    <button class="vtab" onclick="switchVTab('platforms',this)">🔗 评价平台</button>
+  </div>
+  <div id="vt-school" class="vt-panel"></div>
+  <div id="vt-life" class="vt-panel" style="display:none"></div>
+  <div id="vt-visitday" class="vt-panel" style="display:none"></div>
+  <div id="vt-platforms" class="vt-panel" style="display:none"></div>
+</section>
+
+<!-- VISA -->
+<section id="s-visa">
+  <div class="ptitle">🛂 签证办理 & 政策分析</div>
+  <div class="psub">从拿到 I-20 到入境美国，完整的 F-1 签证路线图；以及中美关系对 STEM 留学生的实际影响分析。</div>
+  <div class="guide-grid" id="visa-body"></div>
+</section>
+
+<!-- GUIDE -->
+<section id="s-guide">
+  <div class="ptitle">📖 STEM申请核心要点</div>
+  <div class="psub">区别于一般留学攻略，这里聚焦STEM博士的特有逻辑和中国学生最容易踩的坑。</div>
+  <div class="guide-grid" id="guide-body"></div>
+</section>
+
+<!-- MATCH -->
+<section id="s-match">
+  <div class="ptitle">🎯 选校匹配</div>
+  <div class="psub">输入你的申请背景，系统自动评估每位导师的匹配度。结果仅供参考，实际录取受多种因素影响。</div>
+  <div class="match-layout">
+    <div class="match-form">
+      <h3>📋 你的背景</h3>
+      <div class="mf-group">
+        <label class="mf-label">GPA（满分4.0）</label>
+        <input class="mf-input" id="mf-gpa" type="number" min="0" max="4.0" step="0.1" placeholder="如 3.7">
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">TOEFL 总分</label>
+        <input class="mf-input" id="mf-toefl" type="number" min="0" max="120" placeholder="如 105">
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">论文数量</label>
+        <div class="mf-pills" id="mf-pubs">
+          <span class="mf-pill" data-v="0">0 篇</span>
+          <span class="mf-pill" data-v="1">1 篇</span>
+          <span class="mf-pill" data-v="2">2+ 篇</span>
+        </div>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">科研年限</label>
+        <div class="mf-pills" id="mf-years">
+          <span class="mf-pill" data-v="0">&lt;1年</span>
+          <span class="mf-pill" data-v="1">1年</span>
+          <span class="mf-pill" data-v="2">2年</span>
+          <span class="mf-pill" data-v="3">3年+</span>
+        </div>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">研究方向（可多选）</label>
+        <div class="mf-pills" id="mf-fields"></div>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">目标层次（可多选）</label>
+        <div class="mf-pills" id="mf-tiers">
+          <span class="mf-pill" data-v="elite">顶尖（MIT/Stanford等）</span>
+          <span class="mf-pill" data-v="top">强校（UW/GT/UT等）</span>
+          <span class="mf-pill" data-v="strong">州立强校</span>
+          <span class="mf-pill" data-v="accessible">友好型</span>
+        </div>
+      </div>
+      <button class="match-btn" onclick="runMatch()">🔍 开始匹配</button>
+    </div>
+    <div class="match-results">
+      <h3 id="match-result-title">填写左侧背景后点击「开始匹配」</h3>
+      <div id="match-result-list"><div class="match-empty">请先填写你的申请背景 →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MY APPLICATIONS -->
+<section id="s-mine">
+  <div class="ptitle">📋 我的申请</div>
+  <div class="psub">你在导师库标记的进度、套磁汇总，以及自己设定的截止日期倒计时——全部存在本地浏览器。</div>
+
+  <h3 class="mine-h">🔬 套磁进度</h3>
+  <div id="mine-dash"></div>
+
+  <h3 class="mine-h" style="margin-top:30px">⏰ 截止日期倒计时</h3>
+  <div class="dl-add">
+    <input id="dl-name" class="dl-in" placeholder="学校 / 项目，如 MIT EECS">
+    <input id="dl-date" class="dl-in dl-date" type="date">
+    <button class="dl-btn" onclick="addDeadline()">＋ 添加</button>
+  </div>
+  <div id="dl-list"></div>
+  <details class="dl-ref">
+    <summary>📅 常见 CS/STEM 博士项目「往年」截止参考（务必以官网为准）</summary>
+    <div class="dl-ref-body">
+      <p class="dl-ref-warn">⚠️ 下列为<strong>往年大致窗口</strong>，每年都会调整，仅帮你判断大致节奏。<strong>真实日期请去各校官网核对后，用上方表单添加。</strong></p>
+      <table class="dl-ref-table">
+        <tr><th>截止窗口</th><th>典型项目（往年）</th></tr>
+        <tr><td>12 月 1 日前后</td><td>UT Austin、UW、Georgia Tech 等部分项目（偏早）</td></tr>
+        <tr><td>12 月 15 日前后</td><td>MIT、Stanford、CMU、Berkeley、Princeton、Cornell 等多数顶校 CS</td></tr>
+        <tr><td>12 月底 – 1 月初</td><td>部分院系 / 州立校，及少量延后批次</td></tr>
+        <tr><td>滚动 / 1 月以后</td><td>部分项目、second round 或 master 转博通道</td></tr>
+      </table>
+      <p class="dl-ref-warn" style="color:var(--muted)">💡 经验：把目标校官网的「Application Deadline」逐一查清后录入，并比真实截止<strong>提前 1–2 周</strong>给自己设个 buffer，留出推荐信和缴费的余量。</p>
+    </div>
+  </details>
+</section>
+
+<!-- AI Modal -->
+<div class="ai-overlay" id="ai-overlay" onclick="closeAI(event)">
+  <div class="ai-modal">
+    <h3>💬 向 AI 提问</h3>
+    <p>写下你的问题，点复制后粘贴到 Claude / ChatGPT。已自动附上当前页面的上下文。</p>
+    <textarea class="ai-ta" id="ai-ta" placeholder="例如：我是生物专业大三，GPA 3.8，如何开始套磁 MIT 的导师？"></textarea>
+    <div class="ai-footer">
+      <button class="ai-copy" id="ai-copy" onclick="copyAI()">📋 复制问题</button>
+      <button class="ai-close" onclick="closeAI()">关闭</button>
+    </div>
+    <p class="ai-ctx" id="ai-ctx"></p>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
+const TABS=[
+  {id:"tl",label:"📅 时间轴"},
+  {id:"profs",label:"🔬 导师库"},
+  {id:"match",label:"🎯 选校匹配"},
+  {id:"mine",label:"📋 我的申请"},
+  {id:"email",label:"✉️ 套磁模板"},
+  {id:"check",label:"✅ 申请清单"},
+  {id:"fund",label:"💰 奖学金"},
+  {id:"visa",label:"🛂 签证&政策"},
+  {id:"voices",label:"💬 学生说"},
+  {id:"career",label:"💼 就业&生活"},
+  {id:"guide",label:"📖 申请要点"},
+];
+
+const TL=[
+  {phase:"阶段一",time:"申请前 18-24 个月",title:"方向确立 & 能力储备",color:"#6366f1",
+   tasks:[
+     {id:"t1",text:"确定研究方向（CS / EE / 物理 / 生物 / 数学 等子领域）",note:"越细越好，比如「NLP中的语言模型」比「CS」好套磁",
+      guide:["去看顶会（NeurIPS/ICML/CVPR/ACL/SOSP 等）最近的 Best Paper，看哪类工作让你兴奋","在 Google Scholar 搜索你感兴趣的关键词，选引用量高的2-3篇精读，看参考文献找相关导师","判断标准：你能在5分钟内解释「我想解决什么问题，为什么重要」，说明方向找对了","方向先宽后窄：第一年可以「ML + 医疗」，等做了一个具体项目再细化到「医学图像分割」"]},
+     {id:"t2",text:"刷新 GPA，争取进入系内前10%-20%",
+      guide:["GPA 是最基础的过滤器：低于 3.3 大多数项目直接刷，3.5+ 才有竞争力","如果过去成绩不好，集中在剩余学期拿 A，录取委员会会看「上升趋势」","可以选修一门研究生课程（如果学校允许）并拿好成绩，直接证明科研能力","记录每门核心课的笔记和项目，后续可作为 SOP 的证据材料"]},
+     {id:"t3",text:"确认目标学校 GRE 政策（大多数顶校2024年已取消要求）",note:"即使不要求，可选择不考，把时间投入科研",
+      guide:["打开每所目标学校的官方 PhD 申请页面，搜索「GRE」关键词，记录是否 Required / Optional / Not Accepted","已明确取消 GRE 的学校：MIT EECS、Stanford CS、CMU CS、Berkeley EECS 等顶校（以官网为准）","如果你的 GRE Quant 能稳到 167+（95th），且学校 Optional，提交反而有加分","不要为 GRE 备考超过3个月，时间成本远高于科研经历"]},
+     {id:"t4",text:"备考 TOEFL / IELTS（STEM项目一般要求 100+/7.0+）",
+      guide:["TOEFL 100 是主流门槛，部分学校（如 UMass、Ohio State）接受 90+","Speaking 单项是中国学生的弱点，低于 22 可能直接被拒，需重点练习","推荐备考周期：2-4 个月，考到 100+ 即停，不需要冲 115+","一次不过就二刷，大多数学校接受最高分，但建议一年内搞定，别拖到申请季"]},
+     {id:"t5",text:"广泛阅读目标方向论文，找到感兴趣的具体问题",
+      guide:["每周精读1-2篇，快速浏览3-5篇，用 Notion 或 Papers With Code 做笔记","重点读：摘要、Introduction 最后一段（贡献列表）、Conclusion，论文主体可以跳读","追踪 arXiv 最新 preprint：订阅 arxiv.org 的 cs.LG / cs.CL / cs.CV 等分类的每日摘要邮件","发现某篇论文让你「想继续追」，就去看它的参考文献和引用它的后续论文，顺藤摸瓜"]},
+   ],
+   tip:"这一阶段最重要的是「搞清楚自己对什么感兴趣」，盲目申请是最大的浪费。"},
+
+  {phase:"阶段二",time:"申请前 12-18 个月",title:"科研积累 & 导师初筛",color:"#8b5cf6",
+   tasks:[
+     {id:"t6",text:"积极参与实验室科研，争取独立课题或贡献到论文",
+      guide:["找本校教授表达合作意愿：发邮件附上你读过的一篇他们的论文，问有没有 RA 机会","刚进组别急着「做项目」，先花2-4周完整复现一篇已有论文，展示你的执行力","争取在组里承担一个「自己负责的子任务」：哪怕是跑实验、整理数据集，也要有 owner 意识","参与论文写作：哪怕只写一个 section 的草稿，在 Author Contribution 里有你的名字就够"]},
+     {id:"t7",text:"整理科研成果：论文（哪怕在投）、会议报告、项目代码",
+      guide:["「在投」论文完全可以写在 CV 里，注明 under review at XXX，招生委员会完全接受","代码要上 GitHub 并写好 README：导师会看你的 GitHub，整洁的仓库是隐形加分项","参与过的课程大项目如果质量高，也可以放到 CV 的 Projects 部分","每次做完一个小成果，立刻更新 CV——别等到申请季再翻记忆"]},
+     {id:"t8",text:"建立目标导师名单（每个方向20-30位，用本页导师库筛选）",
+      guide:["同时看：Google Scholar 的引用量、实验室主页（招不招人）、近3年的论文活跃度","用电子表格记录：导师姓名 / 学校 / 方向关键词 / 近期论文 / 招生状态 / 优先级","招生状态：看导师主页有没有 Openings / Prospective Students 页面，或者他在 Twitter/X 上有没有发过招生帖","优先级排序：高度方向匹配 + 近期活跃 + 招生开放 = 优先套磁"]},
+     {id:"t9",text:"阅读目标导师近3年的论文，找到与自己工作的连接点",
+      guide:["每位目标导师至少读2篇最新论文，记录：他们在解决什么问题？用什么方法？还有什么 open question？","在你自己的工作中找「桥梁」：你的项目和导师的某个 open question 是否有交集？","套磁邮件最有力的句子模板：「我读了您2024年发表的 [论文名]，其中 [具体发现] 让我联想到我正在做的 [你的工作]」","找不到连接点也没关系，可以说「我对您的 [方向] 非常感兴趣，因为 [具体原因]」"]},
+     {id:"t10",text:"参加本领域顶会/暑研，增加与圈内人接触机会",
+      guide:["顶会 Volunteer 项目：ACL / NeurIPS / ICML / CVPR 等每年都招 volunteer，免注册费且能旁听全程","暑研申请：学校层面的暑研项目（MIT UROP、Stanford CURIS、CMU RISS）通常3-4月截止，提前关注","没机会去顶会，看录像也有价值：YouTube 上大多数顶会 talk 都有官方录像","加入研究圈子：在 Twitter/X 上关注领域内活跃学者，参与讨论，增加曝光度"]},
+   ],
+   tip:"「有论文」不等于「有好论文」，一篇扎实的在投论文比三篇水会强得多。"},
+
+  {phase:"阶段三",time:"申请前 6-12 个月",title:"套磁 & 材料准备",color:"#06b6d4",
+   tasks:[
+     {id:"t11",text:"开始发送套磁邮件，优先联系招生意向明确的导师",
+      guide:["邮件结构：主题行（简洁：Prospective PhD Student – [你的方向] – [你的名字]）→ 开头说读了哪篇论文 → 介绍自己 → 说连接点 → 请求视频会议，全文不超过200词","最佳发送时机：教授刚发完一篇新论文后（活跃期）；或学术年开始的8-9月","不回复处理：等2周，跟进一封（一句话：询问是否收到），再无回复就放弃这位，不要第三次","套磁成功的标志：对方愿意视频通话，或直接说「welcome to apply」"]},
+     {id:"t12",text:"请推荐人提前打招呼（至少3位，优先学术推荐信）",
+      guide:["理想推荐人：一起做过科研的教授（能具体讲你做了什么），而不是只知道你成绩的任课老师","至少提前3个月告知推荐人，给他们看你的 CV 和 SOP 草稿，让他们了解你的申请方向","提供「素材包」给推荐人：你和他们合作的项目摘要、你贡献了什么、你的两个具体亮点","在递交截止日前2周再催一次，并在申请系统里查看推荐信状态"]},
+     {id:"t13",text:"起草 SOP 初稿（研究动机 + 科研经历 + 未来计划）",
+      guide:["SOP ≠ 个人简介。结构：① 你要解决什么研究问题（1段）② 你做了什么证明你能解决它（2-3段）③ 你在这个项目里想做什么（1-2段，提具体导师）","第一段最重要：「我想研究 X 问题，因为 Y 原因，当前方法的局限是 Z」——直接切题，不要写「从小热爱科学」","字数：通常500-1000词，部分学校限制1-2页，以官网要求为准","初稿写完后找导师或学长帮看，重点检查：逻辑连贯性、是否有虚话、英文流畅度"]},
+     {id:"t14",text:"更新学术 CV（列出所有论文、项目、荣誉）",
+      guide:["学术 CV 和普通简历不同：没有页数限制（1-3页均可），按类别而非时间排列","必含模块：Education / Research Experience / Publications（哪怕 preprint） / Projects / Skills / Awards","论文引用格式要标准：Author1, Author2, … Title. Venue Year. 加上论文链接","技能部分写有实际使用经验的：Python(PyTorch/JAX) / C++ / Linux 等，别写没用过的"]},
+     {id:"t15",text:"确定申请学校列表（冲刺3-4所，匹配3-4所，保底2-3所）",
+      guide:["冲刺校：你认为希望不大但想试试的顶校（MIT/Stanford/CMU等），套磁成功可大幅提高概率","匹配校：你和目标导师已有初步联系，方向高度匹配，录取概率合理（50%+）","保底校：UMass / Ohio State / Virginia Tech 等友好型项目，你的背景远超最低要求","总数控制在8-12所：太少风险高，太多精力分散导致每个 SOP 都写烂"]},
+     {id:"t16",text:"整理各校申请系统账号，查清楚 Deadline 和材料要求",
+      guide:["建立一张电子表格：学校 / 项目 / Deadline / 材料清单 / 申请费 / SOP 字数限制 / 推荐信数量","申请费：每所100-150美元，10所约1000-1500美元，部分学校有 fee waiver，提前申请","材料要求差异：部分学校要 Research Statement 而不是 SOP，有些要额外的 Diversity Statement","系统账号提前注册：避免申请季网站崩溃，且需要提前邀请推荐人"]},
+   ],
+   tip:"套磁不是「广撒网」，而是「精准狙击」。发20封认真写的邮件好过发200封模板邮件。"},
+
+  {phase:"阶段四",time:"9-12月（申请季）",title:"提交申请",color:"#f59e0b",
+   tasks:[
+     {id:"t17",text:"提交语言成绩、标化成绩到各学校",
+      guide:["TOEFL 发分：ETS 官网选学校发送，每个代码5美元，申请前确认学校的 ETS 代码","发分需要2-4周到账，不要在截止日前一周才发","部分学校接受非官方成绩截图用于初审，但最终录取前必须提交官方成绩","发分后在申请系统里确认「Scores Received」状态，没收到要联系 Graduate Admissions Office"]},
+     {id:"t18",text:"逐校定制 SOP，匹配该校具体导师",
+      guide:["每所学校 SOP 的最后1-2段必须个性化：提到你想加入的具体导师（1-2位）及其具体研究","改的不只是名字：读完这位导师的最新论文，把你的研究兴趣和他的 open question 挂钩","核查：SOP 里提到的学校名 / 导师名 / 项目名，不要出现「A大学」却写着「B大学」的低级错误","改完让一位熟悉你的人通读一遍，检查逻辑和语气一致性"]},
+     {id:"t19",text:"催推荐人完成推荐信（至少提前2周提醒）",
+      guide:["在截止日前3周发第一封提醒邮件，附上申请学校列表和各校截止日","在截止日前1周发第二封提醒（语气礼貌但明确）：「我看到推荐信还未提交，是否需要我提供任何额外信息？」","在申请系统里可以看到推荐信是否已提交，每天检查一次","如果某位推荐人实在无法按时完成，提前一周告知学校，部分学校允许申请后补交"]},
+     {id:"t20",text:"检查申请材料完整性，逐项核对清单",
+      guide:["逐项核对：SOP ✓ / CV ✓ / 成绩单 ✓ / 推荐信 ✓ / 语言成绩 ✓ / 申请费 ✓","看「Materials Status」页：所有项目变绿 / Complete 才算提交完整","成绩单：部分学校要官方密封邮寄（提前一个月申请学校官方成绩单），部分接受 PDF 扫描","特别注意：确认申请的是 PhD 而不是 MS 项目（系统里可能两个都有）"]},
+     {id:"t21",text:"按 Deadline 提交，顶校截止日多为12月1日-1月15日",
+      guide:["先提交截止最早的学校，别把所有学校都留到最后一周","提交成功后会收到系统确认邮件，截图保存","提交后如果材料有更新（如新论文发表），大多数学校可以发邮件给 Graduate Admissions 请求补充","支付申请费时确认信用卡（Visa/Mastercard）可用，部分学校不接受银联"]},
+   ],
+   tip:"先提交截止日最早的学校，别把时间全押在最后几天。"},
+
+  {phase:"阶段五",time:"12月-次年2月（面试季）",title:"面试 & 跟进",color:"#10b981",
+   tasks:[
+     {id:"t22",text:"收到面试邀请后24小时内回复，安排时间",
+      guide:["回复模板：「Thank you for the invitation! I'm excited about the opportunity. I'm available on [3个时间段], but happy to adjust to your schedule.」","准备好稳定的网络和安静的环境（面试通常是 Zoom / Google Meet）","提前10分钟进入会议室，测试摄像头和麦克风","如果时区差异较大，确认邮件里写清楚你的时区（如 GMT+8）"]},
+     {id:"t23",text:"面试前精读导师最新2-3篇论文，准备讨论",
+      guide:["必须能回答：「你读过我们组的什么工作？你有什么想法？」——这是最常见的开场问题","准备一个「你自己的研究介绍」（3分钟版）：背景 → 你做了什么 → 结果 → 未来方向","准备提问：「您目前最感兴趣的 open problem 是什么？」「组里的学生通常多久发一篇论文？」","不要死背答案，面试是对话，展示你的思维方式比展示答案更重要"]},
+     {id:"t24",text:"面试后24小时内发感谢邮件",
+      guide:["模板：「Thank you for taking the time to speak with me about [话题]. I particularly enjoyed our discussion about [具体一点]. I remain very excited about the possibility of joining your group.」","邮件不超过3句话，言简意赅，不要重复面试中已讲过的内容","如果面试中提到了某个资料/论文，可以在感谢邮件里附上链接","发给参与面试的所有人（导师 + 有时会有学长学姐）"]},
+     {id:"t25",text:"跟踪已套磁导师动态，适时跟进询问进度",
+      guide:["提交申请后1个月，可以发一封简短的 follow-up 邮件告知已正式申请","关注导师的 Twitter/X 或个人主页，如果他发了新论文，可以发一条简短评论表示关注","收到其他录取时，告知你最想去的导师（温和施压），有时能加快决定","不要反复催促：每位导师每2-3周最多联系一次，超过两次无回复就停止"]},
+     {id:"t26",text:"整理面试问题记录，为后续面试做准备",
+      guide:["面试结束后立刻记录：问了什么问题、你如何回答、导师的反应，下次可以改进","常见问题清单：「你的研究兴趣」「最骄傲的一个项目」「为什么是 PhD 而不是工业界」「5年后你想做什么」","记录导师风格：是否细问技术细节？更关心科研方向还是个人背景？帮助判断 fit","分享到 cs-phd 申请论坛（如 Reddit r/gradadmissions）也有助于整理思路"]},
+   ],
+   tip:"面试是双向选择，你也在评估导师。关注：导师对学生的态度、组内氛围、资助来源稳定性。"},
+
+  {phase:"阶段六",time:"2-4月（决定阶段）",title:"录取决策",color:"#ef4444",
+   tasks:[
+     {id:"t27",text:"收到 Offer 后确认资助条件（TA/RA/Fellowship，金额，年限）",
+      guide:["全奖 PhD 的标准：覆盖学费 + 生活补贴（通常2-4万美元/年）+ 医疗保险，这三项缺一不可","TA（教学助理）：需要帮教授批作业/带实验课；RA（科研助理）：跟着导师做研究，建议争取 RA","Fellowship 最好：不需要工作，专注科研，有些学校第一年给 Fellowship 后转 RA/TA","如果 Offer 里资助不明确，直接邮件问：「Could you clarify the funding structure for incoming PhD students?」——这是正当且被鼓励的"]},
+     {id:"t28",text:"参加 Visit Day（强烈推荐，可以了解组内真实情况）",
+      guide:["Visit Day 是招生方组织的实地参观活动，通常2月-3月，学校报销机票和住宿","核心价值：和组内现有博士生单独聊（远离导师），问真实问题：「导师 responsive 吗？」「压力大吗？」「论文发得顺利吗？」","观察实验室氛围：同学之间的互动、办公环境、讨论频率","如果 Visit Day 在线上，仍然可以提前约一个学长学姐 1v1 视频聊20分钟"]},
+     {id:"t29",text:"在 April 15 前做决定（大多数学校遵守统一截止日）",
+      guide:["CGS April 15 Resolution：美国主要研究型大学承诺给申请人保留到 4月15日，但不是所有学校都签署了，确认你的 Offer Letter 截止日","如果还在等其他结果，可以邮件问还没出结果的学校：「我有另一所学校截止日是 XX，请问贵校的 timeline 如何？」","不要拖到最后一天才决定，给自己留1-2天处理 paperwork","做决定前列一个优先级清单：导师 fit / 资助金额 / 城市生活成本 / 毕业后就业率"]},
+     {id:"t30",text:"礼貌拒绝其他 Offer（圈子很小）",
+      guide:["拒绝模板：「Thank you so much for your offer. After careful consideration, I have decided to attend [X University]. I truly appreciate the opportunity and hope our paths cross in the future.」","尽早拒绝：你的名额可能是别人的 waitlist 机会，越早拒绝越好","拒绝后如果学校追问原因，可以简短回答（如「接受了全额 Fellowship」），不需要详细解释","不要失联：拒绝邮件发出去即可，不需要解释太多或道歉"]},
+   ],
+   tip:"别只看学校排名，导师和组内氛围才是5年博士生活质量的决定因素。"},
+];
+
+const PROFS=[
+  // ═══ ELITE（MIT/Stanford/CMU/Berkeley/Caltech/Harvard/Princeton）═══
+  {name:"Aleksander Madry",school:"MIT",dept:"EECS",field:["CS","ML","安全"],focus:"机器学习鲁棒性、对抗训练、神经网络安全性",url:"https://madry.mit.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Song Han",school:"MIT",dept:"EECS",field:["CS","ML","系统"],focus:"高效深度学习、神经网络压缩、边缘AI硬件协同设计",url:"https://hanlab.mit.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Jacob Andreas",school:"MIT",dept:"EECS",field:["CS","NLP","ML"],focus:"自然语言处理、语言模型基础、组合泛化",url:"https://people.csail.mit.edu/jda/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Stefanie Jegelka",school:"MIT",dept:"EECS",field:["CS","ML","理论"],focus:"图神经网络理论、组合优化与ML结合、核方法",url:"https://people.csail.mit.edu/stefje/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Tomas Lozano-Perez",school:"MIT",dept:"EECS",field:["CS","机器人","ML"],focus:"机器人操控与规划、机器学习在机器人中的应用",url:"https://people.csail.mit.edu/tlp/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Nuh Gedik",school:"MIT",dept:"Physics",field:["物理","凝聚态"],focus:"超快激光光谱、量子材料非平衡动力学",url:"https://gediklab.mit.edu/",status:"unknown",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Pablo Jarillo-Herrero",school:"MIT",dept:"Physics",field:["物理","材料"],focus:"魔角扭曲石墨烯、二维超导体、拓扑材料",url:"https://jarilloherrero.mit.edu/",status:"unknown",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Max Tegmark",school:"MIT",dept:"Physics",field:["物理","ML","AI安全"],focus:"宇宙学、AI安全、物理与机器学习交叉",url:"https://space.mit.edu/home/tegmark/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Robert Langer",school:"MIT",dept:"Chemical Eng.",field:["生物","生物工程","化学"],focus:"药物递送系统、生物材料、组织工程",url:"https://langerlab.mit.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Sangeeta Bhatia",school:"MIT",dept:"IMES/EECS",field:["生物","生物工程"],focus:"微器官芯片、癌症诊断、合成生物学",url:"https://web.mit.edu/smbhatia/www/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Michel Goemans",school:"MIT",dept:"Mathematics",field:["数学","CS","理论"],focus:"组合优化、近似算法、理论计算机科学",url:"https://math.mit.edu/~goemans/",status:"unknown",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Percy Liang",school:"Stanford",dept:"CS",field:["CS","NLP","ML"],focus:"基础模型评估、语言模型可靠性、AI benchmark",url:"https://cs.stanford.edu/~pliang/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Chelsea Finn",school:"Stanford",dept:"CS",field:["CS","ML","机器人"],focus:"元学习、少样本学习、机器人感知与操控",url:"https://ai.stanford.edu/~cbfinn/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Jure Leskovec",school:"Stanford",dept:"CS",field:["CS","ML","图"],focus:"图神经网络、大规模图学习、知识图谱",url:"https://cs.stanford.edu/~jure/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Christopher Manning",school:"Stanford",dept:"CS/Linguistics",field:["CS","NLP"],focus:"深度学习NLP、依存句法、语言基础模型",url:"https://nlp.stanford.edu/~manning/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Tengyu Ma",school:"Stanford",dept:"CS/Statistics",field:["CS","ML","理论"],focus:"深度学习理论、优化理论、分布外泛化",url:"https://ai.stanford.edu/~tengyuma/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Stephen Boyd",school:"Stanford",dept:"EE",field:["EE","数学","优化"],focus:"凸优化理论与应用、控制系统、嵌入式优化",url:"https://web.stanford.edu/~boyd/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Emmanuel Candès",school:"Stanford",dept:"Statistics/Math",field:["数学","统计","ML"],focus:"压缩感知、随机矩阵、统计机器学习",url:"https://candes.su.domains/",status:"open",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Ruslan Salakhutdinov",school:"CMU",dept:"CS/MLD",field:["CS","ML","DL"],focus:"深度学习、生成模型、多模态表示学习",url:"https://www.cs.cmu.edu/~rsalakhu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Zico Kolter",school:"CMU",dept:"CS/MLD",field:["CS","ML","安全"],focus:"可证明鲁棒ML、可微分优化、能源系统AI",url:"https://zicokolter.com/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Virginia Smith",school:"CMU",dept:"ECE/MLD",field:["CS","ML","系统"],focus:"联邦学习、分布式ML、高效训练系统",url:"https://www.cs.cmu.edu/~smithv/",status:"open",tier:"elite",minGPA:3.6,pubReq:"preferred"},
+  {name:"Graham Neubig",school:"CMU",dept:"CS/LTI",field:["CS","NLP","ML"],focus:"多语言NLP、代码生成、低资源语言处理",url:"https://www.phontron.com/",status:"open",tier:"elite",minGPA:3.6,pubReq:"required"},
+  {name:"Onur Mutlu",school:"CMU",dept:"ECE",field:["EE","系统","体系结构"],focus:"计算机体系结构、内存系统、基因组数据加速",url:"https://people.inf.ethz.ch/omutlu/",status:"open",tier:"elite",minGPA:3.6,pubReq:"preferred"},
+  {name:"Michael I. Jordan",school:"Berkeley",dept:"EECS/Statistics",field:["CS","ML","统计"],focus:"机器学习理论、贝叶斯方法、分布式优化",url:"https://people.eecs.berkeley.edu/~jordan/",status:"open",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Pieter Abbeel",school:"Berkeley",dept:"EECS",field:["CS","ML","机器人"],focus:"强化学习、模仿学习、机器人深度学习",url:"https://people.eecs.berkeley.edu/~pabbeel/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Dawn Song",school:"Berkeley",dept:"EECS",field:["CS","安全","ML"],focus:"AI安全、隐私计算、可信AI",url:"https://people.eecs.berkeley.edu/~dawnsong/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Trevor Darrell",school:"Berkeley",dept:"EECS",field:["CS","CV","ML"],focus:"计算机视觉、多模态学习、域自适应",url:"https://people.eecs.berkeley.edu/~trevor/",status:"open",tier:"elite",minGPA:3.6,pubReq:"preferred"},
+  {name:"Jennifer Doudna",school:"Berkeley",dept:"Chemistry/MCB",field:["生物","化学"],focus:"CRISPR-Cas9基因编辑、RNA生物学（诺贝尔奖得主）",url:"https://doudnalab.org/",status:"open",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Ali Niknejad",school:"Berkeley",dept:"EECS",field:["EE","RF","电路"],focus:"毫米波集成电路、射频系统、5G/6G通信",url:"https://people.eecs.berkeley.edu/~niknejad/",status:"unknown",tier:"elite",minGPA:3.6,pubReq:"preferred"},
+  {name:"Yisong Yue",school:"Caltech",dept:"CMS",field:["CS","ML","机器人"],focus:"机器学习应用、运动规划、体育分析AI",url:"https://www.yisongyue.com/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Pietro Perona",school:"Caltech",dept:"EE/CS",field:["CS","CV","生物"],focus:"计算机视觉、人类行为识别、生物图像分析",url:"https://www.vision.caltech.edu/Perona.html",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Anima Anandkumar",school:"Caltech",dept:"CMS",field:["CS","ML","科学ML"],focus:"神经算子、张量方法、科学机器学习",url:"https://tensorlab.cms.caltech.edu/users/anima/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"John Preskill",school:"Caltech",dept:"Physics",field:["物理","量子计算","CS"],focus:"量子计算理论、量子纠错、量子信息",url:"http://theory.caltech.edu/~preskill/",status:"unknown",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Frances Arnold",school:"Caltech",dept:"Chemistry/CBE",field:["生物","化学","生物工程"],focus:"蛋白质定向进化、生物催化、酶工程（诺贝尔奖得主）",url:"http://www.che.caltech.edu/groups/fha/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Finale Doshi-Velez",school:"Harvard",dept:"CS",field:["CS","ML","医疗"],focus:"可解释机器学习、医疗AI、强化学习决策",url:"https://finale.seas.harvard.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"David Parkes",school:"Harvard",dept:"CS",field:["CS","AI","经济"],focus:"算法博弈论、AI经济学、多智能体系统",url:"https://parkes.seas.harvard.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Boaz Barak",school:"Harvard",dept:"CS",field:["CS","理论","密码学"],focus:"计算复杂度、密码学、深度学习理论",url:"https://www.boazbarak.org/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Milind Tambe",school:"Harvard",dept:"CS",field:["CS","AI","社会"],focus:"AI for Social Good、安全博弈论、公共卫生AI",url:"https://teamcore.seas.harvard.edu/tambe",status:"open",tier:"elite",minGPA:3.6,pubReq:"preferred"},
+  {name:"Mikhail Lukin",school:"Harvard",dept:"Physics",field:["物理","量子计算"],focus:"量子光学、量子计算、量子网络",url:"https://lukin.physics.harvard.edu/",status:"open",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Subir Sachdev",school:"Harvard",dept:"Physics",field:["物理","凝聚态"],focus:"量子相变、高温超导、黑洞与量子物质",url:"https://sachdev.physics.harvard.edu/",status:"unknown",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"George Church",school:"Harvard",dept:"Genetics",field:["生物","基因组","生物工程"],focus:"基因组工程、合成生物学、DNA数据存储",url:"https://arep.med.harvard.edu/gmc/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  {name:"Sanjeev Arora",school:"Princeton",dept:"CS",field:["CS","理论","ML"],focus:"计算复杂度、机器学习理论、大语言模型理论",url:"https://www.cs.princeton.edu/~arora/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Elad Hazan",school:"Princeton",dept:"CS",field:["CS","ML","优化"],focus:"在线学习、优化算法、控制理论ML",url:"https://www.ehazan.com/",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Chi Jin",school:"Princeton",dept:"EE/CS",field:["CS","ML","理论"],focus:"强化学习理论、非凸优化、统计学习",url:"https://sites.google.com/view/chijin",status:"open",tier:"elite",minGPA:3.7,pubReq:"required"},
+  {name:"Duncan Haldane",school:"Princeton",dept:"Physics",field:["物理","凝聚态"],focus:"拓扑物态、量子霍尔效应（诺贝尔奖得主）",url:"https://phy.princeton.edu/people/f-duncan-m-haldane",status:"unknown",tier:"elite",minGPA:3.8,pubReq:"required"},
+  {name:"Waseem Bakr",school:"Princeton",dept:"Physics",field:["物理","AMO","量子"],focus:"超冷原子、量子模拟、量子气体显微镜",url:"https://bakrlab.princeton.edu/",status:"open",tier:"elite",minGPA:3.7,pubReq:"preferred"},
+  // ═══ TOP（Cornell / UW / Georgia Tech / UT Austin / UCSD / UMD）═══
+  {name:"Kilian Weinberger",school:"Cornell",dept:"CS",field:["CS","ML","CV"],focus:"深度学习、度量学习、DenseNet发明者",url:"https://www.cs.cornell.edu/~kilian/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Thorsten Joachims",school:"Cornell",dept:"CS",field:["CS","ML","信息检索"],focus:"机器学习、搜索排序、从隐式反馈中学习",url:"https://www.cs.cornell.edu/people/tj/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Robert Kleinberg",school:"Cornell",dept:"CS",field:["CS","理论","算法"],focus:"在线算法、多臂老虎机、算法博弈论",url:"https://www.cs.cornell.edu/~rdk/",status:"unknown",tier:"top",minGPA:3.6,pubReq:"required"},
+  {name:"Noah Smith",school:"UW",dept:"CS/Linguistics",field:["CS","NLP","ML"],focus:"自然语言处理、情感分析、机器翻译、语言推理",url:"https://nasmith.github.io/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Luke Zettlemoyer",school:"UW",dept:"CS",field:["CS","NLP","ML"],focus:"语义解析、大规模语言模型、自监督学习",url:"https://www.cs.washington.edu/people/faculty/lsz",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Yejin Choi",school:"UW",dept:"CS",field:["CS","NLP","AI"],focus:"常识推理、社会化AI、语言与视觉理解",url:"https://homes.cs.washington.edu/~yejin/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Shyam Gollakota",school:"UW",dept:"CS",field:["CS","系统","医疗"],focus:"无线传感器健康应用、隔空感知、低功耗通信",url:"https://homes.cs.washington.edu/~gshyam/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Zsolt Kira",school:"Georgia Tech",dept:"CS",field:["CS","ML","机器人"],focus:"持续学习、域自适应、机器人视觉感知",url:"https://faculty.cc.gatech.edu/~zk15/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Judy Hoffman",school:"Georgia Tech",dept:"CS",field:["CS","CV","ML"],focus:"域自适应、公平性AI、计算机视觉",url:"https://faculty.cc.gatech.edu/~judy/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Polo Chau",school:"Georgia Tech",dept:"CS",field:["CS","ML","可视化"],focus:"图机器学习、AI可解释性、数据可视化",url:"https://poloclub.github.io/polochau/",status:"open",tier:"top",minGPA:3.3,pubReq:"none"},
+  {name:"Philipp Krähenbühl",school:"UT Austin",dept:"CS",field:["CS","CV","ML"],focus:"目标检测、视频理解、自动驾驶感知",url:"https://www.philkr.net/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Qiang Liu",school:"UT Austin",dept:"CS/Statistics",field:["CS","ML","统计"],focus:"贝叶斯深度学习、Stein算子、扩散模型理论",url:"https://www.cs.utexas.edu/~lqiang/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Alex Dimakis",school:"UT Austin",dept:"ECE",field:["EE","ML","信息论"],focus:"信息论与机器学习、压缩感知、生成模型",url:"https://users.ece.utexas.edu/~dimakis/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Julian McAuley",school:"UCSD",dept:"CS",field:["CS","ML","NLP"],focus:"推荐系统、用户行为建模、语言模型应用",url:"https://cseweb.ucsd.edu/~jmcauley/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Jingbo Shang",school:"UCSD",dept:"CS",field:["CS","NLP","数据挖掘"],focus:"弱监督NLP、文本挖掘、知识图谱构建",url:"https://shangjingbo1226.github.io/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Rose Yu",school:"UCSD",dept:"CS",field:["CS","ML","科学ML"],focus:"时空预测、物理信息神经网络、动力系统ML",url:"https://roseyu.com/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Taylor Berg-Kirkpatrick",school:"UCSD",dept:"CS",field:["CS","NLP","ML"],focus:"NLP与音乐、创意文本生成、低资源NLP",url:"https://tabergk.github.io/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Jordan Boyd-Graber",school:"UMD",dept:"CS",field:["CS","NLP","ML"],focus:"问答系统、机器翻译、人机协作NLP",url:"https://users.umiacs.umd.edu/~jbg/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  {name:"Tom Goldstein",school:"UMD",dept:"CS",field:["CS","ML","优化"],focus:"对抗样本、快速优化算法、深度学习可视化",url:"https://www.cs.umd.edu/~tomg/",status:"open",tier:"top",minGPA:3.5,pubReq:"preferred"},
+  {name:"Abhinav Shrivastava",school:"UMD",dept:"CS",field:["CS","CV","ML"],focus:"视觉识别、数据增强、合成数据用于训练",url:"https://abhinavsh.info/",status:"open",tier:"top",minGPA:3.4,pubReq:"preferred"},
+  // ═══ STRONG（UIUC / UMich / UMass / Wisconsin / Ohio State 等）═══
+  {name:"Julia Hockenmaier",school:"UIUC",dept:"CS",field:["CS","NLP","ML"],focus:"自然语言处理、语义理解、视觉语言",url:"https://juliahmr.cs.illinois.edu/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"ChengXiang Zhai",school:"UIUC",dept:"CS",field:["CS","信息检索","NLP"],focus:"信息检索、文本挖掘、自然语言处理",url:"https://czhai.cs.illinois.edu/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Rada Mihalcea",school:"UMich",dept:"CS",field:["CS","NLP","ML"],focus:"自然语言处理、情感分析、多语言NLP",url:"https://web.eecs.umich.edu/~mihalcea/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Joyce Chai",school:"UMich",dept:"CS",field:["CS","NLP","人机交互"],focus:"NLP与人机交互、具身语言理解",url:"https://web.eecs.umich.edu/~chaijy/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Honglak Lee",school:"UMich",dept:"EECS",field:["CS","ML","DL"],focus:"深度学习、无监督表示学习、机器人感知",url:"https://web.eecs.umich.edu/~honglak/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Lu Wang",school:"UMich",dept:"CS",field:["CS","NLP","ML"],focus:"文本摘要、论证挖掘、多文档理解",url:"https://web.eecs.umich.edu/~wangluxy/",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  {name:"Andrew McCallum",school:"UMass",dept:"CS",field:["CS","NLP","ML"],focus:"信息抽取、知识图谱、概率图模型",url:"https://people.cs.umass.edu/~mccallum/",status:"open",tier:"strong",minGPA:3.4,pubReq:"preferred"},
+  {name:"Mohit Iyyer",school:"UMass",dept:"CS",field:["CS","NLP","ML"],focus:"创意文本生成、问答系统、视觉语言",url:"https://people.cs.umass.edu/~miyyer/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Justin Domke",school:"UMass",dept:"CS",field:["CS","ML","统计"],focus:"概率推断、变分推断、贝叶斯深度学习",url:"https://people.cs.umass.edu/~domke/",status:"open",tier:"strong",minGPA:3.3,pubReq:"none"},
+  {name:"Sharon Li",school:"Wisconsin",dept:"CS",field:["CS","ML","安全"],focus:"分布外检测、可靠ML、大模型安全评估",url:"https://pages.cs.wisc.edu/~sharonli/",status:"open",tier:"strong",minGPA:3.3,pubReq:"preferred"},
+  {name:"Shivaram Venkataraman",school:"Wisconsin",dept:"CS",field:["CS","系统","ML"],focus:"分布式系统、ML系统、Spark/Hadoop优化",url:"https://shivaram.org/",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  {name:"Wei-Lun Chao",school:"Ohio State",dept:"CS",field:["CS","ML","CV"],focus:"少样本学习、域自适应、自动驾驶感知",url:"https://sites.google.com/view/wei-lun-harry-chao",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  {name:"Srinivasan Parthasarathy",school:"Ohio State",dept:"CS",field:["CS","数据挖掘","生物信息"],focus:"图挖掘、生物信息学、流数据分析",url:"https://cse.osu.edu/people/parthasarathy.2",status:"open",tier:"strong",minGPA:3.1,pubReq:"none"},
+  {name:"Dan Goldwasser",school:"Purdue",dept:"CS",field:["CS","NLP","ML"],focus:"自然语言处理、社会媒体分析、语言与认知",url:"https://www.cs.purdue.edu/homes/dgoldwas/",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  {name:"Dongwon Lee",school:"Penn State",dept:"IST",field:["CS","NLP","数据挖掘"],focus:"虚假信息检测、Web数据挖掘、自然语言处理",url:"http://pike.psu.edu/dongwon/",status:"open",tier:"strong",minGPA:3.1,pubReq:"none"},
+  {name:"Xipeng Shen",school:"NC State",dept:"CS",field:["CS","系统","ML"],focus:"程序优化、机器学习系统、高性能计算",url:"https://people.engr.ncsu.edu/xshen5/",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  {name:"Lifu Huang",school:"Virginia Tech",dept:"CS",field:["CS","NLP","ML"],focus:"事件抽取、跨语言NLP、知识增强语言模型",url:"https://wilburone.github.io/",status:"open",tier:"strong",minGPA:3.2,pubReq:"none"},
+  // ═══ ACCESSIBLE（ASU / UT Dallas / Stony Brook / Rutgers 等）═══
+  {name:"Huan Liu",school:"ASU",dept:"CS",field:["CS","数据挖掘","ML"],focus:"社交媒体分析、特征选择、可信AI",url:"https://www.public.asu.edu/~huanliu/",status:"open",tier:"accessible",minGPA:3.0,pubReq:"none"},
+  {name:"Hanghang Tong",school:"ASU",dept:"CS",field:["CS","图","数据挖掘"],focus:"图神经网络、异常检测、网络分析",url:"https://www.public.asu.edu/~htong/",status:"open",tier:"accessible",minGPA:3.0,pubReq:"none"},
+  {name:"Latifur Khan",school:"UT Dallas",dept:"CS",field:["CS","数据挖掘","安全"],focus:"大数据分析、网络安全、流数据挖掘",url:"https://www.utdallas.edu/~lkhan/",status:"open",tier:"accessible",minGPA:3.0,pubReq:"none"},
+  {name:"H. Andrew Schwartz",school:"Stony Brook",dept:"CS",field:["CS","NLP","心理"],focus:"计算社会科学、语言与心理健康、NLP应用",url:"https://www3.cs.stonybrook.edu/~has/",status:"open",tier:"accessible",minGPA:3.0,pubReq:"none"},
+  {name:"Gerard de Melo",school:"Stony Brook",dept:"CS",field:["CS","NLP","知识图谱"],focus:"知识图谱、多语言语义、常识推理",url:"https://gerard.demelo.org/",status:"open",tier:"accessible",minGPA:3.0,pubReq:"none"},
+];
+
+const PROF_EXT={
+  "Aleksander Madry":{bio:"对抗训练奠基人，PGD 攻击引用超2万次，ICML 2018 Best Paper",email:"madry@mit.edu",
+    rep:"对学生要求极高，组内氛围严格但学术水平顶尖。学生反映每周 1v1 很少但 feedback 非常精准。适合自驱力极强、能独立推进研究的学生。"},
+  "Song Han":{bio:"神经网络压缩先驱，AMC 与 Once-for-All 作者",email:"songhan@mit.edu",
+    rep:"组内节奏快、产出高，经常有学生同时并行多个项目。他非常 hands-on，定期参与技术讨论。适合想做高效AI方向且能承受较高工作强度的学生。"},
+  "Jacob Andreas":{bio:"组合语言理解方向新星，NeurIPS 2022 Outstanding Paper",email:"jda@csail.mit.edu"},
+  "Stefanie Jegelka":{bio:"图神经网络理论权威，NSF CAREER 与 Sloan Fellow 获得者",email:"stefje@mit.edu"},
+  "Tomas Lozano-Perez":{bio:"机器人规划领域40年资深学者，AAAI Fellow",email:"tlp@csail.mit.edu"},
+  "Nuh Gedik":{bio:"超快光谱方向领军者，Sackler Prize 获得者",email:"gedik@mit.edu"},
+  "Pablo Jarillo-Herrero":{bio:"魔角石墨烯发现者，2020 Wolf Prize / Buckley Prize 获得者",email:"pjarillo@mit.edu"},
+  "Max Tegmark":{bio:"宇宙学权威兼AI安全先驱，《生命3.0》作者，FLI创始人",email:"tegmark@mit.edu",
+    rep:"对跨学科想法非常开放，愿意支持学生探索非主流方向。组内氛围轻松，但物理背景学生在此更有优势。"},
+  "Robert Langer":{bio:"全球被引最多的工程师之一，MIT Koch所核心PI，National Medal of Science",email:"rlanger@mit.edu",
+    rep:"超大实验室（100+人），学生需要有很强的自主性。好处是资源极其丰富、品牌加成巨大；挑战是和 Langer 本人直接接触时间有限，通常由博士后导师（co-mentor）带领日常工作。"},
+  "Sangeeta Bhatia":{bio:"器官芯片先驱，MacArthur Fellow，MIT IMES 联合主任",email:"sbhatia@mit.edu"},
+  "Michel Goemans":{bio:"近似算法理论奠基人，Goemans-Williamson 算法发明者，ACM Fellow",email:"goemans@math.mit.edu"},
+  "Percy Liang":{bio:"HELM benchmark 创始人，基础模型评测框架设计者，Sloan Fellow",email:"pliang@cs.stanford.edu",
+    rep:"学术标准极高，组内以严谨的理论分析著称。学生反映 Percy 本人很忙，但邮件回复快，论文修改 feedback 非常详细。非常适合想做 foundation model 评估/理论方向的学生。"},
+  "Chelsea Finn":{bio:"元学习 MAML 算法发明者，引用超2万次，MIT TR35 获得者",email:"cbfinn@cs.stanford.edu",
+    rep:"学术界公认的好导师之一。学生一致反映她 responsive、supportive，每周 1v1 有保障。组内氛围合作而非竞争，非常适合想做机器人学习的学生，且她积极鼓励学生发展独立研究想法。"},
+  "Jure Leskovec":{bio:"图机器学习先驱，SNAP 数据集作者，Pinterest Chief Scientist",email:"jure@cs.stanford.edu",
+    rep:"高产高效，组内平均发论文速度快。工业界人脉极强（Pinterest/Kumo.AI），学生毕业后就业非常顺利。节奏较快，适合想在图学习方向快速积累成果的学生。"},
+  "Christopher Manning":{bio:"Stanford NLP Group 负责人，《统计NLP》教材作者，ACL Fellow",email:"manning@cs.stanford.edu",
+    rep:"组里走出了大量 NLP 领域大牛（包括多位 OpenAI / Google DeepMind 核心研究员）。Manning 以耐心细致著称，鼓励学生独立思考。但组内竞争激烈，学生普遍需要有极强的研究直觉。"},
+  "Tengyu Ma":{bio:"深度学习理论新星，Sloan Fellow 2021，ICML 2018 Best Paper",email:"tengyuma@stanford.edu"},
+  "Stephen Boyd":{bio:"凸优化权威，《Convex Optimization》全球标准教材作者，IEEE Medal",email:"boyd@stanford.edu",
+    rep:"以教学能力著称，对学生的职业发展很上心。组内侧重理论与应用结合，CVXPY 项目让学生在工业界也极具辨识度。适合想做优化方向且重视长期培养的学生。"},
+  "Emmanuel Candès":{bio:"压缩感知理论奠基人，MacArthur Fellow，Gauss Prize 获得者",email:"candes@stanford.edu"},
+  "Ruslan Salakhutdinov":{bio:"深度学习先驱，Apple AI Research Director 兼职，ACM Fellow",email:"rsalakhu@cs.cmu.edu",
+    rep:"工业界资源丰富（Apple AI Research 联系紧密），学生有较多去顶级工业实验室实习的机会。组内规模中等，他本人兼顾工业与学术，学生需要有一定自驱力，但 mentorship 质量高。"},
+  "Zico Kolter":{bio:"可证明鲁棒ML奠基人，NeurIPS 2018 Best Paper",email:"zkolter@cs.cmu.edu",
+    rep:"以严谨和耐心著称，学生反映他对技术细节非常认真，会花时间逐行审查代码和证明。适合想做 ML 安全/鲁棒性方向的学生，组内氛围协作且相对轻松。"},
+  "Virginia Smith":{bio:"联邦学习理论先驱，LEAF benchmark 作者，NSF CAREER 获得者",email:"smithv@cmu.edu"},
+  "Graham Neubig":{bio:"低资源NLP权威，多语言神经翻译领域领导者，ACL/EMNLP 多次最佳论文",email:"gneubig@cs.cmu.edu",
+    rep:"CMU 公认 mentor 最好的教授之一。学生一致反映他极其 accessible、回邮件快、meeting 有保证。组内氛围轻松友好，论文产出速度快且质量高。非常适合希望在 NLP 方向快速成长的学生，尤其推荐给第一次做科研的学生。"},
+  "Onur Mutlu":{bio:"计算机体系结构权威，DRAM安全领域先驱，IEEE/ACM Fellow",email:"onur@cmu.edu",
+    rep:"以高强度和高产出著称，组内节奏快。学生反映他对工作投入极高并期待学生同等投入。论文产出量在体系结构方向全球顶尖，适合有志于学术界且愿意高强度科研的学生。"},
+  "Michael I. Jordan":{bio:"机器学习理论泰斗，全球CS被引量之首，National Academy of Sciences院士",email:"jordan@cs.berkeley.edu",
+    rep:"极少接新博士生（每年1-2人），已是传奇级学者。在 Jordan 组的学生必须有极强的独立性——他会给出大方向，但不会 hand-hold。这里是最硬的学术背书之一，毕业生几乎清一色顶校教职或顶级研究院。"},
+  "Pieter Abbeel":{bio:"机器人学习先驱，Covariant AI联合创始人，MIT TR35",email:"pabbeel@cs.berkeley.edu",
+    rep:"创业导向极强，多名学生已创办公司（Covariant、Skild、Physical Intelligence 等）。他非常支持学生将科研成果商业化，组内工业界人脉极强。如果目标是学术界，需确认他是否仍接学术导向的学生。"},
+  "Dawn Song":{bio:"AI安全与区块链权威，Oasis Labs创始人，ACM/IEEE Fellow",email:"dawnsong@cs.berkeley.edu",
+    rep:"她本人非常忙（学术+创业双线），学生反映 1v1 meeting 有时难以保证，需要很强的自主性。但组内学生网络强大，开放的实验室文化让学生有很多横向合作机会。"},
+  "Trevor Darrell":{bio:"域自适应先驱，BDD-X数据集作者，Berkeley AI Research创始成员",email:"trevor@eecs.berkeley.edu",
+    rep:"以包容多样研究方向著称，组内项目横跨 CV/NLP/机器人，学生有较大自由度选择课题。他的工业界合作频繁（Toyota Research 等），学生实习机会多。"},
+  "Jennifer Doudna":{bio:"2020年诺贝尔化学奖得主，CRISPR-Cas9基因编辑发明者",email:"doudna@berkeley.edu",
+    rep:"诺奖级别大实验室，日常指导主要由博士后和组内资深成员负责。加入 Doudna Lab 的最大价值是品牌效应和科研网络，但需做好「大实验室」的心理准备，独立 1v1 时间有限。"},
+  "Ali Niknejad":{bio:"毫米波集成电路全球权威，IEEE Fellow，Berkeley Wireless Research负责人",email:"niknejad@berkeley.edu"},
+  "Yisong Yue":{bio:"机器学习应用先驱，体育AI开创者，NSF CAREER 获得者",email:"yyue@caltech.edu",
+    rep:"以鼓励学生探索非传统应用方向著称，组内有做体育/医疗/社会科学的 ML 项目。Caltech 小而精，学生能获得大量与 Yisong 直接讨论的机会，适合喜欢跨领域应用的学生。"},
+  "Pietro Perona":{bio:"计算机视觉先驱，Caltech CaltechPedestrian数据集作者，IEEE Fellow",email:"perona@caltech.edu"},
+  "Anima Anandkumar":{bio:"神经算子先驱，NVIDIA VP Research兼职，NeurIPS 2021 Best Paper",email:"anima@caltech.edu",
+    rep:"工业界（NVIDIA）和学术界双线，资源丰富但时间有限。以鼓励大胆探索著称，组内方向从科学ML到理论均有。适合想做物理AI/科学计算的学生。"},
+  "John Preskill":{bio:"量子计算理论泰斗，「量子霸权」一词创造者，Dirac Medal获得者",email:"preskill@theory.caltech.edu"},
+  "Frances Arnold":{bio:"2018年诺贝尔化学奖得主，酶定向进化领域创始人，National Medal of Technology",email:"frances@cheme.caltech.edu"},
+  "Finale Doshi-Velez":{bio:"可解释AI领军者，NSF CAREER 获得者，哈佛首批女性AI PI之一",email:"finale@seas.harvard.edu",
+    rep:"以对学生的关怀和细心著称，常被列为 Harvard 最好的导师之一。她非常注重学生的身心健康和职业发展，不只关注论文产出。适合对可解释ML/医疗AI感兴趣且重视导师关系质量的学生。"},
+  "David Parkes":{bio:"计算经济学权威，Harvard SEAS前院长，Amazon研究顾问",email:"parkes@seas.harvard.edu"},
+  "Boaz Barak":{bio:"密码学与复杂度理论大师，《计算复杂性》合著者，ACM Fellow",email:"b@boazbarak.org",
+    rep:"以思维开放和善于解释著称，是 Harvard 最受欢迎的理论课教授之一。学生反映他对学生的想法非常尊重，讨论氛围极好。适合想做密码学/复杂度/ML理论的学生。"},
+  "Milind Tambe":{bio:"AI for Social Good先驱，WEF AI委员会成员，AAAI Fellow",email:"tambe@seas.harvard.edu"},
+  "Mikhail Lukin":{bio:"量子计算实验先驱，中性原子量子处理器领域权威，MacArthur Fellow",email:"lukin@physics.harvard.edu",
+    rep:"超级明星大实验室，量子计算硬件方向全球顶尖。组内竞争激烈，科研节奏快。Lukin 本人虽然很忙，但大方向把控能力极强，毕业生在量子计算学术/工业界路径都非常顺畅。"},
+  "Subir Sachdev":{bio:"量子临界现象理论权威，Dirac Medal获得者，APS Fellow",email:"sachdev@physics.harvard.edu"},
+  "George Church":{bio:"合成生物学传奇，千人基因组计划发起人，National Academy of Sciences院士",email:"gchurch@genetics.med.harvard.edu",
+    rep:"超大实验室（50+人），以思维前沿和疯狂创新著称（DNA存储、猛犸象复活等项目）。Church 本人想法极其大胆，学生需要能快速消化前沿技术。日常指导主要靠高年级学生和博士后，但科研环境的刺激感无与伦比。"},
+  "Sanjeev Arora":{bio:"复杂度理论权威，《计算复杂性》教材作者，Gödel Prize 多次获得者",email:"arora@cs.princeton.edu",
+    rep:"以耐心和系统性培养著称，普林斯顿理论方向学生公认的好导师。他非常重视学生打牢理论基础，论文质量远高于数量。适合不急于快速发 paper 而想做扎实理论工作的学生。"},
+  "Elad Hazan":{bio:"在线优化理论先驱，Google Brain Princeton负责人，Sloan Fellow",email:"ehazan@cs.princeton.edu"},
+  "Chi Jin":{bio:"强化学习理论新星，NeurIPS 2019 最佳论文，NSF CAREER 获得者",email:"chij@princeton.edu"},
+  "Duncan Haldane":{bio:"2016年诺贝尔物理奖得主，拓扑物态奠基人",email:"haldane@princeton.edu"},
+  "Waseem Bakr":{bio:"量子气体显微镜领域先驱，Sloan Fellow，Princeton量子实验室PI",email:"wbakr@princeton.edu"},
+  "Kilian Weinberger":{bio:"DenseNet发明者，CVPR/ICML最佳论文多次获得者，ACM Senior Member",email:"kilian@cs.cornell.edu",
+    rep:"以实用导向和强调代码质量著称，组内学生普遍工程能力强。Kilian 非常平易近人，学生反映 meeting 氛围轻松，他擅长把复杂想法简单化。适合想做实用深度学习的学生。"},
+  "Thorsten Joachims":{bio:"搜索学习理论先驱，KDD 2017 Test of Time Award，ACM Fellow",email:"tj@cs.cornell.edu"},
+  "Robert Kleinberg":{bio:"在线算法与多臂老虎机理论权威，Simons Investigator",email:"rdk@cs.cornell.edu"},
+  "Noah Smith":{bio:"ACL Fellow，AllenNLP核心贡献者，语言技术领域广泛影响学者",email:"nasmith@cs.washington.edu",
+    rep:"以思维开阔和支持学生独立探索著称。UW+Allen AI 双平台资源丰富，学生可以使用 Allen AI 的计算资源和人脉。组内氛围合作，适合有独立研究想法的 NLP 学生。"},
+  "Luke Zettlemoyer":{bio:"Meta AI Research科学家兼UW教授，语义解析与自监督学习领军者",email:"lsz@cs.washington.edu",
+    rep:"学术+工业双线（Meta AI Research），资源极其丰富，计算资源方面几乎无限制。学生有很多去 Meta 实习和合作的机会。他本人思路极快，meeting 高效，但学生需要能跟上其快节奏。"},
+  "Yejin Choi":{bio:"常识AI领军者，MacArthur Fellow 2022，Turing Award Honorable Mention",email:"yejin@cs.washington.edu",
+    rep:"以鼓励大胆创意和跨学科思维著称，是 UW NLP 最有个性的 PI 之一。学生反映她给予极大的研究自由度，非常适合有独特研究想法的学生。组内氛围活跃，跨领域合作多（哲学/认知科学）。"},
+  "Shyam Gollakota":{bio:"隔空感知先驱，Sloan Fellow，MIT TR35 Under 35获得者",email:"gshyam@cs.washington.edu"},
+  "Zsolt Kira":{bio:"持续学习与域自适应专家，DARPA SAIL-ON项目PI",email:"zkira@gatech.edu"},
+  "Judy Hoffman":{bio:"域自适应与公平性AI先驱，NSF CAREER获得者",email:"judy@cc.gatech.edu"},
+  "Polo Chau":{bio:"AI可视化与图学习权威，Polo Club负责人，NSF CAREER获得者",email:"polo@cc.gatech.edu",
+    rep:"以善于培养学生、重视可视化讲故事能力著称。组内项目经常产出高影响力工具（如 CNN Explainer），学生在 GitHub/学术圈知名度高。对新生非常 accessible，适合对 AI+可视化方向感兴趣的学生。"},
+  "Philipp Krähenbühl":{bio:"目标检测新星，ECCV 2022 Best Paper，DarkNet框架贡献者",email:"philkr@utexas.edu"},
+  "Qiang Liu":{bio:"扩散模型与粒子VI理论先驱，Stein差异框架作者，NSF CAREER获得者",email:"lqiang@cs.utexas.edu"},
+  "Alex Dimakis":{bio:"信息论与深度学习交叉权威，NSF CAREER，ISIT Best Paper",email:"dimakis@austin.utexas.edu"},
+  "Julian McAuley":{bio:"推荐系统权威，Amazon产品评论数据集作者，引用超4万次",email:"jmcauley@ucsd.edu",
+    rep:"以发论文快、对新生友好著称，UCSD 评价最高的 CS 导师之一。学生反映他反馈及时、鼓励尝试新想法，且不会给学生施加不必要的压力。非常适合第一次做 NLP/推荐系统研究的学生。"},
+  "Jingbo Shang":{bio:"弱监督NLP先驱，跨领域文本挖掘领导者，NSF CAREER获得者",email:"jshang@ucsd.edu",
+    rep:"年轻有活力，和学生一起「做研究」的风格非常突出。学生反映他会参与一线技术讨论，对学生的想法非常耐心。适合想做文本挖掘且希望导师深度参与的学生。"},
+  "Rose Yu":{bio:"时空预测与物理信息ML先驱，NSF CAREER获得者，Sloan Fellow",email:"roseyu@ucsd.edu"},
+  "Taylor Berg-Kirkpatrick":{bio:"创意AI与低资源NLP专家，EMNLP 2022 Best Paper",email:"tberg@ucsd.edu"},
+  "Jordan Boyd-Graber":{bio:"问答系统权威，EMNLP Best Paper多次获得者，NSF CAREER",email:"jbg@umiacs.umd.edu",
+    rep:"非常乐于帮助学生成长，经常在 Twitter/博客上分享培养学生的经验，是学术界公认的好导师。他对学生的写作和演讲能力要求很高，会花大量时间帮学生打磨 paper。"},
+  "Tom Goldstein":{bio:"对抗样本与快速优化先驱，ICML 2022 Outstanding Paper",email:"tomg@cs.umd.edu"},
+  "Abhinav Shrivastava":{bio:"视觉识别与合成数据领域新星，NSF CAREER获得者",email:"abhinav@umiacs.umd.edu"},
+  "Julia Hockenmaier":{bio:"视觉语言NLP权威，CoNLL 2017 Shared Task发起人，ACL Area Chair",email:"juliahmr@illinois.edu"},
+  "ChengXiang Zhai":{bio:"信息检索泰斗，SIGIR Karen Spärck Jones Award，ACM Fellow",email:"czhai@illinois.edu",
+    rep:"以细心培养学生著称，UIUC 学生反映他对 PhD 学生的职业规划非常上心。组内项目实用导向强，学生在工业界信息检索领域就业非常顺畅（百度/Google/Microsoft均有校友）。"},
+  "Rada Mihalcea":{bio:"情感计算NLP权威，ACL Fellow，UMich AI Lab副院长",email:"mihalcea@umich.edu",
+    rep:"以包容和鼓励著称，尤其对来自非英语母语国家的学生非常友好。学生反映她非常理解国际学生面临的挑战，适合中国学生。组内氛围非常正向，适合想做多语言/情感计算方向的学生。"},
+  "Joyce Chai":{bio:"具身语言理解先驱，ACL/EMNLP 最佳论文，NSF CAREER",email:"chaijy@umich.edu"},
+  "Honglak Lee":{bio:"无监督深度学习先驱，Google Brain兼职研究员，曾任LG AI Research负责人",email:"honglak@umich.edu"},
+  "Lu Wang":{bio:"文本摘要与论证挖掘专家，NSF CAREER获得者，ACL Area Chair",email:"wangluxy@umich.edu"},
+  "Andrew McCallum":{bio:"信息抽取NLP权威，UMASS IESL实验室负责人，Google Research顾问",email:"mccallum@cs.umass.edu",
+    rep:"IESL 实验室规模大、资源丰富，学生之间横向合作机会多。他本人非常鼓励学生做有实际影响力的研究，组内有很多与产业合作的项目。适合想做知识图谱/信息抽取且希望研究有实际落地的学生。"},
+  "Mohit Iyyer":{bio:"创意文本生成领域新星，NSF CAREER获得者，EMNLP 最佳论文",email:"miyyer@cs.umass.edu",
+    rep:"年轻活力，和学生一起做研究的风格突出。以善于选题著称，组内论文经常有「出人意料的有趣角度」。适合想做创意NLP/生成方向且喜欢和导师紧密合作的学生。"},
+  "Justin Domke":{bio:"贝叶斯深度学习专家，ARC Future Fellow，NeurIPS Area Chair",email:"domke@cs.umass.edu"},
+  "Sharon Li":{bio:"分布外检测奠基人，OpenOOD benchmark作者，NSF CAREER获得者",email:"sharonli@cs.wisc.edu",
+    rep:"以鼓励学生做有方向性的工作著称，不追热点，专注可靠ML这个长线方向。学生反映她非常有耐心，对新生的指导细致。UMass/Wisconsin方向的学生最高推荐。"},
+  "Shivaram Venkataraman":{bio:"ML系统优化专家，Apache Spark贡献者，NSF CAREER",email:"shivaram@cs.wisc.edu"},
+  "Wei-Lun Chao":{bio:"少样本学习与自动驾驶感知专家，CVPR/NeurIPS多次发表",email:"chao.209@osu.edu"},
+  "Srinivasan Parthasarathy":{bio:"图挖掘与生物信息先驱，IEEE Fellow，KDD Best Paper",email:"srini@cse.ohio-state.edu"},
+  "Dan Goldwasser":{bio:"社会媒体NLP与政治话语分析专家，NSF CAREER获得者",email:"dgoldwas@purdue.edu"},
+  "Dongwon Lee":{bio:"虚假信息检测权威，ICWSM 程序委员会主席，NSF/DARPA项目PI",email:"dongwon@psu.edu"},
+  "Xipeng Shen":{bio:"程序优化与ML系统先驱，NSF CAREER获得者，IEEE TC Best Paper",email:"xshen5@ncsu.edu"},
+  "Lifu Huang":{bio:"事件抽取与跨语言NLP新星，NSF CAREER获得者，ACL/EMNLP 多次发表",email:"lifuh@vt.edu"},
+  "Huan Liu":{bio:"社交媒体分析权威，IEEE ICDM 生涯成就奖，ACM/IEEE Fellow",email:"huanliu@asu.edu",
+    rep:"以平易近人和积极指导著称，ASU 学生反映他对国际学生非常友好，给予充分的指导和支持。组内规模适中，学生有大量独立科研机会，适合刚进入数据挖掘领域的学生起步。"},
+  "Hanghang Tong":{bio:"图神经网络与异常检测专家，NSF CAREER，KDD Best Paper",email:"htong@illinois.edu"},
+  "Latifur Khan":{bio:"大数据安全分析权威，大型NSF/DARPA项目PI，IEEE Senior Member",email:"lkhan@utdallas.edu"},
+  "H. Andrew Schwartz":{bio:"语言与心理健康计算先驱，WWBP实验室负责人，ACL Best Paper",email:"has@cs.stonybrook.edu",
+    rep:"以跨学科合作著称，组内经常和心理学家、医学研究者合作。对于想做「有社会意义的NLP」的学生非常合适。Stony Brook 的生活压力小，学生反映科研氛围轻松而高效。"},
+  "Gerard de Melo":{bio:"多语言知识图谱权威，Wikidata主要贡献者，Hasso Plattner Institute前PI",email:"gdm@demelo.org"},
+};
+
+const SCHOOLS={
+  "MIT":{rank:"全美#1 CS/EE（US News）",city:"马萨诸塞州剑桥市",stipend:"约$42,000/年",intro:"全球科技创新中心，EECS博士录取率约4%，全奖覆盖学费+生活费+医疗险。毕业生遍布Google/DeepMind/Anthropic核心研究岗。与波士顿科技圈无缝连接，MIT创业氛围全球最强。"},
+  "Stanford":{rank:"全美#2 CS（US News）",city:"加利福尼亚州斯坦福市",stipend:"约$45,000/年",intro:"硅谷腹地，CS系与工业界联系极深，大量导师兼任Google/Meta/Anthropic顾问。学费全免+丰厚生活补贴，毕业生创业率极高（Google、Yahoo等均出自此处）。"},
+  "CMU":{rank:"全美#1 CS（US News）",city:"宾夕法尼亚州匹兹堡市",stipend:"约$36,000/年",intro:"ML系（MLD）和语言技术学院（LTI）全球顶尖，SCS学院规模适中但质量极高。匹兹堡生活成本远低于湾区，奖学金购买力强。自动驾驶研究氛围浓厚（Uber ATG、Aurora均源自此处）。"},
+  "Berkeley":{rank:"全美#3 CS/EE（US News）",city:"加利福尼亚州伯克利市",stipend:"约$38,000/年",intro:"公立常春藤之首，EECS博士录取率约2%，竞争极其激烈。AI/ML导师阵容全球最强之一，Berkeley AI Research（BAIR）汇聚顶尖学者。伯克利生活成本高，但湾区就业机会无与伦比。"},
+  "Caltech":{rank:"全美Top 10 CS/EE",city:"加利福尼亚州帕萨迪纳市",stipend:"约$38,000/年",intro:"规模小但极精英化，全校博士生不足2000人。研究氛围极纯粹，工科/物理世界顶尖。导师资源集中，生师比极低，适合想与顶级学者深度合作的学生。气候宜人，离洛杉矶30分钟。"},
+  "Harvard":{rank:"全美Top 10 CS",city:"马萨诸塞州剑桥市",stipend:"约$42,000/年",intro:"SEAS（工程与应用科学学院）近年大力发展CS/AI。品牌效应顶级，跨学科资源（医学院、经济学院、公共卫生学院）得天独厚。CS规模相对小，招生名额有限，与MIT距离步行可达。"},
+  "Princeton":{rank:"全美Top 10 CS",city:"新泽西州普林斯顿市",stipend:"约$38,000/年",intro:"理论研究氛围极浓厚，数学与CS交叉方向世界顶尖。校园优美，距纽约1小时火车。CS PhD项目规模小而精，竞争极激烈。Fellowship比例高，科研氛围纯粹。"},
+  "Cornell":{rank:"全美Top 10 CS",city:"纽约州伊萨卡市（+纽约技术校区）",stipend:"约$32,000/年",intro:"传统CS名校，算法理论与ML方向世界知名。伊萨卡小城学术氛围纯粹，纽约技术校区（Cornell Tech）则提供城市化科研环境。与工业界合作密切，就业前景优秀。"},
+  "UW":{rank:"全美#5 CS",city:"华盛顿州西雅图市",stipend:"约$33,000/年",intro:"CS系近年快速崛起，NLP/HCI/ML/系统方向全球知名。西雅图有微软总部、亚马逊总部、Meta等大厂，实习和联合培养机会极多。生活成本适中，华人社区成熟。"},
+  "Georgia Tech":{rank:"全美Top 10 CS/EE",city:"佐治亚州亚特兰大市",stipend:"约$28,000/年",intro:"工程方向强势，ML/机器人/系统方向近年快速提升，录取相对友好。亚特兰大生活成本低，城市活力足。Google、Delta、Coca-Cola等大型雇主近在咫尺。"},
+  "UT Austin":{rank:"全美Top 10 CS",city:"德克萨斯州奥斯汀市",stipend:"约$28,000/年",intro:"公立旗舰校，CS系近年大幅扩张，ML/CV/NLP方向均有明星导师。奥斯汀是美国科技热门城市，Tesla/Apple/Dell/Amazon均在此设立研发中心，德州无州税。"},
+  "UCSD":{rank:"全美Top 15 CS",city:"加利福尼亚州圣地亚哥市",stipend:"约$33,000/年",intro:"加州阳光充足，生活质量高。CSE系推荐系统与NLP方向全球知名，与工业界联系紧密（Qualcomm/Illumina总部在此）。录取相对开放，性价比优秀。"},
+  "UMD":{rank:"全美Top 15 CS",city:"马里兰州帕克分校",stipend:"约$28,000/年",intro:"靠近华盛顿DC，与NIST/NIH/NSF等政府研究机构合作密切。CS系NLP/安全/CV方向强势，录取条件相对友好。华人学生社区大，生活配套完善。"},
+  "UIUC":{rank:"全美Top 5 CS/EE",city:"伊利诺伊州香槟市",stipend:"约$26,000/年",intro:"CS/EE方向传统强校，计算机图形学和编译器历史深厚。校园位于农村地带，生活成本极低，奖学金购买力强。与工业界合作历史悠久（Mosaic浏览器诞生于此）。"},
+  "UMich":{rank:"全美Top 10 CS",city:"密歇根州安娜堡市",stipend:"约$30,000/年",intro:"公立名校，EECS博士竞争适中，NLP/ML/机器人方向有强力导师。安娜堡生活便利，底特律近郊，与Ford/GM/Toyota自动驾驶研发联系紧密。"},
+  "UMass":{rank:"全美Top 15 NLP",city:"马萨诸塞州阿默斯特市",stipend:"约$24,000/年",intro:"NLP/信息抽取全球知名，Andrew McCallum等大师坐镇。生活成本低，波士顿周边（Five Colleges联盟），与MIT/Harvard互动频繁。对国际学生非常友好。"},
+  "Wisconsin":{rank:"全美Top 15 CS",city:"威斯康星州麦迪逊市",stipend:"约$24,000/年",intro:"公立研究型大学传统强校，CS系ML/系统/数据库均有实力。麦迪逊生活成本低，校园文化好，湖边风景优美。中国学生社区成熟，录取条件相对友好。"},
+  "Ohio State":{rank:"全美Top 20 CS",city:"俄亥俄州哥伦布市",stipend:"约$24,000/年",intro:"大型公立研究型大学，招生名额多，录取条件相对友好。哥伦布是中西部新兴科技城市，生活成本低，Intel新晶圆厂即将落地，科技就业机会持续增加。"},
+  "Penn State":{rank:"全美Top 30 CS",city:"宾夕法尼亚州大学城",stipend:"约$22,000/年",intro:"IST（信息学院）和CS系双轨，网络安全与数据挖掘有特色。对中国申请者接受度高，学校规模大，中国学生社区成熟，Penn State中国校友网络覆盖广。"},
+  "NC State":{rank:"全美Top 30 CS",city:"北卡罗来纳州罗利市",stipend:"约$24,000/年",intro:"研究三角（Research Triangle）核心，毗邻Red Hat/IBM/Cisco等公司总部。CS系偏系统与嵌入式，对工程背景学生友好，生活成本低，气候宜人。"},
+  "Virginia Tech":{rank:"全美Top 30 CS",city:"弗吉尼亚州布莱克斯堡市",stipend:"约$22,000/年",intro:"CS/ECE方向稳健，NLP/AI近年发展快。临近华盛顿DC科技走廊，Amazon HQ2(北弗吉尼亚)和五角大楼就业资源可触达。弗吉尼亚大学联盟学术资源共享。"},
+  "ASU":{rank:"全美Top 50 CS",city:"亚利桑那州坦佩市",stipend:"约$22,000/年",intro:"全美最大公立大学，招生名额多，录取相对宽松。凤凰城阳光气候，生活成本低，Intel/Honeywell/TSMC凤凰城新厂近在咫尺。对国际学生非常友好，签证通过率高。"},
+  "Stony Brook":{rank:"全美Top 30 CS",city:"纽约州石溪市",stipend:"约$22,000/年",intro:"纽约州立大学旗舰分校之一，进入纽约城市圈便利（长岛铁路约1.5小时到曼哈顿）。CS系NLP/HCI方向有特色，对中国学生录取非常友好，华人社区大。"},
+  "UT Dallas":{rank:"全美Top 40 CS",city:"德克萨斯州理查森市",stipend:"约$20,000/年",intro:"近年快速发展，学费相对低廉，德州无州税优势明显。招生规模大，对GPA偏低的国际学生友好。达拉斯有AT&T/Texas Instruments/Ericsson等大量科技就业机会。"},
+  "Purdue":{rank:"全美Top 20 CS/EE",city:"印第安纳州西拉法叶市",stipend:"约$22,000/年",intro:"传统工程强校，CS/ECE历史深厚，航空航天和制造业联系紧密。生活成本极低，奖学金购买力强。航天英雄Neill Armstrong的母校，Purdue工程品牌工业界认可度高。"},
+};
+
+const TEMPLATES=[
+  {id:"init",label:"初次套磁",when:"申请前6-12个月，论文读完后",
+   title:"初次联系导师",desc:"这是最关键的邮件。主题行要具体，第一段必须证明你真的读过导师论文，不是群发。",
+   body:`Subject: Prospective PhD Student – Interest in [具体研究方向] / [你的名字]
+
+Dear Professor [姓名],
+
+I am writing to express my strong interest in joining your research group as a PhD student. I am currently a [大三/研一] student at [你的学校], majoring in [专业].
+
+I have carefully read your recent work on [论文具体标题，如：'Robust Training via Adversarial Examples']. I was particularly intrigued by [具体说一个观点/方法/结论，1-2句，展示你真的读了]. This connects directly to my own research experience: [简述你做过的相关工作，1-2句].
+
+My research interests focus on [你的具体方向]. During my time at [实验室/学校], I [具体成果：发表了/在投/开发了…]. I believe my background in [技术技能] aligns well with your group's direction.
+
+I would be grateful for the opportunity to discuss potential PhD opportunities in your group for [入学年份] Fall. I have attached my CV for your reference. I am happy to share more details about my research at your convenience.
+
+Thank you for your time.
+
+Best regards,
+[你的名字]
+[学校] | [邮箱] | [个人主页/GitHub]`},
+
+  {id:"followup",label:"跟进（无回复）",when:"初次邮件发出2周后仍无回复",
+   title:"礼貌跟进",desc:"保持简短，不要重复所有内容，只提醒一下。只跟进一次，再无回复就放弃。",
+   body:`Subject: Re: Prospective PhD Student – [你的名字] [跟进]
+
+Dear Professor [姓名],
+
+I hope this message finds you well. I wanted to follow up on my previous email from [日期] regarding PhD opportunities in your group.
+
+I remain very excited about your work on [方向], and I would love to discuss the possibility of joining your lab. Please do not hesitate to let me know if you need any additional information.
+
+Thank you for your consideration.
+
+Best regards,
+[你的名字]`},
+
+  {id:"positive",label:"收到正面回复",when:"导师表达了兴趣或邀请面试后",
+   title:"积极回复导师",desc:"快速响应（24小时内），表达热情，主动配合导师时间安排。",
+   body:`Subject: Re: [原邮件主题]
+
+Dear Professor [姓名],
+
+Thank you so much for your response – I am truly excited to hear from you!
+
+I would love to have a conversation about potential PhD opportunities. I am available at the following times (all times in [时区]):
+
+• [时间选项1]
+• [时间选项2]
+• [时间选项3]
+
+Please feel free to suggest any other time that works better for you. I will make myself available.
+
+In the meantime, I have been reading more of your recent work, particularly [最新论文], and I look forward to discussing [具体问题/想法].
+
+Thank you again for your time and consideration.
+
+Best,
+[你的名字]`},
+
+  {id:"postintv",label:"面试后感谢",when:"面试结束后24小时内",
+   title:"面试后感谢信",desc:"简短真诚，提一个面试中聊到的具体内容，展示你在认真倾听。",
+   body:`Subject: Thank You – [日期] Meeting / [你的名字]
+
+Dear Professor [姓名],
+
+Thank you very much for taking the time to speak with me [今天/昨天]. I truly enjoyed our conversation about [面试中聊到的某个具体话题，如：the challenges in scaling your [具体方法] to real-world settings].
+
+Our discussion reinforced my enthusiasm for joining your group. I am particularly excited about [你在面试中提到的某个研究方向/项目].
+
+Please do not hesitate to reach out if you need any additional materials. I look forward to hearing from you regarding next steps.
+
+Thank you again,
+[你的名字]`},
+
+  {id:"funding",label:"确认资助情况",when:"收到 Offer 或面试后，确认全奖前",
+   title:"确认资助细节",desc:"在做最终决定前必须确认资助情况。可以直接问，导师不会觉得奇怪。",
+   body:`Subject: Clarification on Funding – [你的名字]
+
+Dear Professor [姓名],
+
+Thank you for the offer to join your research group. I am very excited about this opportunity.
+
+Before I finalize my decision, I wanted to confirm a few details about the funding arrangement:
+
+1. Would I be supported as a Research Assistant (RA) through your grant, or through a Teaching Assistant (TA) position?
+2. Does the support include full tuition coverage and a stipend?
+3. What is the expected duration of funding (e.g., guaranteed for the first X years)?
+
+I want to make sure I fully understand the arrangement before committing. Please let me know if this information will be provided through the official offer letter.
+
+Thank you for your patience.
+
+Best,
+[你的名字]`},
+];
+
+const CHECKLIST=[
+  {section:"学术基础",items:[
+    {id:"c1",label:"GPA 达标",note:"顶校一般要求 3.5+/4.0，但科研经历可以部分弥补"},
+    {id:"c2",label:"TOEFL ≥ 100 或 IELTS ≥ 7.0",note:"部分学校要求口语单项 ≥ 22/7.5"},
+    {id:"c3",label:"确认目标学校的 GRE 要求",note:"2024年大多数STEM顶校已取消GRE要求"},
+    {id:"c4",label:"整理成绩单（中英文双份）"},
+  ]},
+  {section:"科研经历",items:[
+    {id:"c5",label:"有至少一段完整的实验室/科研经历"},
+    {id:"c6",label:"有论文（发表/在投/准备投稿均可）",note:"有arXiv预印本也算"},
+    {id:"c7",label:"整理GitHub / 代码仓库（CS/EE必备）"},
+    {id:"c8",label:"准备一段研究成果的英文口头介绍（2-3分钟）"},
+  ]},
+  {section:"推荐信",items:[
+    {id:"c9",label:"确认3位推荐人（优先导师/实验室老师）"},
+    {id:"c10",label:"提前至少2个月告知推荐人并提供材料包",note:"材料包包括：CV、SOP草稿、申请学校列表、截止日期"},
+    {id:"c11",label:"申请提交前2周确认推荐信提交状态"},
+  ]},
+  {section:"SOP / 研究计划书",items:[
+    {id:"c12",label:"完成 SOP 初稿（研究动机 + 经历 + 计划）"},
+    {id:"c13",label:"每所学校定制 SOP（提及具体导师和项目）"},
+    {id:"c14",label:"请他人（最好是领域内的人）审读 SOP"},
+  ]},
+  {section:"简历 (CV)",items:[
+    {id:"c15",label:"更新学术 CV（含论文、项目、技能、荣誉）",note:"博士申请用 CV 而非简历，可以超过一页"},
+    {id:"c16",label:"CV 格式整洁，无错别字"},
+  ]},
+  {section:"套磁 & 选校",items:[
+    {id:"c17",label:"建立目标导师名单（至少15-20位）"},
+    {id:"c18",label:"完成每位目标导师的论文阅读"},
+    {id:"c19",label:"发送套磁邮件（使用模板库定制）"},
+    {id:"c20",label:"最终学校列表确定（8-12所，包含冲刺/匹配/保底）"},
+  ]},
+  {section:"提交申请",items:[
+    {id:"c21",label:"注册各校申请账号"},
+    {id:"c22",label:"上传所有材料（成绩单、语言成绩、CV、SOP）"},
+    {id:"c23",label:"核对每所学校的截止日期"},
+    {id:"c24",label:"按时提交并保存确认邮件"},
+  ]},
+];
+
+/* ═══════════════════════════════════════
+   STORAGE
+═══════════════════════════════════════ */
+const LS={
+  done:{},
+  save(){try{localStorage.setItem("phd_done",JSON.stringify(this.done));}catch(e){}},
+  load(){try{this.done=JSON.parse(localStorage.getItem("phd_done")||"{}");}catch(e){}}
+};
+LS.load();
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+let currentTab="tl";
+function initTabs(){
+  const wrap=document.getElementById("tabs");
+  TABS.forEach(t=>{
+    const d=document.createElement("div");
+    d.className="tab"+(t.id===currentTab?" on":"");
+    d.textContent=t.label;
+    d.onclick=()=>switchTab(t.id);
+    wrap.appendChild(d);
+  });
+}
+function switchTab(id){
+  currentTab=id;
+  document.querySelectorAll(".tab").forEach((el,i)=>el.classList.toggle("on",TABS[i].id===id));
+  document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
+  if(id==="mine")refreshMine();
+}
+
+/* ═══════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════ */
+function initTimeline(){
+  const wrap=document.getElementById("tl-wrap");
+  wrap.innerHTML=TL.map((ph,pi)=>`
+    <div class="tl-item">
+      <div class="tl-dot" style="background:${ph.color}"></div>
+      <div class="tl-card" id="tlc-${pi}" onclick="toggleTL(${pi})">
+        <div class="tl-head">
+          <span class="tl-phase" style="background:${ph.color}22;color:${ph.color}">${ph.phase}</span>
+          <span class="tl-time">${ph.time}</span>
+        </div>
+        <div class="tl-title">${ph.title}</div>
+        <div class="tl-body">
+          <ul class="tl-tasks">
+            ${ph.tasks.map(t=>`
+              <li class="tl-task${LS.done[t.id]?" done":""}" id="tlt-${t.id}">
+                <input type="checkbox" id="cb-${t.id}" ${LS.done[t.id]?"checked":""} onclick="toggleTLTask('${t.id}',event)">
+                <div class="tl-task-content">
+                  <label for="cb-${t.id}">${t.text}${t.note?`<br><span style="font-size:11.5px;color:var(--muted)">${t.note}</span>`:""}</label>
+                  ${t.guide?`<button class="tl-guide-btn" onclick="toggleGuide('g-${t.id}',this,event)">怎么做 ▸</button>
+                  <ul class="tl-guide" id="g-${t.id}">${t.guide.map(g=>`<li>${g}</li>`).join("")}</ul>`:""}
+                </div>
+              </li>`).join("")}
+          </ul>
+          <div class="tl-tip">💡 ${ph.tip}</div>
+        </div>
+      </div>
+    </div>`).join("");
+}
+function toggleGuide(id,btn,e){
+  e.stopPropagation();
+  const el=document.getElementById(id);
+  const open=el.classList.toggle("open");
+  btn.textContent=open?"收起 ▾":"怎么做 ▸";
+}
+function toggleTL(i){
+  const card=document.getElementById("tlc-"+i);
+  card.classList.toggle("open");
+}
+function toggleTLTask(id,e){
+  e.stopPropagation();
+  LS.done[id]=!LS.done[id];LS.save();
+  const li=document.getElementById("tlt-"+id);
+  if(li)li.classList.toggle("done",LS.done[id]);
+  updateCKProgress();
+}
+
+/* ═══════════════════════════════════════
+   PROFESSOR DB
+═══════════════════════════════════════ */
+let filterSchool="全部",filterField="全部",searchQ="",onlyMarked=false;
+
+/* ── 套磁追踪存储 ── */
+const STATUS_OPTS=[["","＋ 标记"],["saved","⭐ 收藏"],["sent","📨 已发"],["replied","✅ 已回复"],["interview","🎯 约面试"],["rejected","✖ 婉拒"]];
+const STATUS_CLS={saved:"st-saved",sent:"st-sent",replied:"st-replied",interview:"st-interview",rejected:"st-rejected"};
+const Tracker={
+  data:{},
+  load(){try{this.data=JSON.parse(localStorage.getItem("phd_tracker")||"{}");}catch(e){this.data={};}},
+  save(){try{localStorage.setItem("phd_tracker",JSON.stringify(this.data));}catch(e){}},
+  get(name){return this.data[name]||"";},
+  set(name,v){if(v)this.data[name]=v;else delete this.data[name];this.save();}
+};
+function onStatusChange(sel){
+  const name=sel.dataset.prof,v=sel.value;
+  Tracker.set(name,v);
+  sel.className="prof-status "+(STATUS_CLS[v]||"");
+  sel.closest(".prof-card").classList.toggle("is-marked",!!v);
+  updateMarkCount();
+  if(onlyMarked&&!v)renderProfs();
+}
+function toggleOnlyMarked(cb){onlyMarked=cb.checked;renderProfs();}
+function updateMarkCount(){
+  const n=Object.keys(Tracker.data).length;
+  document.getElementById("mark-count").textContent=n?`(${n})`:"";
+}
+
+function initProfs(){
+  const schools=["全部",...new Set(PROFS.map(p=>p.school))];
+  const fields=["全部","CS","EE","ML","NLP","物理","生物","数学","机器人","安全","量子"];
+  document.getElementById("profs-sub").innerHTML=`收录 ${schools.length-1} 所学校 · ${PROFS.length} 位导师 · 标记你的套磁进度（自动保存） · <span style="color:var(--yellow);font-weight:600">⚠️ 招生状态每年变化，套磁前务必查看导师主页确认</span>`;
+  document.getElementById("school-pills").innerHTML=schools.map(s=>
+    `<span class="pill${s===filterSchool?" on":""}" onclick="setSchool('${s}')">${s}</span>`).join("");
+  document.getElementById("field-pills").innerHTML=fields.map(f=>
+    `<span class="pill${f===filterField?" on":""}" onclick="setField('${f}')">${f}</span>`).join("");
+  updateMarkCount();
+  renderProfs();
+}
+function setSchool(s){filterSchool=s;document.querySelectorAll("#school-pills .pill").forEach(p=>p.classList.toggle("on",p.textContent===s));renderProfs();}
+function setField(f){filterField=f;document.querySelectorAll("#field-pills .pill").forEach(p=>p.classList.toggle("on",p.textContent===f));renderProfs();}
+function filterProfs(){searchQ=document.getElementById("psearch").value.toLowerCase();renderProfs();}
+function profAvatarBg(name){
+  const p=["#6366f1","#8b5cf6","#06b6d4","#10b981","#f59e0b","#ef4444","#ec4899","#0ea5e9"];
+  let h=0;for(const c of name)h=(h*31+c.charCodeAt(0))&0xfffffff;
+  return p[h%p.length];
+}
+function profInitials(name){return name.split(" ").filter(w=>w).map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+
+function renderProfs(){
+  const grid=document.getElementById("prof-grid");
+  const banner=document.getElementById("school-banner");
+  const filtered=PROFS.filter(p=>{
+    if(onlyMarked&&!Tracker.get(p.name))return false;
+    if(filterSchool!=="全部"&&p.school!==filterSchool)return false;
+    if(filterField!=="全部"&&!p.field.includes(filterField))return false;
+    if(searchQ&&!p.name.toLowerCase().includes(searchQ)&&!p.focus.toLowerCase().includes(searchQ)&&!p.field.join("").toLowerCase().includes(searchQ))return false;
+    return true;
+  });
+  // school banner
+  if(filterSchool!=="全部"&&SCHOOLS[filterSchool]){
+    const s=SCHOOLS[filterSchool];
+    document.getElementById("school-banner-name").textContent=filterSchool;
+    document.getElementById("school-banner-rank").textContent=s.rank;
+    document.getElementById("school-banner-city").textContent=s.city;
+    document.getElementById("school-banner-stipend").textContent="生活津贴 "+s.stipend;
+    document.getElementById("school-banner-intro").textContent=s.intro;
+    banner.classList.add("on");
+  } else { banner.classList.remove("on"); }
+
+  if(!filtered.length){grid.innerHTML=`<div class="db-empty">${onlyMarked?"你还没有标记任何导师。在导师卡片右下角的下拉菜单里标记套磁进度即可。":"没有找到匹配的导师，试试调整筛选条件"}</div>`;return;}
+  const tierLabel={elite:"顶尖",top:"强校",strong:"州立",accessible:"友好"};
+  const tierCls={elite:"tier-elite",top:"tier-top",strong:"tier-strong",accessible:"tier-accessible"};
+  grid.innerHTML=filtered.map(p=>{
+    const ext=PROF_EXT[p.name]||{};
+    const bg=profAvatarBg(p.name);
+    const ini=profInitials(p.name);
+    const st=Tracker.get(p.name);
+    const statusSel=`<select class="prof-status ${STATUS_CLS[st]||""}" data-prof="${p.name.replace(/"/g,"&quot;")}" onchange="onStatusChange(this)" title="套磁进度（自动保存）">${STATUS_OPTS.map(o=>`<option value="${o[0]}"${o[0]===st?" selected":""}>${o[1]}</option>`).join("")}</select>`;
+    const schUrl=`https://scholar.google.com/scholar?q=${encodeURIComponent(p.name+" "+p.school)}`;
+    const gcUrl=`https://www.thegradcafe.com/survey/index.php?q=${encodeURIComponent(p.school)}`;
+    return `<div class="prof-card${st?" is-marked":""}">
+      <div class="prof-top">
+        <div class="prof-avatar" style="background:${bg}">${ini}</div>
+        <div style="flex:1;min-width:0">
+          <div class="prof-name"><a href="${p.url}" target="_blank" rel="noopener">${p.name}</a>
+            <span class="tier-badge ${tierCls[p.tier]||""}" style="margin-left:5px">${tierLabel[p.tier]||""}</span>
+          </div>
+          <div class="prof-meta">${p.school} · ${p.dept}</div>
+          ${ext.bio?`<div class="prof-bio">${ext.bio}</div>`:""}
+        </div>
+      </div>
+      <div style="margin-bottom:8px">${p.field.map(f=>`<span class="tag">${f}</span>`).join("")}</div>
+      <div class="prof-focus">${p.focus}</div>
+      ${ext.rep?`<div class="prof-rep"><span class="rep-label">💬 学生口碑</span>${ext.rep}</div>`:""}
+      <div class="prof-foot">
+        <a class="prof-link" href="${p.url}" target="_blank" rel="noopener">主页 ↗</a>
+        ${ext.email?`<a class="prof-link" href="mailto:${ext.email}" title="${ext.email}">📧 邮件</a>`:""}
+        <span class="status-dot ${p.status}"></span>
+        <span class="status-txt">${p.status==="open"?"可能招生（需确认）":p.status==="closed"?"暂停招生":"状态未知"}</span>
+        ${statusSel}
+      </div>
+      <div class="prof-resources">
+        <a class="res-link" href="${schUrl}" target="_blank" rel="noopener">Google Scholar</a>
+        <a class="res-link" href="${gcUrl}" target="_blank" rel="noopener">Grad Cafe 评价</a>
+        <a class="res-link" href="https://phdstipends.com" target="_blank" rel="noopener">PhD Stipends</a>
+        <a class="res-link" href="https://csrankings.org" target="_blank" rel="noopener">CS Rankings</a>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════
+   MY APPLICATIONS（套磁汇总 + 截止倒计时）
+═══════════════════════════════════════ */
+const STATUS_META={
+  saved:{label:"⭐ 收藏"},sent:{label:"📨 已发"},replied:{label:"✅ 已回复"},
+  interview:{label:"🎯 约面试"},rejected:{label:"✖ 婉拒"}
+};
+function barColor(s){return {saved:"#f59e0b",sent:"#6366f1",replied:"#10b981",interview:"#8b5cf6",rejected:"#9ca3af"}[s]||"var(--muted)";}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+const Deadlines={
+  list:[],
+  load(){try{this.list=JSON.parse(localStorage.getItem("phd_deadlines")||"[]");}catch(e){this.list=[];}},
+  save(){try{localStorage.setItem("phd_deadlines",JSON.stringify(this.list));}catch(e){}},
+  add(name,date){this.list.push({name,date,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6)});this.save();},
+  del(id){this.list=this.list.filter(d=>d.id!==id);this.save();}
+};
+
+function initMine(){Deadlines.load();}
+function refreshMine(){renderMineDash();renderDeadlines();}
+
+function renderMineDash(){
+  const el=document.getElementById("mine-dash");
+  const order=["saved","sent","replied","interview","rejected"];
+  const marked=PROFS.filter(p=>Tracker.get(p.name));
+  if(!marked.length){el.innerHTML='<div class="mine-empty">还没有标记任何导师。<br>去「🔬 导师库」，在导师卡右下角的下拉菜单里标记套磁进度（收藏 / 已发 / 已回复…），这里会自动汇总。</div>';return;}
+  const counts={};order.forEach(s=>counts[s]=0);
+  marked.forEach(p=>{const s=Tracker.get(p.name);if(counts[s]!=null)counts[s]++;});
+  const stats=`<div class="mine-stats">
+    <div class="mine-stat"><div class="ms-num">${marked.length}</div><div class="ms-lbl">已标记</div></div>
+    ${order.map(s=>`<div class="mine-stat"><div class="ms-num" style="color:${barColor(s)}">${counts[s]}</div><div class="ms-lbl">${STATUS_META[s].label}</div></div>`).join("")}
+  </div>`;
+  const bar=`<div class="mine-bar">${order.filter(s=>counts[s]).map(s=>`<span class="color-${s}" style="flex:${counts[s]}" title="${STATUS_META[s].label} ${counts[s]}"></span>`).join("")}</div>`;
+  const groups=order.filter(s=>counts[s]).map(s=>{
+    const list=marked.filter(p=>Tracker.get(p.name)===s);
+    return `<div class="mine-group">
+      <h4>${STATUS_META[s].label} <span class="mg-count">${list.length} 位</span></h4>
+      <div class="mine-list">${list.map(p=>{
+        const ext=PROF_EXT[p.name]||{};
+        return `<div class="mine-prof">
+          <div><div class="mp-name"><a href="${p.url}" target="_blank" rel="noopener">${p.name}</a></div><div class="mp-school">${p.school} · ${p.dept}</div></div>
+          ${ext.email?`<a class="mp-mail" href="mailto:${ext.email}" title="${ext.email}">📧</a>`:""}
+        </div>`;
+      }).join("")}</div>
+    </div>`;
+  }).join("");
+  el.innerHTML=stats+bar+groups;
+}
+
+function addDeadline(){
+  const n=document.getElementById("dl-name").value.trim();
+  const d=document.getElementById("dl-date").value;
+  if(!n||!d){alert("请填写学校/项目名称和截止日期");return;}
+  Deadlines.add(n,d);
+  document.getElementById("dl-name").value="";
+  document.getElementById("dl-date").value="";
+  renderDeadlines();
+}
+function delDeadline(id){Deadlines.del(id);renderDeadlines();}
+
+function renderDeadlines(){
+  const el=document.getElementById("dl-list");
+  if(!Deadlines.list.length){el.innerHTML='<div class="dl-empty">还没有添加截止日期。查好目标校官网的 Application Deadline 后用上方表单录入，这里会实时倒计时。</div>';return;}
+  const today=new Date();today.setHours(0,0,0,0);
+  const sorted=[...Deadlines.list].sort((a,b)=>a.date.localeCompare(b.date));
+  el.innerHTML=sorted.map(d=>{
+    const dd=new Date(d.date+"T00:00:00");
+    const days=Math.round((dd-today)/86400000);
+    let cls,countHtml,countCls;
+    if(days<0){cls="past";countCls="";countHtml=`<div class="dc-num">已过</div><div class="dc-lbl">${-days} 天前</div>`;}
+    else if(days===0){cls="urgent";countCls="urgent";countHtml=`<div class="dc-num">今天</div><div class="dc-lbl">截止</div>`;}
+    else{cls=days<=14?"urgent":days<=30?"soon":"ok";countCls=cls;countHtml=`<div class="dc-num">${days}</div><div class="dc-lbl">天后截止</div>`;}
+    const dateStr=dd.toLocaleDateString("zh-CN",{year:"numeric",month:"long",day:"numeric"});
+    return `<div class="dl-item ${cls}">
+      <div><div class="dl-school">${escapeHtml(d.name)}</div><div class="dl-when">${dateStr}</div></div>
+      <div class="dl-count ${countCls}">${countHtml}</div>
+      <button class="dl-del" onclick="delDeadline('${d.id}')" title="删除">✕</button>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════
+   EMAIL TEMPLATES
+═══════════════════════════════════════ */
+let curTmpl=0;
+function initTemplates(){
+  document.getElementById("tmpl-nav").innerHTML=TEMPLATES.map((t,i)=>
+    `<div class="tnav-item${i===0?" on":""}" onclick="showTmpl(${i})">${t.label}</div>`).join("");
+  showTmpl(0);
+}
+function showTmpl(i){
+  curTmpl=i;
+  document.querySelectorAll(".tnav-item").forEach((el,j)=>el.classList.toggle("on",j===i));
+  const t=TEMPLATES[i];
+  const highlighted=t.body.replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');
+  document.getElementById("tmpl-content").innerHTML=`
+    <div class="tmpl-title">${t.title}</div>
+    <div class="tmpl-desc">${t.desc}</div>
+    <div class="tmpl-when">⏰ 时机：${t.when}</div>
+    <div class="tmpl-body">${highlighted}</div>
+    <button class="copy-tmpl" id="copy-tmpl-btn" onclick="copyTemplate()">📋 复制模板</button>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">⚠️ 复制后<b>务必认真修改</b>，把所有 [括号内容] 替换为真实信息。发模板邮件会被一眼识破。</p>`;
+}
+function copyTemplate(){
+  const t=TEMPLATES[curTmpl].body;
+  const btn=document.getElementById("copy-tmpl-btn");
+  const cb=()=>{btn.classList.add("done");btn.textContent="✓ 已复制";setTimeout(()=>{btn.classList.remove("done");btn.textContent="📋 复制模板";},1800);};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(cb).catch(()=>fallbackCopy(t,cb));
+  else fallbackCopy(t,cb);
+}
+
+/* ═══════════════════════════════════════
+   CHECKLIST
+═══════════════════════════════════════ */
+function initChecklist(){
+  const body=document.getElementById("ck-body");
+  body.innerHTML=CHECKLIST.map(sec=>`
+    <div class="ck-section">
+      <h3>${sec.section} <span class="ck-badge" id="ck-badge-${sec.section.replace(/\s/g,"_")}">${sec.items.filter(it=>LS.done[it.id]).length}/${sec.items.length}</span></h3>
+      <div class="ck-items">
+        ${sec.items.map(it=>`
+          <div class="ck-item${LS.done[it.id]?" done":""}" id="cki-${it.id}" onclick="toggleCK('${it.id}')">
+            <input type="checkbox" ${LS.done[it.id]?"checked":""} onclick="event.stopPropagation();toggleCK('${it.id}')">
+            <div><div class="ck-label">${it.label}</div>${it.note?`<div class="ck-note">${it.note}</div>`:""}</div>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+  updateCKProgress();
+}
+function toggleCK(id){
+  LS.done[id]=!LS.done[id];LS.save();
+  const el=document.getElementById("cki-"+id);
+  if(el){el.classList.toggle("done",LS.done[id]);el.querySelector("input").checked=LS.done[id];}
+  updateCKProgress();
+}
+function updateCKProgress(){
+  const allItems=CHECKLIST.flatMap(s=>s.items);
+  const done=allItems.filter(it=>LS.done[it.id]).length;
+  const pct=Math.round(done/allItems.length*100);
+  const fill=document.getElementById("ck-fill");
+  const label=document.getElementById("ck-label");
+  if(fill)fill.style.width=pct+"%";
+  if(label)label.textContent=`已完成 ${done} / ${allItems.length} 项（${pct}%）`;
+  CHECKLIST.forEach(sec=>{
+    const badge=document.getElementById("ck-badge-"+sec.section.replace(/\s/g,"_"));
+    if(badge)badge.textContent=`${sec.items.filter(it=>LS.done[it.id]).length}/${sec.items.length}`;
+  });
+}
+
+/* ═══════════════════════════════════════
+   FUNDING
+═══════════════════════════════════════ */
+function initFunding(){
+  document.getElementById("fund-body").innerHTML=`
+    <div class="fund-grid">
+      <div class="fund-card">
+        <div class="amount">RA</div>
+        <h4>科研助理（Research Assistantship）</h4>
+        <p>由导师科研经费支付，覆盖学费 + 生活津贴。<b>STEM博士最常见的资助方式。</b>与导师绑定，导师经费断了可能影响支持。</p>
+        <div style="margin-top:10px">${["理工科主流","导师经费支付","与科研直接相关"].map(t=>`<span class="tag green">${t}</span>`).join("")}</div>
+      </div>
+      <div class="fund-card">
+        <div class="amount">TA</div>
+        <h4>教学助理（Teaching Assistantship）</h4>
+        <p>由院系支付，需要协助教授课程（批作业、答疑、辅导课）。<b>每周10-20小时，可能影响科研时间。</b>通常作为补充或第一年过渡。</p>
+        <div style="margin-top:10px">${["院系支付","需教学工作","较稳定"].map(t=>`<span class="tag yellow">${t}</span>`).join("")}</div>
+      </div>
+      <div class="fund-card">
+        <div class="amount">🏆</div>
+        <h4>Fellowship（奖学金）</h4>
+        <p>竞争性奖学金，无需工作义务，专注科研。<b>最理想的资助形式。</b>分为学校级（NSF, DOE）和院系级。国际生通常无法申请NSF，但可申请院系Fellowship。</p>
+        <div style="margin-top:10px">${["竞争性","无工作义务","声誉加成"].map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <h3 style="margin-bottom:14px">💡 资助金额参考（2024年，因校因领域差异较大）</h3>
+      <table class="compare-table">
+        <tr><th>学校/地区</th><th>年津贴（税前）</th><th>学费全免</th><th>医疗保险</th></tr>
+        <tr><td>MIT / Stanford / Harvard</td><td>$38,000 - $45,000</td><td>✅</td><td>✅</td></tr>
+        <tr><td>CMU / Berkeley / Caltech</td><td>$35,000 - $42,000</td><td>✅</td><td>✅</td></tr>
+        <tr><td>Cornell / Princeton</td><td>$34,000 - $40,000</td><td>✅</td><td>✅</td></tr>
+        <tr><td>UIUC / UMich</td><td>$28,000 - $35,000</td><td>✅</td><td>✅（部分）</td></tr>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">⚠️ 以上数据仅供参考，实际金额以 Offer Letter 为准。生活成本因城市差异巨大（湾区≈纽约>>香槟/安娜堡）。</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:10px">✉️ 套磁/面试时如何确认资助</h3>
+      <p style="font-size:13.5px;line-height:1.8;margin-bottom:10px">在面试中或收到非正式 Offer 后可以直接问：</p>
+      <ul style="font-size:13.5px;line-height:1.9;padding-left:18px;color:var(--fg)">
+        <li><i>"Could you clarify the funding arrangement for your PhD students?"</i></li>
+        <li><i>"Is the support through RA from your grant, or through TA/fellowship?"</i></li>
+        <li><i>"How long is the funding guaranteed?"</i></li>
+      </ul>
+      <p style="font-size:13px;color:var(--red);margin-top:12px;font-weight:600">🚨 红线：如果导师/项目无法明确说明资助来源或年限，务必谨慎。没有书面资助承诺不要轻易接受 Offer。</p>
+    </div>
+    <div class="budget-card">
+      <h3>🧮 申请季费用预算计算器</h3>
+      <div class="bc-sub">博士本身是全奖，但<b>申请这件事本身要花钱</b>。很多人临到刷卡才发现要小两千刀。改下面的数字即时估算（已默认常见取值）。</div>
+      <div class="bc-rows">
+        <div class="bc-row"><label>申请学校数<small>建议 8–12 所</small></label><input type="number" id="bc-n" min="0" value="10" oninput="calcBudget()"></div>
+        <div class="bc-row"><label>平均申请费 / 所（$）<small>顶校多在 $90–125</small></label><input type="number" id="bc-fee" min="0" value="105" oninput="calcBudget()"></div>
+        <div class="bc-row"><label>TOEFL 额外送分数<small>$20/份，前 4 份免费</small></label><input type="number" id="bc-toefl" min="0" value="6" oninput="calcBudget()"></div>
+        <div class="bc-row"><label>GRE 额外送分数<small>$30/份，不要求可填 0</small></label><input type="number" id="bc-gre" min="0" value="0" oninput="calcBudget()"></div>
+        <div class="bc-row"><label>成绩单/WES 认证等杂费（$）<small>寄送、公证、认证的估算</small></label><input type="number" id="bc-misc" min="0" value="150" oninput="calcBudget()"></div>
+      </div>
+      <div class="bc-total">
+        <div><div class="bc-usd" id="bc-usd">$0</div><div style="font-size:11.5px;color:var(--muted)">申请季总花费（不含考试报名 / 签证 / 机票）</div></div>
+        <div class="bc-rmb" id="bc-rmb">≈ ¥0</div>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6">💡 另需单独预留：TOEFL 报名 ¥2,100 / 次、GRE 报名 ¥2,300 / 次（如需）、F-1 签证 SEVIS+面签约 $535、单程机票约 $600–1,200。汇率按 ¥7.2/$ 估算。</p>
+    </div>`;
+  calcBudget();
+}
+function calcBudget(){
+  const v=id=>Math.max(0,parseFloat(document.getElementById(id).value)||0);
+  const usd=v("bc-n")*v("bc-fee")+v("bc-toefl")*20+v("bc-gre")*30+v("bc-misc");
+  document.getElementById("bc-usd").textContent="$"+usd.toLocaleString("en-US",{maximumFractionDigits:0});
+  document.getElementById("bc-rmb").textContent="≈ ¥"+Math.round(usd*7.2).toLocaleString("en-US");
+}
+
+/* ═══════════════════════════════════════
+   GUIDE
+═══════════════════════════════════════ */
+function initGuide(){
+  const tips=[
+    {icon:"🎯",title:"STEM博士的核心逻辑：找导师 > 找学校",
+     body:`<p>美国STEM博士是「加入一个研究组」，不是「进入一所大学」。你的5年博士生涯80%取决于导师，而不是学校排名。</p>
+     <p style="margin-top:8px">实际建议：<span class="hl">宁可去排名低一点但导师研究和你高度匹配的学校，也不要去顶校但组里氛围差/导师不招人</span>。</p>`},
+    {icon:"📧",title:"套磁是STEM申请的分水岭",
+     body:`<ul>
+       <li>理工科很多录取是「导师内定」，套磁成功=录取概率大幅提升</li>
+       <li>套磁要「精准」：先认真读论文，找到一个具体的共鸣点，再写邮件</li>
+       <li>最佳时机：申请前6-9个月（通常是当年2-5月开始准备次年秋季入学）</li>
+       <li>发邮件后通常等1-2周，没有回复只跟进一次，再无回复就放弃这位导师</li>
+     </ul>`},
+    {icon:"🔬",title:"科研经历 >> GPA（但GPA也要过线）",
+     body:`<ul>
+       <li>一篇 top 会议/期刊论文（哪怕三作）对申请的帮助 > GPA 从 3.7 到 3.9</li>
+       <li>有 arXiv 预印本也比没有强，证明你会做完整的研究</li>
+       <li>GitHub 活跃度对 CS/EE 方向很重要，保持代码整洁有文档</li>
+       <li>暑研（暑假去目标学校实验室实习）是最有效的「试婚」，既能获得推荐信，又能确认导师风格</li>
+     </ul>`},
+    {icon:"📝",title:"SOP不是个人简介，是研究提案",
+     body:`<p>很多中国学生的SOP写成了「我从小喜欢XX，大学参加了XX社团…」，这是错误的方向。</p>
+     <p style="margin-top:8px">好的SOP结构：</p>
+     <ol style="margin-top:8px">
+       <li>你的核心研究问题是什么（1段）</li>
+       <li>你做过什么让你有能力研究这个问题（2-3段，具体科研经历）</li>
+       <li>你想在这个项目里做什么（结合具体导师/学校，1-2段）</li>
+     </ol>
+     <p style="margin-top:8px;color:var(--red);font-weight:600">⚠️ 每所学校的SOP都要定制，提及具体导师姓名和你想做的具体项目。</p>`},
+    {icon:"🌐",title:"GRE：2024年大多数顶校已不要求",
+     body:`<p>以下STEM顶校CS/EE项目已<span class="hl">取消GRE要求</span>（截至2024年，请以官网为准）：</p>
+     <div style="margin-top:10px">${["MIT EECS","Stanford CS","CMU CS","Berkeley EECS","Caltech CS","Harvard SEAS","Princeton CS","Cornell CS"].map(s=>`<span class="tag">${s}</span>`).join("")}</div>
+     <p style="margin-top:10px;color:var(--muted);font-size:12.5px">建议：不强制要求就不考，把时间投入科研和套磁。如果你的GRE成绩特别高（Q 168+）且学校标注 GRE Optional，可以选择提交。</p>`},
+    {icon:"🚩",title:"常见踩坑：中国学生特有的误区",
+     body:`<ul>
+       <li><b>误区1：中介一手包办</b> — SOP和套磁信一定要自己写，教授一眼能识别代写文体，这是直接减分项</li>
+       <li><b>误区2：只申请 Top 10</b> — 顶校竞争激烈且招生名额有限，保底校不要省，8-12所是合理数量</li>
+       <li><b>误区3：推荐信找名人</b> — 一封和你有实质合作、了解你研究的助理教授的推荐信，胜过一封知名院士的寒暄信</li>
+       <li><b>误区4：不确认资助就接受Offer</b> — 永远在 Offer Letter 里确认资助，口头承诺没有法律效力</li>
+     </ul>`},
+  ];
+  const vidsSOP=[
+    {id:"LxHzyzWu3-Y",title:"如何写出最优秀的SOP",note:"英文，约15分钟，结构清晰，附真实范例分析"},
+    {id:"naFIjJvnq4Q",title:"研究生SOP写作全指南",note:"英文，约12分钟，涵盖常见错误和修改思路"},
+    {id:"3ejMdAcoe48",title:"SOP写作实例：逐段拆解",note:"英文，约18分钟，从空白到完稿的完整演示"},
+  ];
+  document.getElementById("guide-body").innerHTML=
+    tips.map(t=>`<div class="guide-card"><h3>${t.icon} ${t.title}</h3>${t.body}</div>`).join("")+
+    `<div class="vid-section">
+      <div class="vid-section-title">🎬 SOP写作视频精选（已验证可播放）</div>
+      <div class="vid-grid">${vidsSOP.map(v=>`<div class="vid-card">
+        <div class="vid-embed-wrap"><iframe src="https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1" loading="lazy" allowfullscreen></iframe></div>
+        <div class="vid-caption"><strong>${v.title}</strong>${v.note}</div>
+      </div>`).join("")}</div>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════
+   AI MODAL
+═══════════════════════════════════════ */
+function openAI(){document.getElementById("ai-overlay").classList.add("on");document.getElementById("ai-ta").focus();
+  const ctx=`当前页面：美国STEM博士申请导航\n当前标签：${TABS.find(t=>t.id===currentTab)?.label||currentTab}`;
+  document.getElementById("ai-ctx").textContent="已附上下文："+ctx;
+}
+function closeAI(e){if(!e||e.target===document.getElementById("ai-overlay"))document.getElementById("ai-overlay").classList.remove("on");}
+function copyAI(){
+  const q=document.getElementById("ai-ta").value.trim();
+  if(!q){document.getElementById("ai-ta").focus();return;}
+  const ctx=`我正在使用「美国STEM博士申请导航」工具，当前浏览：${TABS.find(t=>t.id===currentTab)?.label}。\n\n我的问题：${q}\n\n请用中文，结合美国STEM博士申请的实际情况，多用具体例子，简洁地解答。`;
+  const btn=document.getElementById("ai-copy");
+  const cb=()=>{btn.classList.add("done");btn.textContent="✓ 已复制，去粘贴吧";setTimeout(()=>{btn.classList.remove("done");btn.textContent="📋 复制问题";},1800);};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ctx).then(cb).catch(()=>fallbackCopy(ctx,cb));
+  else fallbackCopy(ctx,cb);
+}
+
+function fallbackCopy(t,cb){
+  const el=document.createElement("textarea");el.value=t;document.body.appendChild(el);el.select();
+  try{document.execCommand("copy");cb();}catch(e){}document.body.removeChild(el);
+}
+function toggleTheme(){document.body.classList.toggle("dark");}
+function dismissDataNote(){
+  document.getElementById("data-note").classList.add("hide");
+  try{localStorage.setItem("phd_datanote","1");}catch(e){}
+}
+function initDataNote(){
+  try{if(localStorage.getItem("phd_datanote")==="1")document.getElementById("data-note").classList.add("hide");}catch(e){}
+}
+
+/* ═══════════════════════════════════════
+   CAREER
+═══════════════════════════════════════ */
+const CITIES=[
+  {id:"boston",name:"波士顿/剑桥",schools:"MIT · Harvard",
+   rent:"$2,000–3,200",safety:"⭐⭐⭐⭐",climate:"❄️ 严寒",chinese:"🈵 极多",
+   climateDetail:"四季分明，冬季漫长（11月—3月），最低可达 -15°C，积雪频繁。夏季舒适（25°C 左右）。新生第一个冬天普遍不适应，建议提前备好厚羽绒服和雪地靴。",
+   safetyDetail:"剑桥整体非常安全，是美国治安最好的大学城之一。波士顿部分街区（如 Roxbury）需注意，但 MIT/Harvard 周边步行无忧。",
+   housing:"房价高居全美前三。建议入学前4-6个月找室友合租（2-3人），人均可控制在 $1,000–1,500。热门区域：Cambridgeport、Central Square（近MIT）、Porter Square（近Harvard）。网站用 Zillow、Craigslist、Facebook Groups 找房。",
+   life:"公共交通极好（MBTA 地铁/公交），无需买车。超市有 H-Mart（韩国超市，中国食材齐全）、C-Mart（华人超市）。唐人街距 MIT 约 20 分钟地铁，川菜/粤菜/火锅选择丰富。",
+   entertainment:"波士顿文化资源丰富：红袜队、凯尔特人球赛；大量博物馆（MFA、科学馆）；Charles River 骑行步道；附近 Cape Cod、Vermont 滑雪场可周末出行。",
+   chineseDetail:"波士顿华人社区历史悠久，唐人街是东北部最大之一。MIT/Harvard 两校 CSSA 非常活跃，每年新生活动、春晚、中秋晚会规模大，新生融入社区容易。"},
+
+  {id:"bayarea",name:"湾区（Palo Alto/Stanford）",schools:"Stanford",
+   rent:"$2,800–4,500",safety:"⭐⭐⭐⭐",climate:"🌤️ 全年温和",chinese:"🈵 极多",
+   climateDetail:"地中海气候，全年最舒适之一。冬季 10–15°C，夏季 25–30°C，少雨，几乎无极端天气。是美国气候最宜居的大学城没有之一。",
+   safetyDetail:"Palo Alto 及 Stanford 校园极安全。东湾 Oakland 部分区域治安差，避免夜间独行。SF 市区近年治安下滑，前往时注意个人财物。",
+   housing:"全美最贵之一。Stanford 提供研究生宿舍（供不应求，需抢）。校外 Palo Alto 1BR $2,800+，合租人均 $1,500–2,000。推荐找室友住 Sunnyvale/Mountain View，性价比更高。必备私家车或自行车。",
+   life:"Caltrain 连接 SF 和 San Jose，通勤可用。中国食材：Ranch 99（华人超市）、Mitsuwa 遍布湾区。Cupertino/Milpitas/San Jose 有大量正宗中餐（川菜/粤菜/台湾小吃）。",
+   entertainment:"距离 SF 30 分钟，周末可去：金门大桥、渔人码头、各类音乐节。Tahoe 滑雪（3小时）、Big Sur 海岸（2小时）、Napa 酒庄（1.5小时）。Palo Alto 本地餐厅和咖啡馆密集，周边公园徒步资源丰富。",
+   chineseDetail:"北加州华人密度全美最高，Cupertino 华人比例超过60%。湾区各校 CSSA 联合举办大型活动，微信群极活跃，中文服务（理发、装修、中医）应有尽有，生活语言障碍几乎为零。"},
+
+  {id:"pittsburgh",name:"匹兹堡",schools:"CMU",
+   rent:"$1,000–1,600",safety:"⭐⭐⭐",climate:"🌧️ 阴冷",chinese:"🈴 中等",
+   climateDetail:"四季分明，冬季阴冷（-5 到 5°C），全年阴天多（日照少仅次于西雅图），夏季闷热潮湿。新生需做好心理准备，日照不足影响情绪需提前应对（补充 Vitamin D，买日光灯）。",
+   safetyDetail:"CMU 校园及周边（Squirrel Hill、Shadyside）相对安全。部分老工业区（Hill District、Homewood）需避开。总体比网络上说的要安全得多，只要不深夜独行于不熟悉区域即可。",
+   housing:"全美性价比最高的大城市之一，$1,000–1,200 可租到独立 1BR。热门区域：Squirrel Hill（华人聚集，有亚超，步行到 CMU 约 20 分钟）、Shadyside、Oakland（最近 CMU）。建议合租，人均 $600–900。",
+   life:"Pittsburgh 有 Asian Food Market 和多家亚洲超市，中餐馆选择近年增多。公共交通（PAT 公交）覆盖主要区域，但有车更方便。CMU 周边步行可达的餐厅和咖啡馆密集。",
+   entertainment:"Pittsburgh 文化复兴明显：三支职业运动队（钢人队、企鹅队、海盗队）；Phipps 温室、Carnegie 博物馆群；大量免费公园（Frick Park、Schenley Park）；Primanti Bros. 必吃。距 NYC 约 5 小时车程，可周末出行。",
+   chineseDetail:"华人聚集于 Squirrel Hill，有数家中餐馆和亚洲超市。CMU CSSA 非常活跃，中国学生比例高（约25-30%），春晚和新生见面会是传统大活动。建立社交圈比湾区更快。"},
+
+  {id:"berkeley",name:"伯克利/奥克兰",schools:"UC Berkeley",
+   rent:"$1,800–2,800",safety:"⭐⭐⭐",climate:"🌫️ 温和多雾",chinese:"🈵 极多",
+   climateDetail:"旧金山湾东岸，气候宜人但多雾。夏季凉爽（20–25°C），冬季温和（8–15°C），几乎无极端天气。夏天傍晚可能较凉，「Mark Twain」名言：最冷的冬天是我在旧金山度过的夏天——伯克利也有类似感觉。",
+   safetyDetail:"伯克利校园安全，但 Telegraph Ave 以南和部分 BART 站周边需注意。Oakland 内城区治安复杂，建议避免夜间单独前往不熟悉地区，乘 Lyft/Uber 优于步行。总体不必过于担心，保持基本防范即可。",
+   housing:"比 Palo Alto 略便宜但仍贵。热门区域：North Berkeley（环境好，离校稍远）、Downtown Berkeley（热闹，BART 可达 SF）。建议合租，人均 $900–1,400。学校有少量研究生宿舍，竞争激烈需提前申请。",
+   life:"BART 地铁连接 SF 和整个东湾，是全美最好用的大学城公共交通之一。Albany/El Cerrito 有亚洲超市（99 Ranch、H-Mart）。中餐：Oakland 唐人街、Richmond 中餐密集区，选择极多。",
+   entertainment:"SF 30 分钟 BART 可达，周末活动无限：金融区酒吧、各类音乐节、多元文化餐馆。Marin County 徒步、Tahoe 滑雪（3.5小时）。本地有 Tilden 公园、葡萄酒产区 Livermore 等。",
+   chineseDetail:"东湾华人密度极高，旧金山唐人街是全美最大之一。Berkeley/Oakland 有大量粤语、普通话社区，中文服务完善。CSSA 组织规模大，新生入学即可快速融入。"},
+
+  {id:"seattle",name:"西雅图",schools:"UW",
+   rent:"$1,800–2,600",safety:"⭐⭐⭐",climate:"🌧️ 多雨阴灰",chinese:"🈵 极多",
+   climateDetail:"西北太平洋气候，10月—5月持续阴雨，日照严重不足——这是最需要心理准备的地方。夏季（6月—9月）极美，阳光充足、温度舒适（22–28°C）。建议购置优质雨衣（非雨伞，当地人更常用），补充 Vitamin D，安排室内活动。",
+   safetyDetail:"UW 校园安全，Capitol Hill、University District 周边相对正常。市区部分区域（如 3rd Ave）治安较差，夜间避开。西雅图整体比名声要安全，保持基本防范即可。",
+   housing:"科技人才涌入推动房价上涨，但仍低于湾区。热门区域：University District（步行到 UW，学生聚集）、Capitol Hill（热闹有活力）、Bellevue（华人聚集，需跨湖）。合租人均 $900–1,400。有车或使用 Link Light Rail 通勤方便。",
+   life:"西雅图公共交通以 Link Light Rail 为核心，覆盖市区主要区域。华人超市齐全：Uwajimaya（亚洲食材天堂）、H-Mart，Bellevue 更是「小台北」，各类中餐（四川/台湾/广东/云南）应有尽有。",
+   entertainment:"户外天堂：Rainier 国家公园（1.5小时）、Olympic 半岛（2小时）、喀斯喀特山脉滑雪场（1小时）。市内有 Pike Place 市场、精酿啤酒文化、大量独立咖啡馆。微软/亚马逊文化渗透日常，科技行业社交活动丰富。",
+   chineseDetail:"Bellevue 是北美华人密度最高的城市之一，中文服务覆盖一切：中文学校、中医诊所、华人房产中介、中餐外卖应有尽有。UW CSSA 极活跃，新生入学即有大量中文社群可加入，融入感极强。"},
+
+  {id:"atlanta",name:"亚特兰大",schools:"Georgia Tech",
+   rent:"$1,200–1,900",safety:"⭐⭐⭐",climate:"☀️ 湿热夏季",chinese:"🈷️ 较少",
+   climateDetail:"亚热带气候，夏季漫长炎热（35°C+，湿度高），冬季温和（偶有冰冻，需注意路面结冰）。全年日照充足是大优点。4月偶有龙卷风警报，需了解应急程序。",
+   safetyDetail:"Georgia Tech 校园有围栏管理，安全性良好。校外 Midtown 相对安全，但 Tech 周边部分街区（向南方向）治安较差，夜间注意。亚特兰大市区整体犯罪率高于全美平均，但 Tech 学生区域可控。",
+   housing:"价格适中，性价比好。热门区域：Midtown（校园步行可达，热闹但稍贵）、West Midtown、Decatur（环境好，需开车）。合租人均 $700–1,100。必备私家车，亚特兰大公交极不方便。",
+   life:"必须有车——亚特兰大几乎无可用公共交通（MARTA 地铁线路少）。亚洲超市：Buford Highway 沿线是东南亚最大的亚洲美食走廊，韩餐、越南菜、中餐非常地道，华人超市（Asian Square Mall）有各类食材。",
+   entertainment:"Buford Highway 美食一条街是最大惊喜；Stone Mountain 公园；CNN Center 参观；年度龙虾节、Peach Festival；距离 Blue Ridge 山区 1.5 小时，可徒步和赏瀑布。NBA 老鹰队、NFL 猎鹰队球赛。",
+   chineseDetail:"华人社区集中在 Duluth/Norcross（驱车 30 分钟），当地生活便利但距 GT 校区较远。GT CSSA 活跃，每年春晚规模不小。对比湾区/西雅图，华人密度明显低，需要更主动融入多元文化社区。"},
+
+  {id:"austin",name:"奥斯汀",schools:"UT Austin",
+   rent:"$1,400–2,100",safety:"⭐⭐⭐⭐",climate:"🌵 极热夏季",chinese:"🈴 中等",
+   climateDetail:"德克萨斯气候，夏季极热（6月—9月，最高可达 42°C，需空调续命）；冬季通常温和，但偶有严寒冰冻（2021年冬季暴风雪断电事件需了解）。春秋两季非常舒适，是最适合户外活动的时节。",
+   safetyDetail:"UT Austin 校园和 West Campus 区域安全，整体治安良好。奥斯汀是德州犯罪率最低的大城市之一。停车场和夜间独行保持基本防范即可。",
+   housing:"科技人才涌入推动近年房价上涨，但仍合理。热门区域：West Campus（步行到 UT，学生云集）、Hyde Park（安静宜居）、South Congress（文艺有活力）。合租人均 $800–1,200。必须有车。德州无州个人所得税，实际收入更高。",
+   life:"H-Mart 和多家亚洲超市提供中国食材。中餐选择近年快速增加，川菜/烤鱼/火锅均有。德州 BBQ 是必体验的本地文化（Terry Black's / la Barbecue）。Whole Foods 总部在此，有机食材丰富。",
+   entertainment:"世界现场音乐之都（6th Street Live Music）、SXSW 音乐节（3月）、ACL 音乐节（10月）；Barton Springs 天然泳池；Lady Bird Lake 皮划艇；周边 Enchanted Rock、Hamilton Pool 徒步极美。Tesla/Apple/Dell 总部文化渗透，科技社交圈活跃。",
+   chineseDetail:"奥斯汀华人社区近年随科技移民快速增长。UT CSSA 活跃，有新生接机、旧货交流等互助传统。与西雅图/湾区相比中文服务稍少，但基本需求（中超、中餐、中文医生）均可满足。"},
+
+  {id:"sandiego",name:"圣地亚哥",schools:"UCSD",
+   rent:"$1,900–2,700",safety:"⭐⭐⭐⭐⭐",climate:"🌞 完美气候",chinese:"🈴 中等",
+   climateDetail:"全美气候最完美的城市，没有之一。全年温度在 15–28°C 之间，阳光充足，极少下雨。夏季海风调节温度，不像 LA 那么热。唯一缺点：「圣地亚哥综合症」——气候太舒适让人懒于行动。",
+   safetyDetail:"圣地亚哥是全美最安全的大城市之一，UCSD 校园及 La Jolla 社区极安全。整体犯罪率显著低于 LA/SF/奥克兰。",
+   housing:"La Jolla 校园周边房价较高，Mira Mesa（华人聚集）和 Sorrento Valley 性价比更好。合租人均 $900–1,400。交通需要有车，公共交通有限但 UCSD 有校园穿梭车。",
+   life:"Kearny Mesa 是圣地亚哥最大的亚洲美食区，99 Ranch、中餐、韩餐、台湾珍奶一条街全齐。UCSD 周边 Convoy Street 美食选择极好。从气候到食物到购物，生活质量极高。",
+   entertainment:"全美顶级海滩（La Jolla Cove、Pacific Beach）；Balboa Park（世界级公园+博物馆群）；墨西哥 Tijuana 越境（30分钟）；LA 两小时车程；海洋世界、圣地亚哥动物园。户外活动（冲浪、攀岩、徒步）资源密集。",
+   chineseDetail:"Kearny Mesa/Clairemont 是华人聚集地，中文超市和餐馆密度高。UCSD 中国学生比例不低，CSSA 每年活动丰富。整体中文生态不如湾区/西雅图，但核心需求均可满足。"},
+
+  {id:"uiuc",name:"香槟/厄巴纳",schools:"UIUC",
+   rent:"$700–1,200",safety:"⭐⭐⭐⭐",climate:"❄️ 极寒",chinese:"🈴 中等",
+   climateDetail:"中西部气候，冬季极寒（最低可达 -25°C，体感更低），伴有强风（风寒效应显著）；夏季炎热潮湿（35°C+）。平坦的农田地形让冬天风更大，需准备高质量羽绒服、热靴和围脖。",
+   safetyDetail:"大学城整体安全，犯罪率低，是美国最安全的大学城之一。校园内夜间也较安全，保持基本防范即可。",
+   housing:"全美大学城中性价比最高之一。$700–900 可租独立 1BR，合租人均 $400–600。热门区域：Green Street 沿线（学生聚集，餐馆超市密集）、South Campus（宿舍区附近）。步行和骑行为主要交通方式。",
+   life:"公交系统（MTD）非常完善，覆盖 Champaign-Urbana 全区域，凭学生证免费乘坐。中国食材在本地亚洲超市可购，也有少量中餐馆。芝加哥 2.5 小时车程，可周末前往解决大城市需求。",
+   entertainment:"小城市意味着娱乐选择有限：Krannert 艺术中心、大学体育赛事（Fighting Illini）。主要消遣是校园内的学术/社交活动和前往芝加哥大城市游玩。自然环境平坦，户外活动选择少。",
+   chineseDetail:"UIUC 中国学生比例极高（约20%），中文社区非常活跃，几乎所有日常事务都可找到中文帮助。有中餐馆和亚洲超市，但选择少于大城市。CSSA 春晚规模大，社区凝聚力强。"},
+
+  {id:"annarbor",name:"安娜堡",schools:"UMich",
+   rent:"$1,000–1,600",safety:"⭐⭐⭐⭐",climate:"❄️ 中西部寒冬",chinese:"🈴 中等",
+   climateDetail:"密歇根湖效应，冬季寒冷（-15°C 常见），降雪量大；春秋短暂但美丽；夏季舒适（25°C）。11月—3月需做好防寒准备，雪天出行注意路面结冰。",
+   safetyDetail:"安娜堡是全美最安全的大学城之一，整体犯罪率极低。Downtown 和校园周边夜间也安全，深受学生和家庭喜爱。",
+   housing:"典型大学城价格，合理可负担。热门区域：Central Campus 周边（步行到主楼）、Burns Park（安静住宅区）、Kerrytown（市集旁）。合租人均 $600–900。步行和自行车为主，也有公交。",
+   life:"Kerrytown 农夫市集每周开放；Plum Market 有机超市；中国食材在 Hua Xing Asia Market 可购；Ann Arbor 餐馆种类多样，有多家中餐馆（密西根大学城，饮食选择超预期）。",
+   entertainment:"University of Michigan 大学体育赛事（Big House 美式足球，全美最大体育场）是核心文化；Downtown 艺术区和 Art Fair（每年7月全美最大）；距底特律 45 分钟（汽车文化、Motown 音乐、夜生活）；Michigan 湖畔夏日游泳、冬日雪地徒步。",
+   chineseDetail:"密歇根大学中国学生比例较高，CSSA 和各类中文社团活跃。有亚洲超市和中餐馆，基本需求满足。和大城市相比华人聚居区不明显，但校园内中文社群足够活跃，融入快。"},
+
+  {id:"madison",name:"麦迪逊",schools:"Wisconsin",
+   rent:"$900–1,400",safety:"⭐⭐⭐⭐",climate:"❄️ 严寒漫长",chinese:"🈷️ 较少",
+   climateDetail:"威斯康星气候，冬季极为漫长严寒（11月—3月，最低 -25°C），湖面结冰是常态。夏季短暂美好（6月—8月，25°C，湖边活动极多）。冬季心理准备最重要，日照少 + 极寒是挑战。",
+   safetyDetail:"麦迪逊整体非常安全，是威斯康星州首府，犯罪率低。校园和周边商业区夜间无忧，是美国最宜居的大学城之一。",
+   housing:"中西部大学城价格，性价比高。热门区域：State Street 附近（热闹，餐馆多）、Langdon Street（湖边，景观好）、East Side（安静住宅）。合租人均 $500–750。步行和骑行方便，有公交。",
+   life:"State Street 是麦迪逊的文化商业中心，各类餐馆、书店、咖啡馆聚集。有亚洲食材超市（Asian Midway Foods），中餐选择有限但基本需求可满足。Farmer's Market（Capitol 广场，全美最大之一）每周六举办，强烈推荐。",
+   entertainment:"两个大湖（Mendota 湖和 Monona 湖）是城市灵魂，夏天划船、游泳，冬天冰钓、冰壶；Badgers 体育赛事；Capital 建筑游览；Wisconsin Dells（美国度假村聚集地，45分钟）；芝加哥 2.5 小时。",
+   chineseDetail:"中国学生社区存在但规模不大，CSSA 有基本活动。与湾区/西雅图相比中文生态有限，更多需要融入国际化多元环境。适合愿意跳出中文圈锻炼英文能力的学生。"},
+];
+
+const CITY_BBOX={
+  boston:"-71.19,42.33,-71.04,42.40",
+  bayarea:"-122.26,37.38,-122.11,37.46",
+  pittsburgh:"-80.04,40.41,-79.92,40.48",
+  berkeley:"-122.32,37.84,-122.23,37.90",
+  seattle:"-122.38,47.56,-122.27,47.65",
+  atlanta:"-84.46,33.70,-84.34,33.80",
+  austin:"-97.80,30.23,-97.69,30.32",
+  sandiego:"-117.27,32.845,-117.22,32.895",
+  uiuc:"-88.27,40.07,-88.18,40.14",
+  annarbor:"-83.79,42.25,-83.70,42.32",
+  madison:"-89.44,43.05,-89.37,43.09",
+};
+
+const COMPANIES=[
+  {emoji:"🔵",name:"Google / DeepMind",type:"AI · 搜索 · 云计算",
+   tips:["PhD Intern 和 Student Researcher 是两类项目：前者3月短期实习，后者可兼职远程","直接联系目标 team 的 Research Scientist（去看论文致谢），成功率远高于投简历","Google Scholar 主页上有「联系作者」，是最直接的套磁渠道"],
+   links:[{label:"招聘主页",url:"https://careers.google.com/students/"},{label:"DeepMind 实习",url:"https://deepmind.google/about/jobs/"}]},
+  {emoji:"🟦",name:"Microsoft Research",type:"AI · 系统 · 量子",
+   tips:["MSR 分多个 Lab（Redmond/Cambridge/Asia），方向对应选择团队","MSR Asia（北京）对中国大陆学生尤其友好，可在国内实习","直接给 MSR 研究员发邮件介绍自己是最有效方式，成功率高于HR渠道"],
+   links:[{label:"MSR 实习",url:"https://www.microsoft.com/en-us/research/academic-program/phd-fellowship/"},{label:"MSR Asia",url:"https://www.msra.cn/zh-cn/connections/academic-programs/msr-internship"}]},
+  {emoji:"🟣",name:"Meta AI (FAIR)",type:"AI · CV · NLP",
+   tips:["FAIR（Fundamental AI Research）是最纯粹的研究实习，发 paper 机会多","Messenger/Instagram/Reality Labs 等 Applied Research 偏工程","导师推荐是最有效渠道；在 ICML/NeurIPS/CVPR 面基是最自然的认识机会"],
+   links:[{label:"Meta 实习",url:"https://www.metacareers.com/students-and-grads/"},{label:"FAIR 官网",url:"https://ai.meta.com/research/"}]},
+  {emoji:"⬛",name:"OpenAI",type:"AGI · LLM · 安全",
+   tips:["竞争极激烈，几乎每个申请者都有顶会论文","Fellowship 项目（SuperAlignment Fellows 等）每年开放申请，值得关注","内推是事实上的必要条件；在 AI 安全/对齐圈子里建立认知才是关键"],
+   links:[{label:"OpenAI 招聘",url:"https://openai.com/careers"},{label:"OpenAI Fellows",url:"https://openai.com/blog/openai-fellows"}]},
+  {emoji:"🟠",name:"Anthropic",type:"AI安全 · LLM",
+   tips:["Anthropic Residency 面向有科研经历但不一定在读 PhD 的候选人","Claude 团队实习主要通过内推，AI 安全/可解释性方向优先","公司规模仍小，在正式渠道之外联系研究员效果好"],
+   links:[{label:"Anthropic 招聘",url:"https://www.anthropic.com/careers"},{label:"Residency 项目",url:"https://www.anthropic.com/research"}]},
+  {emoji:"🟢",name:"NVIDIA Research",type:"GPU · 图形 · 科学ML",
+   tips:["NVIDIA Research 在 Toronto/Seattle/Santa Clara 均有实习岗位","图形学/高效训练/科学ML 是最活跃方向","LinkedIn 直接联系目标研究员成功率不错，注意附上论文链接"],
+   links:[{label:"NVIDIA 学生项目",url:"https://www.nvidia.com/en-us/about-nvidia/careers/internships/"}]},
+  {emoji:"🍎",name:"Apple ML / AI",type:"ML · 隐私 · 感知",
+   tips:["Apple AI Research 偏隐私保护 ML 和端侧部署，方向要匹配","实习岗位在 Siri/Vision/Health 等多个组，ML 方向均有","Apple 不怎么发论文（保密文化），需确认自己是否接受这一点"],
+   links:[{label:"Apple 实习",url:"https://jobs.apple.com/en-us/search?team=internships-STDNT-INTRN"}]},
+  {emoji:"🟡",name:"Amazon Science",type:"推荐 · NLP · 机器人",
+   tips:["Amazon Science 覆盖 Alexa、AWS AI、物流机器人多个方向","年度 PhD Fellowship 提供 $40,000 资助 + 实习机会","招聘量大，通过 LinkedIn 投递后内推成功率高于其他大厂"],
+   links:[{label:"Amazon PhD Fellowship",url:"https://www.amazon.science/academic-engagements/amazon-fellowship"},{label:"Amazon 实习",url:"https://www.amazon.jobs/en/teams/internships-for-students"}]},
+];
+
+function initCareer(){
+  // ── 实习内推 panel ──
+  document.getElementById("ct-intern").innerHTML=`
+    <div class="referral-box">
+      <h3>🤝 如何获得内推（步骤最重要）</h3>
+      <div class="referral-steps">
+        ${[
+          ["在 <b>一亩三分地</b>（1point3acres.com）内推版块搜索目标公司，有大量华人员工主动提供内推，成功率高、门槛低","直接找资源"],
+          ["在 <b>LinkedIn</b> 搜索「[目标公司] Research Scientist [你的方向]」→ 找到中国名字的员工 → 发 connection request + 简短消息说明你的背景和意向，转化率10-20%","主动出击"],
+          ["在顶会（NeurIPS/ICML/ACL 等）poster session 或 workshop 面基目标公司研究员，当面交流 > 一切冷邮件，大量公司实习就是这样谈成的","线下结交"],
+          ["请<b>导师直接推荐</b>——大多数名教授和工业界研究员都有私交，一封导师邮件胜过100封简历投递","借力导师"],
+          ["加入各大学校<b>华人学生微信群</b>：每所学校 CSSA 群里经常有学姐学长转发内推机会，反应要快（先到先得）","社群信息"],
+        ].map(([text,tag],i)=>`<div class="r-step"><div class="r-num">${i+1}</div><div><b style="color:var(--accent)">${tag}</b>：${text}</div></div>`).join("")}
+      </div>
+      <div style="margin-top:14px;padding:10px 13px;background:var(--bg);border-radius:8px;font-size:12.5px;color:var(--muted)">
+        💡 <b>关键资源</b>：
+        <a class="res-link" style="margin-left:8px" href="https://www.1point3acres.com/bbs/forum-198-1.html" target="_blank" rel="noopener">一亩三分地内推版</a>
+        <a class="res-link" style="margin-left:6px" href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="res-link" style="margin-left:6px" href="https://www.google.com/about/careers/applications/students/" target="_blank" rel="noopener">Google Student</a>
+        <a class="res-link" style="margin-left:6px" href="https://jobs.lever.co/anthropic" target="_blank" rel="noopener">Anthropic</a>
+      </div>
+    </div>
+    <div class="intern-grid">${COMPANIES.map(c=>`
+      <div class="intern-card">
+        <div class="intern-card-head">
+          <div class="intern-logo" style="background:var(--bg);border:1px solid var(--border)">${c.emoji}</div>
+          <div><div class="intern-name">${c.name}</div><div class="intern-type">${c.type}</div></div>
+        </div>
+        <ul>${c.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+        <div class="intern-links">${c.links.map(l=>`<a class="intern-link" href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a>`).join("")}</div>
+      </div>`).join("")}</div>`;
+
+  // ── 就业路径 panel ──
+  document.getElementById("ct-path").innerHTML=`<div class="path-grid">${[
+    {title:"🎓 学术教职（tenure-track）",salary:"$110,000–180,000/年（助理教授起步）",items:[
+      "CS 方向顶校教职竞争极烈，通常需要5-10篇顶会一作论文",
+      "申请时间：博士第4-5年开始准备，10月-12月投材料，1-3月面试（job talk）",
+      "顶校教职几率：有论文+好导师推荐，约1-5%；换算到匹配岗位约10-20%",
+      "Teaching Statement + Research Statement + 3封推荐信是标准材料",
+      "国内高校（北大/清华/中科院/港校）也是重要选项，竞争相对低且发展快",
+    ]},
+    {title:"🔬 工业界研究院（Research Scientist）",salary:"$180,000–350,000/年（含股票）",items:[
+      "Google DeepMind/Meta FAIR/Microsoft Research/OpenAI 等，最接近学术的工业岗",
+      "要求：顶会一作论文2篇+（越多越好），代码能力强于普通学术岗",
+      "面试流程：约1-3轮，包括 research presentation + 技术面 + system design",
+      "股票（RSU）是总包的重要组成，4年 vesting，级别越高比例越大",
+      "优点：资源多、薪资高；缺点：研究方向可能受产品约束",
+    ]},
+    {title:"⚙️ 工业界应用ML工程师",salary:"$160,000–280,000/年",items:[
+      "ML Engineer / Applied Scientist，以落地产品为主，代码能力要求高",
+      "面试：LeetCode 算法题（必备）+ ML 系统设计 + 模型调参经验",
+      "顶校 PhD 常被直接免刷题进入 onsite，但需要 LeetCode 中等题熟练度",
+      "亚马逊/Meta/微软/字节/百度 招聘量大，PhD 有明显起薪优势",
+      "绿卡路径：EB-2 NIW 或雇主 EB-2，等待期依国籍而定（中国籍极长）",
+    ]},
+    {title:"🚀 创业 / 技术联合创始人",salary:"不固定（高风险高回报）",items:[
+      "Stanford/MIT/CMU 博士联合创业比例极高，导师资源+校友网络是核心优势",
+      "Y Combinator、a16z、Sequoia 等 VC 在顶校招募是常态",
+      "AI 方向创业：2023-2025年是历史性窗口期，毕业即融资的案例很多",
+      "签证注意：F-1 OPT 期间可以创业，但需要在自己的公司「就职」符合规定",
+      "适合有清晰产品想法且能承受高不确定性的学生",
+    ]},
+    {title:"🇨🇳 回国发展",salary:"顶校 offer: ¥60–150万/年（含股权）",items:[
+      "BAT（百度/阿里/腾讯）+ 字节/华为/大疆 + 国内顶校教职是主要方向",
+      "美国顶校 PhD 在国内就业市场极受青睐，通常可免笔试直通技术面",
+      "国内顶校教职（清北/浙大/上交/港校）近年对海归 PhD 需求大",
+      "时间节点：毕业前一年开始联系，通常国内公司面试周期比美国短",
+      "政策了解：国内人才引进政策（青年千人/优青等）对海归博士有专项支持",
+    ]},
+    {title:"📊 量化金融 / 数据科学",salary:"$200,000–400,000+/年（顶尖对冲基金）",items:[
+      "Two Sigma、D.E. Shaw、Citadel、Renaissance 等对 STEM PhD 需求旺盛",
+      "数学/统计/物理 PhD 尤其受青睐，CS/ML 背景也非常受欢迎",
+      "面试：数理逻辑题 + 编程 + 统计推断，风格与 CS 大厂面试不同",
+      "NYC 为主要就业地，薪资是 CS 行业平均的1.5-3倍，但工作强度也高",
+      "转行需要提前准备：量化面试题库（QuantGuide、Brainstellar）",
+    ]},
+  ].map(p=>`<div class="path-card"><h4>${p.title}</h4><div class="path-salary">${p.salary}</div><ul>${p.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("")}</div>`;
+
+  // ── 城市生活 panel ──
+  const cityPills=CITIES.map((c,i)=>`<button class="city-pill${i===0?" on":""}" onclick="switchCity('${c.id}',this)">${c.name}</button>`).join("");
+  const cityCards=CITIES.map((c,i)=>`
+    <div class="city-card${i===0?" on":""}" id="city-${c.id}">
+      ${CITY_BBOX[c.id]?`<iframe class="city-map" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${CITY_BBOX[c.id]}&layer=mapnik" title="${c.name}地图"></iframe>`:""}
+      <div style="margin-bottom:14px">
+        <div style="font-size:17px;font-weight:800">${c.name}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">🏫 ${c.schools}</div>
+      </div>
+      <div class="city-top">
+        <div class="city-stat"><div class="city-stat-val">${c.rent}</div><div class="city-stat-label">月租参考</div></div>
+        <div class="city-stat"><div class="city-stat-val">${c.safety}</div><div class="city-stat-label">安全评级</div></div>
+        <div class="city-stat"><div class="city-stat-val">${c.climate}</div><div class="city-stat-label">气候特点</div></div>
+        <div class="city-stat"><div class="city-stat-val">${c.chinese}</div><div class="city-stat-label">华人社区</div></div>
+      </div>
+      <div class="city-sections">
+        <div class="city-section"><h4>🌡️ 气候详情</h4><ul><li>${c.climateDetail}</li></ul></div>
+        <div class="city-section"><h4>🔒 安全说明</h4><ul><li>${c.safetyDetail}</li></ul></div>
+        <div class="city-section"><h4>🏠 租房建议</h4><ul><li>${c.housing}</li></ul></div>
+        <div class="city-section"><h4>🛒 生活便利</h4><ul><li>${c.life}</li></ul></div>
+        <div class="city-section"><h4>🎭 娱乐社交</h4><ul><li>${c.entertainment}</li></ul></div>
+        <div class="city-section"><h4>🇨🇳 华人社区</h4><ul><li>${c.chineseDetail}</li></ul></div>
+      </div>
+    </div>`).join("");
+  document.getElementById("ct-city").innerHTML=`<div class="city-filter">${cityPills}</div>${cityCards}`;
+}
+
+function switchCTab(id,btn){
+  document.querySelectorAll("#s-career .vt-panel").forEach(p=>p.style.display="none");
+  document.querySelectorAll("#s-career .vtab").forEach(b=>b.classList.remove("on"));
+  document.getElementById("ct-"+id).style.display="block";
+  btn.classList.add("on");
+}
+function switchCity(id,btn){
+  document.querySelectorAll(".city-card").forEach(c=>c.classList.remove("on"));
+  document.querySelectorAll(".city-pill").forEach(b=>b.classList.remove("on"));
+  document.getElementById("city-"+id).classList.add("on");
+  btn.classList.add("on");
+}
+
+/* ═══════════════════════════════════════
+   VOICES
+═══════════════════════════════════════ */
+const SCHOOL_VOICES=[
+  {school:"MIT",rank:"#1 CS/EE",
+   pros:["计算资源几乎无限，拿到顶尖工业实验室 offer 的概率远高于其他学校","跨组合作密切，CSAIL 内部学生网络庞大","毕业后无论学术/工业界都是最硬的背书"],
+   cons:["导师通常极忙，每周 1v1 难以保证，需要极强的自驱力","Cambridge 和 Boston 生活成本高，RA 津贴购买力有限","竞争氛围比较内卷，压力感明显"],
+   quote:"「MIT 给了我极好的资源，但我花了整整一年才学会自己管理自己的研究进度。」— CS 2022届"},
+  {school:"Stanford",rank:"#2 CS",
+   pros:["硅谷人脉无与伦比，和工业界连接密度全美最高","创业氛围浓厚，有想法直接能找到资源落地","学生生活质量高，校园设施顶级"],
+   cons:["部分学生因工业界诱惑分心，科研专注度下降","湾区生活成本极高，租房压力大","创业导向较强的导师对专注学术的学生可能支持不足"],
+   quote:"「Stanford 的 PhD 更像是给你一张通往湾区的门票，学术科研反而需要自己主动维护。」— EE 2023届"},
+  {school:"CMU",rank:"#1 CS（部分榜单）",
+   pros:["MLD/LTI 组导师普遍比顶校更 accessible，meeting 质量高","匹兹堡生活成本低，奖学金实际购买力强","自动驾驶/机器人/系统方向工业界校友网络极强（Uber ATG、Aurora 根据地）"],
+   cons:["匹兹堡娱乐选择有限，部分学生觉得城市活力不足","冬天较长，气候偏灰暗，需要适应","SCS 竞争压力不低，学生普遍工作量大"],
+   quote:"「CMU 的导师真的很 responsive，这一点比我之前在其他学校的朋友好太多了。」— MLD 2022届"},
+  {school:"Berkeley",rank:"#3 CS/EE",
+   pros:["BAIR 学生社区活跃，组间合作频繁，横向交流机会极多","湾区实习资源和 Stanford 同级别","学生自治意识强，学术氛围多元开放"],
+   cons:["奥克兰/伯克利治安是常见话题，需要注意居住区选择","TA 工作量重，部分学生反映影响科研进度","部分超级明星导师极忙，学生实际指导时间有限"],
+   quote:"「Berkeley 的好处是你身边的同学都很厉害，坏处是导师时间真的很少，得自己主动 push。」— EECS 2023届"},
+  {school:"Harvard",rank:"Top 10 CS",
+   pros:["跨院系资源无敌，和医学院/公卫/经济学院合作是日常","哈佛品牌在非学术圈的认可度比任何学校都高","校园文化丰富，人文氛围好"],
+   cons:["SEAS 的 CS 规模相对小，可选导师范围有限","和 MIT 同城，有时学生会有比较压力","工业界 AI 研究方向不如 MIT/Stanford 深"],
+   quote:"「选了 Harvard 的最大理由是导师，不是学校名字。SEAS 的 CS 其实还在发展中。」— CS 2021届"},
+  {school:"Princeton",rank:"Top 10 CS",
+   pros:["理论研究方向全美最纯粹的环境之一，Fellowship 比例高","小镇学术氛围优秀，干扰少、专注度高","数学/CS 理论交叉方向导师密度极高"],
+   cons:["距离纽约需要 1 小时火车，城市娱乐不便","工业界人脉相对弱于斯坦福/CMU","毕业后学术路径顺畅但工业界跳板效果弱于湾区学校"],
+   quote:"「Princeton 让我有时间真正想清楚一个问题。但如果你想快速发很多 paper，这里可能不是最好的地方。」— CS 2022届"},
+  {school:"Cornell",rank:"Top 10 CS",
+   pros:["伊萨卡学术氛围纯粹、适合专注科研","Cornell Tech 纽约校区提供城市科技生态","算法/系统/ML 理论方向传统强势"],
+   cons:["伊萨卡位置偏远，交通不便，冬天雪大","工业界实习需要主动争取，不像湾区唾手可得","部分导师负担重，学生人均指导时间有限"],
+   quote:"「Ithaca 很美，但刚来的时候确实有点不习惯这种与世隔绝的感觉。习惯后反而觉得很适合做研究。」— CS 2020届"},
+  {school:"UW",rank:"#5 CS",
+   pros:["西雅图大厂（微软/亚马逊/Meta）实习资源极便利","NLP/HCI/系统方向导师阵容快速提升","生活成本比湾区低，华人社区成熟"],
+   cons:["西雅图冬季多雨阴暗，有些学生反映影响心情","部分导师兼有工业兼职，学生 meeting 时间受影响","工业界诱惑大，PhD 中途转 offer 的现象存在"],
+   quote:"「UW 的最大优势是在西雅图，你随时能感受到科技行业的真实节奏，这对做应用研究非常有帮助。」— CS 2023届"},
+  {school:"Georgia Tech",rank:"Top 10 CS/EE",
+   pros:["ML/机器人/系统方向近年迅速提升，录取相对友好","亚特兰大生活成本低，奖学金实际购买力强","GT 工程品牌在工业界认可度高，校友网络覆盖广"],
+   cons:["学术声望在纯理论方向不如顶校","亚特兰大公共交通一般，需要有车","部分导师科研方向偏应用，做基础理论资源相对少"],
+   quote:"「GT 给了我足够的自由度，导师不会过度管控，适合自主性强的学生。亚特兰大生活也出乎意料地丰富。」— CS 2022届"},
+  {school:"UMich",rank:"Top 10 CS",
+   pros:["NLP/ML 方向导师对学生非常 accessible，指导质量高","安娜堡大学城生活便利，华人社区成熟","Ford/GM/Toyota 自动驾驶研发合作机会多"],
+   cons:["密歇根冬天漫长寒冷，需要心理准备","工业界人脉不如湾区/西雅图学校","部分方向在全国排名上不如对口方向更强的学校"],
+   quote:"「UMich 的导师真的很 nice，Rada 对中国学生超级友好，组里也没有什么内耗氛围。」— CS 2021届"},
+  {school:"Caltech",rank:"Top 5 理工",
+   pros:["师生比全美最高，几乎每位学生都能获得充足的导师时间","物理/应用数学/量子计算世界领先，诺奖密度全球最高","帕萨迪纳气候常年温暖，是加州最宜居小城之一"],
+   cons:["CS/AI方向可选导师极少（全院不足10位相关教授），方向不对就完全无选择","校园极小，社交圈局限，长期在此容易产生封闭感","工业界人脉和品牌在AI圈远弱于同城的UCLA/UCI"],
+   quote:"「Caltech真的是把「小精英」做到极致。我每周和导师的时间比其他学校朋友多很多，但你得确认方向完全对上，因为几乎没有退路。」— EE 2022届"},
+  {school:"UCSD",rank:"#10 CS（CSRankings）",
+   pros:["ML/NLP/视觉方向近年发展迅速，Julian McAuley等新生代导师质量很高","圣地亚哥气候完美、La Jolla环境优美，生活质量全美前列","Sorrento Valley/Torrey Pines周边生物科技公司密集，交叉研究机会多"],
+   cons:["校园在郊区La Jolla，城市感弱，出行几乎完全依赖私家车","部分热门导师组人满为患，录取率极低且指导时间有限","整体学术声望稍低于同级别的 Berkeley/UCLA"],
+   quote:"「UCSD最让我意外的是生活质量——海边、阳光、不太贵的合租，科研压力也相对理性。就是没车真的寸步难行。」— CS 2023届"},
+  {school:"UIUC",rank:"#5 CS/EE（CSRankings）",
+   pros:["系统/EE/数据库方向历史最强之一，Grainger EE全球公认品牌","香槟工业界校友网络遍布Qualcomm/Intel/NVIDIA/AMD，硬件方向实习超级容易","香槟生活成本全美最低之一，$2,000/月津贴购买力极强"],
+   cons:["香槟在伊利诺伊农业州腹地，娱乐极度匮乏，需要接受「玉米地里做科研」的现实","冬季极寒+强风，体感温度可达-30°C","距离芝加哥2.5小时，城市资源不便捷，容易产生孤立感"],
+   quote:"「UIUC的EE/系统真的是有底蕴的，出去找工作校友网络立刻激活。但来之前要做好心理建设，香槟这个地方娱乐是真的少。」— EE 2022届"},
+  {school:"UT Austin",rank:"Top 15 CS",
+   pros:["CS方向近年飞速提升，ML/NLP/系统导师阵容在快速扩充","奥斯汀科技爆发：Dell/Apple/Amazon/Tesla大型研发中心均在此，实习资源真实存在","德克萨斯无州个人所得税，实际到手收入更高；春秋气候极美"],
+   cons:["奥斯汀租房近年随科技移民涨价，便宜优势不再明显","夏季极热（38–42°C，6月—9月），室外活动基本废掉","导师质量参差不齐，好的很好，一般的也有不少，需仔细甄别"],
+   quote:"「UT Austin的优势是奥斯汀这座城市，科技公司多、实习机会在增加，城市在快速变化。导师方面要做功课，不能只靠学校名。」— CS 2023届"},
+  {school:"Wisconsin",rank:"Top 20 CS/统计",
+   pros:["统计/ML理论/生物信息方向历史积淀深厚，学术纯粹","麦迪逊是全美最宜居大学城之一，两湖环绕、State Street文化氛围极好","生活成本低，奖学金购买力强；Big Ten体育赛事是重要社交纽带"],
+   cons:["冬季极寒漫长（11月—3月，最低-25°C），日照不足，是最大心理挑战","娱乐选择有限，城市规模小，需做好「大学城生活」心理准备","工业界人脉和连接不如沿海顶校，主动争取实习更重要"],
+   quote:"「麦迪逊让我出乎意料，生活质量真的高。两个湖边做科研，Farmer's Market每周六——就是冬天真的太长太冷了。」— CS 2022届"},
+  {school:"UMass",rank:"NLP方向全美前五",
+   pros:["NLP/信息检索方向是全美历史最深厚的重镇之一，Allan Lab学术影响力无可替代","Five Colleges联盟（Smith/Amherst/Hampshire/Mt Holyoke+UMass）课程资源丰富","新英格兰秋天红叶风景极美，小镇安全宁静"],
+   cons:["安默斯特极度偏僻，娱乐选项接近于零，出行需要开车","工业界实习需要非常主动争取，地理位置不利","华人圈小，想用中文解决日常问题比较难"],
+   quote:"「UMass NLP是有历史底蕴的地方，导师认真负责。但安默斯特真的是大学城，来之前要确认你能接受这种生活节奏。」— CS 2022届"},
+  {school:"UMD",rank:"Top 20 CS/信息安全",
+   pros:["紧邻华盛顿DC，NIH/NSF/DARPA等政府科研合同资源密集","信息安全/HCI/NLP方向强，UMIACS是全美顶级计算机研究中心","DC地铁（Metro）直达，政府/智库/科技公司实习机会独特"],
+   cons:["College Park大学城本身环境一般，部分街区治安需注意","导师质量参差不齐，跟对导师很重要","学术声望在顶校中偏低，找教职时受到影响"],
+   quote:"「UMD的最大卖点是Location。能在NIH/NSF做合作项目，这对系统/安全/健康AI方向是真正独特的机会，别的学校给不了。」— CS 2022届"},
+  {school:"ASU",rank:"Top 50 CS（发展中）",
+   pros:["近年AI/ML方向快速引进新锐教授，性价比高","凤凰城冬季气候全美最温暖，1-3月可穿短袖户外活动","大都会区有科技公司（Intel晶圆厂/Microchip/GoDaddy），实习有一定资源"],
+   cons:["暑季极热（6—9月，45°C，基本不可能室外活动）","学术声望明显低于T1学校，找教职和顶级实习时需要额外努力","凤凰城完全汽车依赖，没车=寸步难行"],
+   quote:"「来ASU最大的理由一定是导师本人，不能靠学校名。冬天真的很舒服，但夏天出门就像进烤箱。」— CS 2023届"},
+  {school:"Ohio State",rank:"Top 30 CS/EE",
+   pros:["大型R1综合性大学，科研经费充足；哥伦布生活成本低，购买力强","ML/视觉/系统方向有稳定且 accessible 的师资","Ohio State体育文化（足球赛事）是极重要的社交纽带，融入本地文化很快"],
+   cons:["学术声望和T1顶校差距明显，找教职时处于劣势","哥伦布冬天阴暗多雪，天气变化大","工业界大厂招聘不会主动来，需要自己去投，比湾区学校多付出一倍精力"],
+   quote:"「Ohio State的全奖加上哥伦布的低生活成本，钱真的够用甚至有余。但想进大厂，你要在网络和简历上多下功夫，没有被动躺赢的机会。」— CS 2021届"},
+  {school:"Penn State",rank:"Top 30 CS/EE",
+   pros:["校园环境安全纯粹，适合专心科研","计算机视觉/图形学/HCI方向有一定积累","距费城3小时、距纽约4小时，可借助城市资源"],
+   cons:["State College是美国最偏远的大学城之一，娱乐几乎为零","工业界连接弱，主动争取实习难度大","部分导师带学生数量偏多，指导时间有限"],
+   quote:"「Penn State的导师对学生确实认真，但State College这个地方——做好两三年窝在小镇里做科研的心理准备，不是每个人都能接受。」— CS 2020届"},
+  {school:"Purdue",rank:"Top 20 EE/工程",
+   pros:["工程方向（EE/航天/机械）历史最强之一，NASA/Boeing校友密度极高","West Lafayette生活成本极低，奖学金购买力强","STEM OPT后留在制造业/航空航天/芯片行业的校友网络真实有效"],
+   cons:["West Lafayette城市极小，娱乐不足，需要接受小镇生活","CS相对全院工程实力不算最强，需仔细甄别方向","距离最近大城市（印第安纳波利斯）也要1小时"],
+   quote:"「Purdue的EE工程底子是真的扎实。West Lafayette的中国超市比想象中好。但CS方向来之前一定要仔细确认导师。」— EE 2021届"},
+  {school:"Stony Brook",rank:"Top 40 CS/理论",
+   pros:["纽约长岛，距曼哈顿1小时火车，是全美距顶尖金融/科技就业市场最近的中等R1大学","CS理论/计算生物方向有不错积累；纽约州政府科技合作机会独特","票价便宜，LIRR通勤去纽约可作为差旅或实习补充"],
+   cons:["Stony Brook本身是郊区，校园周边便利性有限，无城市感","学术声望明显低于同州的Columbia/Cornell/NYU","导师规模小，方向选择有限"],
+   quote:"「Stony Brook最大卖点就是纽约，LIRR1小时进城，这对做FinTech/金融AI的人有真实优势。学术上别抱太高期望，但地理位置是真的独特。」— CS 2022届"},
+  {school:"NC State",rank:"Research Triangle核心",
+   pros:["Research Triangle（NC State + Duke + UNC）三校联合科研生态，课程和讲座互通","罗利生活成本低且宜居，苹果/Google RTP/红帽公司进驻带来实习资源","计算机视觉/ML/数据挖掘方向近年进步明显"],
+   cons:["三校中学术声望最低，教职竞争中处于劣势","公共交通有限，需要有车","独立华人圈规模小，中文生态不如大城市"],
+   quote:"「NC State在Triangle里最低调，但Coalition的联合讲座真的让你结识Duke和UNC的人，横向资源比想象中好。罗利生活宜居，房租也合理。」— CS 2022届"},
+  {school:"Virginia Tech",rank:"Top 30 EE/系统",
+   pros:["EE/电力系统/分布式计算方向强，Virginia Tech品牌在国防/能源行业认可度高","Northern Virginia分校（NOVA）靠近DC科技走廊（Amazon HQ2/Booz Allen），产学合作机会独特","生活成本低，校园安全"],
+   cons:["Blacksburg极度偏远，几乎没有大城市资源，娱乐选项极少","CS学术声望相对较低","气候湿润多雾，冬季道路结冰需注意"],
+   quote:"「VT的EE确实有分量，国防和能源行业校友网络真实存在。但Blacksburg这个地方——好处是干扰少，坏处是想放松都没什么去处。」— EE 2021届"},
+  {school:"UT Dallas",rank:"Top 50 CS（发展中）",
+   pros:["达拉斯科技走廊（AT&T/TI/Ericsson/Nokia/三星/Cisco研发总部）紧邻，产学合作和内推渠道真实","德克萨斯无州个人所得税；达拉斯华人社区在全美属于规模较大的之一","生活成本低，学校近年投入资源快速扩充师资"],
+   cons:["学术声望明显低于UT Austin，同样是德州但差距不小","校园在郊区Richardson，完全汽车依赖","科研基础积累较薄，高水平论文发表难度相对高"],
+   quote:"「UTD最实际的优势是达拉斯的位置，AT&T/TI的校友内推渠道是真实的，不只是说说。学术上就不能跟UT Austin比了。」— CS 2023届"},
+];
+
+function initVoices(){
+  // School tab
+  document.getElementById("vt-school").innerHTML=`<div class="school-voice-grid">${
+    SCHOOL_VOICES.map(s=>`<div class="sv-card">
+      <div class="sv-card-head">
+        <div class="sv-school-name">${s.school}</div>
+        <div class="sv-rank">${s.rank}</div>
+      </div>
+      <div class="sv-pros"><div class="sv-pros-title">✓ 学生普遍认可</div><ul>${s.pros.map(p=>`<li>${p}</li>`).join("")}</ul></div>
+      <div class="sv-cons"><div class="sv-cons-title">△ 常见顾虑</div><ul>${s.cons.map(c=>`<li>${c}</li>`).join("")}</ul></div>
+      <div class="sv-quote">${s.quote}</div>
+    </div>`).join("")}
+  </div>`;
+
+  // Life tab
+  document.getElementById("vt-life").innerHTML=`<div class="life-grid">${[
+    {icon:"🕐",title:"时间管理现实",items:[
+      "PhD 没有固定上下班时间，自律是最核心的技能，也是最难掌握的技能",
+      "前两年课程+轮转/科研并行，时间极碎，很多人第一年感到迷茫和低效",
+      "「假期」在很多实验室是相对概念，节假日仍然有论文截止和实验压力",
+      "建议：用「每周目标」而不是「每日任务」管理科研进度，减少焦虑",
+    ]},{icon:"💰",title:"实际经济状况",items:[
+      "全奖津贴在顶校一般够用但不宽裕：MIT/Stanford ~$3,500/月，CMU ~$3,000/月，州立校 ~$2,000/月",
+      "湾区/波士顿生活成本高，租房+生活基本花掉大半津贴，储蓄有限",
+      "暑期实习（工业界）通常月薪 $8,000-15,000，是很多 PhD 学生重要的财务补充",
+      "税务：国际学生前五年享受中美税收协定免税（目前仍有效），后续需按正常税率缴税",
+    ]},{icon:"🧠",title:"心理健康现实",items:[
+      "PhD 抑郁率和焦虑率显著高于普通人群，这是美国顶校普遍承认的问题",
+      "最常见触发点：论文被拒、和导师关系不顺、看到同龄人的成就感到落后",
+      "建议：入学后第一时间了解学校心理咨询资源（大部分免费）",
+      "建立实验室外的社交圈非常重要，不要把所有社交都局限在组内",
+    ]},{icon:"🤝",title:"导师关系管理",items:[
+      "「选导师比选学校更重要」是 PhD 圈里最广泛的共识，没有之一",
+      "每学期主动和导师对齐期望：你的目标是什么？导师认为什么是进展？",
+      "遇到 advisor 关系不顺：先找组内高年级学生私下聊，再考虑找系里协调人（Ombudsperson）",
+      "换导师是正常的，约10-15%的 PhD 学生会更换导师，不要因为面子拖延",
+    ]},{icon:"📄",title:"论文发表现实",items:[
+      "CS 方向：顶会（NeurIPS/ICML/CVPR/ACL 等）是硬通货，期刊相对次要",
+      "第一作者论文通常需要 1-2 年才能完成一篇，前期的「没有产出」是正常的",
+      "被拒是常态：顶会接受率通常在 15-25%，三四次拒稿后接收是很普通的经历",
+      "arXiv 预印本是展示进度的好方式，可以在正式发表前建立学术存在感",
+    ]},{icon:"🏃",title:"课余生活建议",items:[
+      "每周至少有 1-2 天完全离开科研，有助于维持长期创造力",
+      "找到当地中国学生学者联合会（CSSA），是最快融入当地生活的方式",
+      "开车是大多数美国城市的必备技能，建议入学后尽快考取当地驾照",
+      "善用学校健身房和心理咨询——这是你学费（通常已减免）换来的资源，要用足",
+    ]},
+  ].map(c=>`<div class="life-card"><h4>${c.icon} ${c.title}</h4><ul>${c.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("")}</div>
+  <div class="vid-section"style="margin-top:28px">
+    <div class="vid-section-title">🎬 一线记录：真实PhD日常（已验证可播放）</div>
+    <div class="vid-grid">${[
+      {id:"KKskj03ad4w",title:"美国PhD的一天",note:"实验室、会议、生活，全程真实记录"},
+      {id:"s6zTBw_pq6Y",title:"哈佛博士生的一天",note:"2022年，课程压力与科研并行的日常"},
+      {id:"c_3B3FUn4kA",title:"UCLA博士生的一天",note:"包含TA上课场景，展示博士生工作全貌"},
+      {id:"lPHhQPCE8A4",title:"研究生的日常解析",note:"时间分配、压力管理、真实作息展示"},
+    ].map(v=>`<div class="vid-card">
+      <div class="vid-embed-wrap"><iframe src="https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1" loading="lazy" allowfullscreen></iframe></div>
+      <div class="vid-caption"><strong>${v.title}</strong>${v.note}</div>
+    </div>`).join("")}</div>
+  </div>`;
+
+  // Visit Day tab
+  document.getElementById("vt-visitday").innerHTML=`<div class="visit-grid">${[
+    {title:"问导师本人",qs:[
+      "您目前最感兴趣的 open problem 是什么？您希望下一位学生重点攻克哪个方向？",
+      "您平均多久和学生开一次 1v1 meeting？遇到学生科研卡壳时您通常怎么介入？",
+      "您如何看待学生去工业界实习？一般在 PhD 哪个阶段比较合适？",
+      "组里学生平均几年毕业？毕业后主要去了哪些地方（学术/工业/创业）？",
+      "您觉得在您组里成功的学生有什么共同特点？",
+    ]},{title:"问组内在读学生（导师不在场）",qs:[
+      "导师 responsive 吗？发邮件/消息通常多久回复？",
+      "你觉得导师最大的优点和最大的缺点分别是什么？",
+      "组内氛围是竞争性的还是合作性的？学生之间会互相帮助吗？",
+      "你有没有遇到过和导师意见不一致的情况，你们是怎么解决的？",
+      "如果重来一次，你还会选这个导师/这个项目吗？",
+      "这里的生活成本大概是多少？津贴够用吗？大家通常住哪里？",
+    ]},{title:"问项目/系里协调人",qs:[
+      "换导师的流程是怎样的？系里有没有相关支持机制？",
+      "如果和导师产生矛盾，学生可以找谁协调？",
+      "系里有没有对 PhD 学生的心理健康支持项目？",
+      "TA 工作量大约是每周几小时？会占用大量科研时间吗？",
+    ]},{title:"自己观察的信号",qs:[
+      "实验室里学生之间的日常对话是轻松的还是紧绷的？",
+      "高年级学生看起来对自己的研究进展有信心吗，还是普遍焦虑？",
+      "导师提到学生时是用「我的学生做了 X」还是「学生帮我做了 X」？（前者更好）",
+      "导师回答关于学生毕业去向的问题时是否具体？含糊其辞往往是信号。",
+    ]},
+  ].map(b=>`<div class="vq-block"><h4>${b.title}</h4><ul>${b.qs.map(q=>`<li>${q}</li>`).join("")}</ul></div>`).join("")}</div>`;
+
+  // Platforms tab
+  document.getElementById("vt-platforms").innerHTML=`<div class="platform-grid">${[
+    {name:"The Grad Cafe",desc:"最大的研究生申请结果数据库。可以搜索具体学校+项目+年份的录取结果，了解真实录取背景（GPA/论文/来源院校）。也有论坛讨论各项目口碑。",url:"https://www.thegradcafe.com/"},
+    {name:"CS Rankings",desc:"基于论文发表量的CS项目客观排名，可以按研究方向（ML/NLP/Systems等）细分。比 US News 更能反映科研实力，申请选校时必看。",url:"https://csrankings.org/"},
+    {name:"PhD Stipends",desc:"众包收集全美各校 PhD 津贴数据，可以按学校/专业/年份查询实际生活补贴金额，帮助你对比不同 Offer 的实际购买力。",url:"https://www.phdstipends.com/"},
+    {name:"Rate My Professors",desc:"学生对教授教学和 mentorship 的评价平台。博士申请时用处一般，但可以了解导师的教学风格和基本性格倾向。",url:"https://www.ratemyprofessors.com/"},
+    {name:"Reddit r/gradadmissions",desc:"活跃的研究生申请社区，有大量真实申请经验贴、套磁反馈、录取结果分享和对具体导师的评价讨论。",url:"https://www.reddit.com/r/gradadmissions/"},
+    {name:"Reddit r/cscareerquestions",desc:"CS从业者社区，有大量关于 PhD vs 工业界、各大厂内推、PhD 毕业后就业路径的真实讨论，帮助你判断 PhD 是否适合你。",url:"https://www.reddit.com/r/cscareerquestions/"},
+    {name:"Quora PhD 话题",desc:"有很多美国顶校 PhD 学生和毕业生分享的经验文章，搜索「PhD life at MIT/Stanford/CMU」可以找到大量一手感受。",url:"https://www.quora.com/topic/PhD-Students"},
+    {name:"各校 PhD 生存指南",desc:"很多学校的 PhD 学生自发整理了「新生存活指南」，包含真实的生活建议和避坑经验。搜索「[学校名] PhD survival guide」通常能找到。",url:"https://scholar.google.com/"},
+  ].map(p=>`<div class="plat-card"><h4>${p.name}</h4><p>${p.desc}</p><a class="plat-link" href="${p.url}" target="_blank" rel="noopener">访问 ↗</a></div>`).join("")}</div>`;
+}
+
+function switchVTab(id,btn){
+  document.querySelectorAll(".vt-panel").forEach(p=>p.style.display="none");
+  document.querySelectorAll(".vtab").forEach(b=>b.classList.remove("on"));
+  document.getElementById("vt-"+id).style.display="block";
+  btn.classList.add("on");
+}
+
+/* ═══════════════════════════════════════
+   VISA
+═══════════════════════════════════════ */
+function initVisa(){
+  const sections=[
+    {icon:"📄",title:"F-1 签证是什么",body:`
+      <p>F-1 是美国学生签证，适用于就读于 SEVP（学生和交流访问者项目）认证学校的全日制学生。博士阶段通常持有 F-1 签证直至毕业。</p>
+      <ul style="margin-top:8px">
+        <li><b>学习期间</b>：可在校内打工（每周≤20小时），不可随意校外就业</li>
+        <li><b>暑假</b>：可申请 CPT（课程实践训练）在相关机构实习</li>
+        <li><b>毕业后</b>：可申请 OPT（选择性实践培训），理工科（STEM OPT）可延长至3年</li>
+        <li><b>维持状态</b>：每学期保持全日制注册，每年按时完成 SEVIS 地址更新</li>
+      </ul>
+      <p style="margin-top:10px;color:var(--yellow);font-weight:600">⚠️ F-1 不是移民签证，每次入境需携带有效 I-20、有效护照、有效签证贴纸（国内不停留无需签证有效期）。</p>`},
+
+    {icon:"🗓️",title:"申请时间轴（从 I-20 到入境）",body:`
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+        ${[
+          ["拿到录取 Offer","立即","学校发送 Offer Letter，确认接受后启动 I-20 申请流程"],
+          ["收到 I-20","接受 Offer 后 2-4 周","学校通过邮件发送电子 I-20（部分学校邮寄纸质版），确认所有信息无误"],
+          ["缴纳 SEVIS 费","拿到 I-20 后，签证预约前","登录 fmjfee.com 缴纳 SEVIS I-901 费用（$350），保存收据"],
+          ["填写 DS-160","签证预约前","在 ceac.state.gov 填写非移民签证申请表，完成后打印确认页"],
+          ["预约签证面试","越早越好（热门签证季排队长）","登录 ustraveldocs.com（中国）预约面试，北京/上海/广州/成都/沈阳均有签证中心"],
+          ["参加签证面试","按预约日期","携带全套材料，面试时间通常5-10分钟，当场获知初步结果"],
+          ["护照返还（贴签）","面试后3-5个工作日（通常）","行政审查（Administrative Processing）可能延长至数周至数月"],
+          ["入境美国","开学日前1-30天","F-1 签证持有者最早可在 I-20 开始日期前30天入境"],
+        ].map(([step,time,note])=>`
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0"></div>
+            <div>
+              <div style="font-weight:700;font-size:13px">${step} <span style="font-weight:400;color:var(--accent);font-size:12px">— ${time}</span></div>
+              <div style="font-size:12.5px;color:var(--muted);margin-top:2px">${note}</div>
+            </div>
+          </div>`).join("")}
+      </div>`},
+
+    {icon:"📋",title:"签证面试所需材料",body:`
+      <p style="margin-bottom:10px">面试当天携带以下材料（建议准备原件+复印件各一份）：</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${[
+          ["DS-160 确认页","填写完成后打印，有条形码的那一页"],
+          ["有效护照","有效期需覆盖签证到期后至少6个月"],
+          ["I-20 表格","学校签发，本人签名（第一页学生签名栏）"],
+          ["SEVIS I-901 费用收据","在 fmjfee.com 缴纳后打印"],
+          ["录取通知书","学校 Offer Letter 或入学确认邮件打印版"],
+          ["经济担保材料","RA/TA/Fellowship offer letter（博士全奖最重要）"],
+          ["成绩单及学位证","证明学历背景，带英文版"],
+          ["签证照片","2×2英寸白底，或面试现场拍摄"],
+          ["预约确认页","签证面试预约成功的确认邮件打印版"],
+          ["个人陈述/SOP（可选）","展示学术目的，非必须但有备无患"],
+        ].map(([item,note])=>`
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+            <div style="font-size:13px;font-weight:600">✓ ${item}</div>
+            <div style="font-size:11.5px;color:var(--muted);margin-top:3px">${note}</div>
+          </div>`).join("")}
+      </div>`},
+
+    {icon:"🏫",title:"SEVP & SEVIS 是什么",body:`
+      <ul>
+        <li><b>SEVP</b>（Student and Exchange Visitor Program）：美国国土安全部（DHS）下属项目，负责管理全美所有被认证的学校和学生签证状态。你就读的学校必须是 SEVP 认证学校才能为你签发 I-20。</li>
+        <li style="margin-top:8px"><b>SEVIS</b>（Student and Exchange Visitor Information System）：SEVP 管理的数据库系统，记录你在美的学籍、地址、学习状态。每次转学、休学、地址变更都必须通知 DSO（国际学生顾问）更新 SEVIS 记录，否则签证状态会出问题。</li>
+        <li style="margin-top:8px"><b>DSO</b>（Designated School Official）：你学校国际学生办公室（ISO/ISSS）的工作人员，是你签证状态的官方管理人，所有 F-1 相关问题第一步找他们。</li>
+        <li style="margin-top:8px"><b>I-20</b>：DSO 签发给你的学生身份证明文件，出入境必须携带，确保在有效期内并有 DSO 的有效旅行签名（每年更新）。</li>
+      </ul>
+      <div style="margin-top:12px;padding:10px 12px;background:rgba(99,102,241,.08);border-radius:8px;font-size:12.5px">
+        💡 <b>关键操作</b>：入境后10天内向学校 DSO 报到，更新 SEVIS 入境记录；每次换地址30天内通知 DSO 更新系统。
+      </div>`},
+
+    {icon:"💬",title:"签证面试技巧（中国学生）",body:`
+      <p>博士签证面试通常很短（5-10分钟），签证官重点判断你的<b>真实学习意图</b>和<b>能够自我资助</b>。以下是高频问题和建议回答思路：</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        ${[
+          ["你去美国做什么？","我已被 [学校名] 录取攻读 [专业] 博士学位，研究方向是 [简述]，预计 [年限] 年完成学业。"],
+          ["你的资金来源？","我获得了学校的全额奖学金，包括学费减免和每月生活津贴（可出示 Offer Letter）。"],
+          ["你的导师是谁，研究什么？","我的导师是 [姓名] 教授，研究 [方向]，我们会在 [具体课题] 上合作。"],
+          ["毕业后你打算做什么？","完成博士学业后，我计划回国继续从事学术研究/在国际学术机构工作。（保持非移民倾向）"],
+          ["你为什么选这所学校？","该校 [专业] 全美排名靠前，我的导师是 [方向] 领域的权威，与我的研究兴趣高度吻合。"],
+        ].map(([q,a])=>`
+          <div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+            <div style="font-size:12.5px;font-weight:700;color:var(--accent)">Q: ${q}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:5px">建议思路：${a}</div>
+          </div>`).join("")}
+      </div>
+      <div style="margin-top:12px;font-size:12.5px;color:var(--red)">⚠️ 避免：回答含糊、说「不知道自己学什么」、表现出移民意图（如说毕业后想留美定居）。</div>`},
+
+    {icon:"🌐",title:"中美关系 & 政策影响分析",body:`
+      <p style="margin-bottom:10px">近年来中美关系变化对STEM留学生产生了实际影响，需要了解以下关键政策：</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="border-left:3px solid var(--red);padding:10px 12px;background:rgba(239,68,68,.06);border-radius:0 8px 8px 0">
+          <div style="font-weight:700;font-size:13px">🔴 出口管制 & 技术限制（EAR/ITAR）</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:5px">部分敏感技术领域（半导体、量子计算、高性能计算等）的研究受《出口管理条例》（EAR）或《国际武器交通条例》（ITAR）约束。中国学生参与相关实验室课题前，需确认该项目是否有访问限制（Controlled Research）。多数学术基础研究豁免（Fundamental Research Exclusion），但应用研究与军工相关方向需谨慎。</div>
+        </div>
+        <div style="border-left:3px solid var(--yellow);padding:10px 12px;background:rgba(245,158,11,.06);border-radius:0 8px 8px 0">
+          <div style="font-weight:700;font-size:13px">🟡 行政审查（Administrative Processing）延误</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:5px">STEM方向（尤其是AI/ML/量子/航空航天/生物技术）的中国学生签证被触发 221(g) 行政审查的概率高于其他国籍。审查周期从数周到数月不等。<b>建议：</b>申请签证时间比开学日至少提前3-4个月；开学前若签证未下，联系学校ISO争取延期入学。</div>
+        </div>
+        <div style="border-left:3px solid var(--yellow);padding:10px 12px;background:rgba(245,158,11,.06);border-radius:0 8px 8px 0">
+          <div style="font-weight:700;font-size:13px">🟡 「中国行动计划」后续影响</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:5px">DOJ 的「China Initiative」已于2022年正式终止，但相关氛围导致部分高校和联邦资助实验室对中国背景研究人员更加谨慎。对博士生影响相对有限，但若参与涉及联邦资金的军民两用研究，需了解导师的资助来源（NSF/DARPA等）。</div>
+        </div>
+        <div style="border-left:3px solid var(--green);padding:10px 12px;background:rgba(16,185,129,.06);border-radius:0 8px 8px 0">
+          <div style="font-weight:700;font-size:13px">🟢 F-1 签证整体仍畅通（非军事STEM方向）</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:5px">对于主流CS/ML/NLP/生物/统计等方向，中国学生F-1签证整体仍正常发放，并无全面禁令。2023-2024学年在美中国留学生人数仍超27万，为最大国际学生群体。<b>关注点：</b>避开军事敏感方向；选择资金来源清晰的导师（NSF/NIH为主要资助方的实验室风险较低）。</div>
+        </div>
+        <div style="border-left:3px solid var(--accent);padding:10px 12px;background:rgba(99,102,241,.06);border-radius:0 8px 8px 0">
+          <div style="font-weight:700;font-size:13px">🔵 STEM OPT 三年延期：目前仍有效</div>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:5px">STEM OPT 允许理工科毕业生在标准12个月OPT基础上延长24个月（共3年），目前政策未变。但历史上曾有行政令试图限制OPT（2020年被法院阻止），建议持续关注政策动态。OPT期间可申请H-1B或通过学术途径获得绿卡。</div>
+        </div>
+      </div>`},
+
+    {icon:"✈️",title:"入境 & 到校后必做清单",body:`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+        ${[
+          ["入境时向海关申报","诚实申报，入境目的填「学习」，出示 I-20 和有效签证"],
+          ["查看 I-94 入境记录","入境后48小时内登录 cbp.gov/i94 确认入境记录正确（D/S 状态）"],
+          ["向 ISO/DSS 报到","入境后10天内向学校国际学生办公室报到，激活 SEVIS 记录"],
+          ["申请 SSN（社会安全号）","拿到 RA/TA offer 后可申请，到当地 Social Security Administration 办公室"],
+          ["开设银行账户","Chase/Bank of America 等支持凭 I-20+护照开户，推荐第一天就办"],
+          ["获取校园 ID 和邮件","入学注册时办理，用于图书馆/实验室/导师联系"],
+          ["购买健康保险","学校通常强制要求学生保险，确认是否已自动扣除或需手动购买"],
+          ["了解驾照考取","留学期间可考取当地驾照，需学校 I-20 和 I-94 证明在学状态"],
+        ].map(([item,note])=>`
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+            <div style="font-size:13px;font-weight:600">✓ ${item}</div>
+            <div style="font-size:11.5px;color:var(--muted);margin-top:3px">${note}</div>
+          </div>`).join("")}
+      </div>`},
+
+    {icon:"🎓",title:"OPT / STEM OPT 毕业后工作权",body:`
+      <ul>
+        <li><b>OPT（选择性实践培训）</b>：毕业后可申请12个月的在美工作许可，需在毕业前90天或毕业后60天内申请，由 USCIS 审批，目前等待时间约3-5个月，<b>务必提前申请</b>。</li>
+        <li style="margin-top:8px"><b>STEM OPT 延期（+24个月）</b>：STEM学科（CS/EE/物理/数学/生物等）毕业生可在12个月OPT届满前申请额外24个月，雇主必须参与 E-Verify 计划，共计在美合法工作3年。</li>
+        <li style="margin-top:8px"><b>H-1B 抽签</b>：每年4月抽签，总额65,000张（硕士及以上额外20,000张），中签率约35%。若未中签可继续 STEM OPT 或转学术路径（博士后/教职）。</li>
+        <li style="margin-top:8px"><b>学术绿卡路径</b>：美国高校教职（Assistant Professor）可由学校申办 EB-1A（杰出人才）或 EB-2 NIW（国家利益豁免），绕过 H-1B 抽签，是学术界最常见的移民路径。</li>
+      </ul>
+      <div style="margin-top:12px;padding:10px 12px;background:rgba(99,102,241,.08);border-radius:8px;font-size:12.5px">
+        💡 <b>博士生建议</b>：博士期间可积累足够的论文发表为 EB-1A / EB-2 NIW 申请做准备；毕业时若有教职或研究员 offer，学校/机构法务部门会协助办理移民手续。
+      </div>`},
+  ];
+  document.getElementById("visa-body").innerHTML=sections.map(s=>`
+    <div class="guide-card">
+      <h3>${s.icon} ${s.title}</h3>
+      ${s.body}
+    </div>`).join("");
+}
+
+/* ═══════════════════════════════════════
+   MATCH
+═══════════════════════════════════════ */
+function initMatch(){
+  const fields=[...new Set(PROFS.flatMap(p=>p.field))].sort();
+  document.getElementById("mf-fields").innerHTML=
+    fields.map(f=>`<span class="mf-pill" data-v="${f}">${f}</span>`).join("");
+  ["mf-pubs","mf-years"].forEach(gid=>{
+    document.getElementById(gid).addEventListener("click",e=>{
+      const pill=e.target.closest(".mf-pill");if(!pill)return;
+      [...e.currentTarget.querySelectorAll(".mf-pill")].forEach(p=>p.classList.remove("on"));
+      pill.classList.add("on");
+    });
+  });
+  ["mf-fields","mf-tiers"].forEach(gid=>{
+    document.getElementById(gid).addEventListener("click",e=>{
+      const pill=e.target.closest(".mf-pill");if(!pill)return;
+      pill.classList.toggle("on");
+    });
+  });
+}
+
+function matchScore(prof,gpa,pubs,years){
+  let s=0;
+  if(gpa!==null){
+    if(gpa>=prof.minGPA) s+=40;
+    else if(gpa>=prof.minGPA-0.3) s+=20;
+  }
+  if(prof.pubReq==="none") s+=30;
+  else if(prof.pubReq==="preferred") s+=pubs>=1?30:15;
+  else if(prof.pubReq==="required") s+=pubs>=2?30:pubs>=1?15:0;
+  s+=Math.min(years,3)*10;
+  return s;
+}
+
+function runMatch(){
+  const gpa=parseFloat(document.getElementById("mf-gpa").value)||null;
+  const selPub=document.querySelector("#mf-pubs .mf-pill.on");
+  const selYr=document.querySelector("#mf-years .mf-pill.on");
+  if(!gpa){alert("请先填写 GPA");return;}
+  if(!selPub||!selYr){alert("请选择论文数量和科研年限");return;}
+  const pubs=parseInt(selPub.dataset.v);
+  const years=parseInt(selYr.dataset.v);
+  const selTiers=[...document.querySelectorAll("#mf-tiers .mf-pill.on")].map(p=>p.dataset.v);
+  const selFields=[...document.querySelectorAll("#mf-fields .mf-pill.on")].map(p=>p.dataset.v);
+
+  const tierLabel={elite:"顶尖",top:"强校",strong:"州立强校",accessible:"友好型"};
+  const pubLabel={required:"需发表",preferred:"推荐发表",none:"无要求"};
+  const lvlEmoji=s=>s>=70?"🟢":s>=40?"🟡":"🔴";
+  const lvlText=s=>s>=70?"强烈推荐":s>=40?"可以尝试":"有挑战";
+  const lvlCls=s=>s>=70?"good":s>=40?"ok":"hard";
+  const tierCls={elite:"tier-elite",top:"tier-top",strong:"tier-strong",accessible:"tier-accessible"};
+
+  let results=PROFS
+    .filter(p=>selTiers.length===0||selTiers.includes(p.tier))
+    .filter(p=>selFields.length===0||p.field.some(f=>selFields.includes(f)))
+    .map(p=>({...p,score:matchScore(p,gpa,pubs,years)}))
+    .sort((a,b)=>b.score-a.score);
+
+  if(!results.length){
+    document.getElementById("match-result-title").textContent="没有符合条件的导师";
+    document.getElementById("match-result-list").innerHTML=`<div class="match-empty">请放宽层次或方向筛选后重试</div>`;
+    return;
+  }
+  document.getElementById("match-result-title").textContent=`匹配结果 — 共 ${results.length} 位导师`;
+  document.getElementById("match-result-list").innerHTML=results.map(p=>`
+    <div class="match-card">
+      <div class="match-lvl ${lvlCls(p.score)}" style="flex-direction:column;gap:2px">
+        <span style="font-size:18px">${lvlEmoji(p.score)}</span>
+        <span style="font-size:10px;font-weight:700">${p.score}分</span>
+        <span style="font-size:9px">${lvlText(p.score)}</span>
+      </div>
+      <div class="match-info">
+        <div class="match-name"><a href="${p.url}" target="_blank" rel="noopener">${p.name}</a>
+          <span class="tier-badge ${tierCls[p.tier]}" style="margin-left:6px">${tierLabel[p.tier]}</span>
+        </div>
+        <div class="match-school">${p.school} · ${p.dept} · 招生：${p.status==="open"?"✅ 开放":"❓ 待确认"}</div>
+        <div class="match-focus">${p.focus}</div>
+        <div>${p.field.map(f=>`<span class="tag">${f}</span>`).join("")}
+          <span class="tag">GPA≥${p.minGPA}</span>
+          <span class="tag">${pubLabel[p.pubReq]}</span>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+initTabs();
+initDataNote();
+Tracker.load();
+initMine();
+initTimeline();
+initProfs();
+initTemplates();
+initChecklist();
+initFunding();
+initCareer();
+initVoices();
+initVisa();
+initGuide();
+initMatch();
+switchTab("tl");
+</script>
+</body>
+</html>
