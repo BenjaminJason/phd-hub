@@ -31,6 +31,14 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .thm:hover{color:var(--fg)}
 .ai-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:600;cursor:pointer}
 .ai-btn:hover{opacity:.88}
+.star-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(245,180,0,.14);color:#b45309;border:1px solid rgba(245,180,0,.42);border-radius:8px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
+.star-btn:hover{background:rgba(245,180,0,.26)}
+.site-footer{max-width:1000px;margin:0 auto;padding:28px 24px 54px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:12.5px;line-height:1.9}
+.site-footer .sf-row{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;align-items:center;margin-bottom:9px}
+.site-footer a{color:var(--accent);text-decoration:none;font-weight:600}
+.site-footer a:hover{text-decoration:underline}
+.site-footer .sf-ver{font-size:11.5px;opacity:.75}
+.site-footer .sf-disc{font-size:11.5px;opacity:.85;max-width:640px;margin:0 auto}
 
 /* Sections */
 section{display:none;max-width:1000px;margin:0 auto;padding:32px 24px 60px}
@@ -401,6 +409,7 @@ body.dark .tl-tip{color:var(--accent2)}
   .path-grid{grid-template-columns:1fr}
   .city-stat{min-width:calc(50% - 8px)}
   section{padding:24px 15px 50px}
+  .site-footer{padding:24px 15px 44px}
   .hdr{padding:0 14px}
   .data-note{padding:7px 14px}
   .tabs{overflow-x:auto}
@@ -414,6 +423,7 @@ body.dark .tl-tip{color:var(--accent2)}
   <div class="logo">🎓 美国STEM博士导航</div>
   <div class="tabs" id="tabs"></div>
   <div class="hdr-right">
+    <a class="star-btn" href="https://github.com/BenjaminJason/phd-hub" target="_blank" rel="noopener" title="免费开源，去 GitHub 给颗 Star 支持持续更新">⭐ Star</a>
     <button class="thm" onclick="toggleTheme()">🌓</button>
     <button class="ai-btn" onclick="openAI()">💬 问 AI</button>
   </div>
@@ -607,6 +617,16 @@ body.dark .tl-tip{color:var(--accent2)}
     </div>
   </details>
 </section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="sf-row">
+    <a href="https://github.com/BenjaminJason/phd-hub" target="_blank" rel="noopener">⭐ 在 GitHub 给个 Star</a>
+    <a href="https://github.com/BenjaminJason/phd-hub/issues/new?title=%E4%BD%BF%E7%94%A8%E5%8F%8D%E9%A6%88%20%2F%20%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE&body=%EF%BC%88%E5%9C%A8%E4%B8%8B%E9%9D%A2%E5%86%99%E4%B8%8B%E4%BD%A0%E7%9A%84%E4%BD%93%E9%AA%8C%E3%80%81%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%88%96%E6%83%B3%E5%8A%A0%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%8C%E4%BD%9C%E8%80%85%E4%BC%9A%E7%9C%8B%EF%BD%9E%EF%BC%89%0A%0A-%20%E6%88%91%E7%94%B3%E8%AF%B7%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%88%E5%A6%82%20CS%2FML%E3%80%81%E7%94%9F%E7%89%A9%E2%80%A6%EF%BC%89%EF%BC%9A%0A-%20%E8%A7%89%E5%BE%97%E6%9C%80%E6%9C%89%E7%94%A8%E7%9A%84%E9%83%A8%E5%88%86%EF%BC%9A%0A-%20%E5%B8%8C%E6%9C%9B%E6%94%B9%E8%BF%9B%E6%88%96%E6%96%B0%E5%A2%9E%EF%BC%9A%0A-%20%E7%94%A8%E7%9A%84%E4%BB%80%E4%B9%88%E8%AE%BE%E5%A4%87%2F%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%9A%0A" target="_blank" rel="noopener">💬 提反馈 / 许愿</a>
+  </div>
+  <div class="sf-disc">本工具开源免费 · 数据为 2026 年 6 月整理的静态快照，导师招生状态 / 政策 / 费用每年变动，<b>请务必以学校与导师官网为准</b>。</div>
+  <div class="sf-ver">v1.0 · 更新于 2026-06-21</div>
+</footer>
 
 <!-- AI Modal -->
 <div class="ai-overlay" id="ai-overlay" onclick="closeAI(event)">
